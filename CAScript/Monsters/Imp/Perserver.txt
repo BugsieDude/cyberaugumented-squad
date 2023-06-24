@@ -1,0 +1,117 @@
+Class DCY_Perserver : DCY_Impe
+{
+  Default
+  {
+  SeeSound "Zorg/Sight";
+  ActiveSound "Zorg/Active";
+  PainSound "Zorg/Pain";
+  DeathSound "Zorg/Death";
+  AttackSound "";
+  Health 90;
+  BloodType "AndroidNeonFluid", "AndroidNeonFluid", "AndroidNeonFluid";
+  BloodColor "DarkRed";
+  Tag "Perserver";
+  Speed 10.2555555;
+  FastSpeed 13.5555555;
+  Obituary "%o got outsmarted by a Perserver.";
+  DCYMonster.GibType "DCY_GibletsAdd";
+  DCYMonster.ScientificName "Ignauus surculus";
+  DCYMonster.FootstepSound "dcyrocky/walk";
+  }
+  
+  States
+  {
+  Spawn:
+	SDDM A 10 DCY_Look();
+	Loop;
+  Look:
+	SDDM AABBCCDD 2 DCY_LookingForPlayer();
+	Loop;
+  Alert:
+    "####" "#" 0 DCY_AlertSound();
+    Goto See;
+  See:
+	SDDM AABBCCDD 2 DCY_Chase();
+	Loop;
+  Melee:
+  Missile:
+	SDDM E 0 A_Jump(100, "Dodge");
+	Goto MissileContinue;
+  Dodge:
+	SDDM A 5
+	{
+		A_Dodging(12);
+		A_FaceTarget();
+	}
+    SDDM AAA 5;
+	Goto See;
+  MissileContinue:
+	SDDM EEEEEEEEE 1 A_FaceTarget();
+	SDDM F 3
+	{
+		A_SpawnProjectile("DCY_PerserverMissile", 30, 8, frandom(-1.65, 1.65), CMF_OFFSETPITCH|CMF_TRACKOWNER, frandom(0.655, -0.655));
+		A_FaceTarget();
+	}
+	SDDM EEEE 3 A_FaceTarget();
+	SDDM E 0 A_MonsterRefire(128, "See");
+	Goto MissileContinue+9;
+  Pain:
+	SDDM G 4;
+	SDDM G 4 A_Pain();
+	Goto See;
+  Death:
+    SDDM H 5;
+    SDDM I 5 A_Scream();
+    SDDM J 4 A_NoBlocking();
+    SDDM KLM 4;
+    SDDM N -1;
+    Stop;
+  XDeath:
+    SDDM O 5;
+    SDDM P 5 { DCY_Gibs(false); A_StartSound("Android/Gib", CHAN_VOICE); }
+    SDDM Q 4 A_NoBlocking();
+    SDDM RSTUV 3;
+    SDDM W -1;
+    Stop;
+  Raise:
+    SDDM NM 4;
+	SDDM LKJIH 5;
+    Goto See;
+  }
+}
+
+Class DCY_PerserverMissile : DCY_FastProjectile
+{
+  Default
+  {
+  Radius 11;
+  Height 7;
+  Damage 5;
+  Speed 15.5;
+  FastSpeed 22.5;
+  RenderStyle "Add";
+  Scale 0.8785;
+  SeeSound "dcydrone/fire";
+  DeathSound "dcydrone/fire";
+  Translation "0:255=%[0.00,0.00,0.00]:[2.00,1.17,0.34]";
+  Decal "ImpScorch";
+  }
+  States
+  {
+  Spawn:
+    THZ4 A 1 Bright
+	{
+		if (random(0, 8) == 0)
+		{
+			actor arc = Spawn("DCY_Arc", pos + (frandom(-8.0, 8.0), frandom(-8.0, 8.0), frandom(-8.0, 8.0)));
+			if (arc) { arc.translation = translation; arc.scale *= 0.65; }
+		}
+		
+		A_SpawnParticleEx(0xbd1e13, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 10, 20, 0, velx: frandom(-0.5, 0.5), vely: frandom(-0.5, 0.5), velz: frandom(-0.5, 0.5), fadestepf: 0.05, sizestep: -2.225);
+	}
+	Loop;
+  Death:
+    THZ4 DEFGHIJKLM 1 Bright;
+    Stop;
+  }
+}

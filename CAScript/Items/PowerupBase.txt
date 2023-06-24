@@ -1,0 +1,115 @@
+Class DCY_SphereRing : Actor
+{
+  Default
+  {
+  Radius 0;
+  Height 0;
+  RenderStyle "Add";
+  Alpha 0.5;
+  Scale 0.00001;
+  +NOCLIP
+  -SOLID
+  +THRUACTORS
+  +ROLLSPRITE
+  +NOGRAVITY
+  +NOTIMEFREEZE
+  +FLATSPRITE
+  +BRIGHT
+  }
+  
+  float xpos;
+  float ypos;
+  float zpos;
+  float wangle;
+  float scaleincrease;
+  
+  override void PostBeginPlay()
+  {
+	super.PostBeginPlay();
+	
+	angle = (frandom(-360.00, 360.00));
+	pitch = (frandom(-360.00, 360.00));
+	roll = (frandom(-360.00, 360.00));
+	scaleincrease = 0.06;
+	
+	if (master)
+	{
+		xpos = frandom(-5.0, 5.0);
+		ypos = frandom(-5.0, 5.0);
+		zpos = frandom(-5.0, 5.0);
+		wangle = frandom(0, 360);
+	}
+  }
+  
+  override void Tick()
+  {
+	super.Tick();
+	
+	if (master)
+		Warp(master, xpos, ypos, zpos, wangle, WARPF_NOCHECKPOSITION|WARPF_INTERPOLATE);
+	
+	if (scaleincrease > 0)
+		scaleincrease -= 0.005;
+  }
+  
+  States
+  {
+  Spawn:
+	EF3_ A 0 NoDelay;
+	Goto Looper;
+  Looper:
+	"####" "#" 1
+	{
+		A_SetScale(Scale.X+0.06+scaleincrease, Scale.Y+0.06+scaleincrease);
+		A_FadeOut(0.025, 0);
+		
+		if (alpha < 0)
+			Destroy();
+	}
+	Loop;
+  }
+}
+
+Class DCY_SoulSphereRing : DCY_SphereRing { States { Spawn: EF3_ K 0 NoDelay; Goto Looper; } }
+Class DCY_MegaSphereRing : DCY_SphereRing { States { Spawn: EF3_ G 0 NoDelay; Goto Looper; } }
+Class DCY_UncoRing : DCY_SphereRing { States { Spawn: EF3_ E 0 NoDelay; Goto Looper; } }
+Class DCY_RehabiliationRing : DCY_SphereRing { States { Spawn: EF3_ B 0 NoDelay; Goto Looper; } }
+Class DCY_SupremacyRing : DCY_SphereRing { States { Spawn: EF3_ I 0 NoDelay; Goto Looper; } }
+Class DCY_ProspectRing : DCY_SphereRing { States { Spawn: EF3_ J 0 NoDelay; Goto Looper; } }
+Class DCY_PhotocoagulatorRing : DCY_SphereRing { States { Spawn: EF3_ D 0 NoDelay; Goto Looper; } }
+
+Class DCY_RingThing : Actor
+{
+  string ringtype;
+  property RingT : ringtype;
+  
+  Default
+  {
+  Radius 0;
+  Height 0;
+  RenderStyle "Add";
+  Alpha 1.0;
+  Scale 0.45;
+  +NOCLIP
+  +NOTIMEFREEZE
+  +NOGRAVITY
+  +NOINTERACTION
+  +THRUACTORS
+  DCY_RingThing.RingT "SphereRing";
+  }
+  
+  States
+  {
+  Spawn:
+	TNT1 A 4 NoDelay
+	{
+		for (int i = 5; i > 0; i--)
+			A_SpawnItemEx(ringtype, frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), 0, 0, 0, frandom(0.0, 360.0), SXF_NOCHECKPOSITION, 10);
+	}
+	TNT1 A 1;
+	Stop;
+  }
+}
+
+Class DCY_ProspectRingThing : DCY_RingThing { Default { DCY_RingThing.RingT "DCY_ProspectRing"; } }
+Class DCY_PhotocoagulatorRingThing : DCY_RingThing { Default { DCY_RingThing.RingT "DCY_PhotocoagulatorRing"; } }

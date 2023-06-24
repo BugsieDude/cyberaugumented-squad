@@ -1,0 +1,106 @@
+Class DCY_TheGiantEnemySpider : DCYMonster
+{
+  Default
+  {
+	Tag "The Matriarch";
+	Health 3000;
+	Radius 128;
+	Height 100;
+	Mass 1000;
+	Speed 12;
+	PainChance 40;
+	Monster;
+	+BOSS
+	+MISSILEMORE
+	+FLOORCLIP
+	+NORADIUSDMG
+	+DONTMORPH
+	+BOSSDEATH
+	SeeSound "DCYMatriarch/Sight";
+	AttackSound "";
+	PainSound "DCYMatriarch/Pain";
+	DeathSound "DCYMatriarch/Death";
+	ActiveSound "DCYMatriarch/Idle";
+	Obituary "%o feared the Matriarch's all-demonic might.";
+	TeleFogSourceType "DCY_CyberSourceTeleport";
+	TeleFogDestType "DCY_CyberTeleport";
+	Species "Spider Masterminds";
+	DCYMonster.GibType "DCY_FatGiblets";
+	DCYMonster.ScientificName "Regina aranearum";
+	+DCYMONSTER.DCYNORMALBOSS;
+	DCYMonster.FootstepFrames 0, 3, 6;
+	DCYMonster.FootstepSound "";
+  }
+  
+  void A_MetalII()
+  {
+	A_QuakeEx(0, 0, 1, 200, 0, 25, "none", QF_SCALEDOWN|QF_RELATIVE, falloff: 200);
+	A_StartSound("dcyspider/walk", CHAN_BODY, 0, 1.0, ATTN_NORM, frandom(0.7, 0.8));
+  }
+  
+  States
+  {
+  Spawn:
+	ME__ A 10 DCY_Look();
+	Loop;
+  Look:
+	#### A 3 A_MetalII();
+	#### ABBCC 3 A_Chase();
+	#### D 3 A_MetalII();
+	#### DEEFF 3 A_Chase();
+	"####" "#" 0 A_CheckSight("Look");
+	Goto Alert;
+  Alert:
+	"####" "#" 0 DCY_AlertSound();
+	Goto See;
+  See:
+	ME__ A 3 A_MetalII();
+	ME__ ABBCC 3 A_Chase();
+	ME__ D 3 A_MetalII();
+	ME__ DEEFF 3 A_Chase();
+	Loop;
+  Missile:
+	ME__ A 10 A_FaceTarget();
+	ME__ T 0 A_StartSound("Minigun/WindUp", CHAN_WEAPON);
+	ME__ TTTUUUTTUUTUTU 2 A_FaceTarget();
+	Goto MinigunLoop;
+  MinigunLoop:
+	ME__ G 1 A_FaceTarget();
+	ME__ H 1
+	{
+		A_StartSound("Deagle/Fire", CHAN_WEAPON, CHANF_DEFAULT, 1.0, 0.5, 0.735);
+		A_SpawnProjectile("DCY_AlacritousGuyBullet", 40, angle: frandom(-7.5, 7.5));
+	}
+	ME__ H 1 A_SpidRefire();
+	Loop;
+  Pain:
+	ME__ I 3;
+	ME__ I 3 A_Pain();
+	Goto See;
+  Death:
+	ME__ I 1;
+	ME__ I 30 A_ScreamAndUnblock();
+	ME__ J 16;
+	ME__ KLM 5
+	{
+		if (damagetype != "Massacre")
+		{
+			if (!random(0, 1)) DCY_Gibs(false);
+			A_SpawnItemEx("DCY_Explosion_1", random(-20, 20), random(-20, 20), random(30, 70));
+			A_SpawnItemEx("DCY_Explosion_1", random(-20, 20), random(-20, 20), random(30, 70));
+		}
+	}
+	ME__ N 5
+	{
+		A_StartSound("Archon/Explode", CHAN_BODY, attenuation: 0.5);
+		if (damagetype != "Massacre")
+			for (int i = 3; i > 0; i--) {
+				DCY_Gibs(false);
+				A_SpawnItemEx("DCY_Explosion_1_Biggie", random(-40, 40), random(-40, 40), random(20, 40), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(0, 360), SXF_NOCHECKPOSITION);
+		}
+	}
+	ME__ OPQRSSSSSSSSSSSS 6;
+	ME__ S -1 A_BossDeath2();
+	Stop;
+  }
+}

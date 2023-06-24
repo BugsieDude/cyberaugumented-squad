@@ -1,0 +1,99 @@
+OptionValue "DisableEnableAnnounce"
+{
+  0, "Announce"
+  1, "Stay Silent"
+}
+
+OptionValue "BossPiano"
+{
+  0, "Silence"
+  1, "Play"
+}
+
+OptionValue "EnableDisable2"
+{
+  0, "Off"
+  1, "On"
+}
+
+OptionValue "YesNoIOS"
+{
+  0, "Vanilla"
+  1, "Cyberaugumented"
+}
+
+OptionValue "EnemySpawnYN"
+{
+  0, "Normal"
+  1, "Vanilla Tier"
+}
+
+OptionValue "AestheticYN"
+{
+  0, "Vanilla!!"
+  1, "DCY Aesthetics"
+}
+
+OptionValue "Scienceyn"
+{
+  0, "Off"
+  1, "Tag + Scientific Name"
+  2, "Scientific Name only"
+  3, "Tag + Scientific Name (Except for humans)"
+  4, "Scientific Name only (Except for humans)"
+}
+
+OptionValue "DisableEnableAnnounce2"
+{
+  0, "Distance-based"
+  1, "Instant"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+	StaticText " "
+	Submenu "DCY Monsters", "DCYMonsterOptionsMenu"
+}
+
+AddOptionMenu "OptionsMenuSimple"
+{
+	StaticText " "
+	Submenu "DCY Monsters", "DCYMonsterOptionsMenu"
+}
+
+OptionMenu "DCYMonsterOptionsMenu"
+{
+	Title "Cyberaugumented Monster Options"
+	Class "DCY_OptionMenu"
+    StaticText "You can modify all of these to your liking."
+	StaticText ""
+	Option "Enemy Announcements", "cyberaugumented_noenemyannouncements", "DisableEnableAnnounce"
+	Option "Announcement Mode", "dcy_announcetype", "DisableEnableAnnounce2"
+	StaticText ""
+	Option "Refrain Souls from the Kill Count",	"dcy_soulcount", "EnableDisable2"
+	Option "Refrain the Resurrected from the Kill Count",	"dcy_rescount", "EnableDisable2"
+	StaticText ""
+	Option "Enable Progression", "sv_dcy_progressivespawns", "YesNo"
+	Slider "Progression Multiplier", "sv_dcy_progression", 0.000, 2.000, 0.01
+	StaticText ""
+	Option "SS Guard Replacement", "dcy_wolfensteinspawns", "YesNo"
+	Option "Keen Replacement", "dcy_keenspawns", "YesNo"
+	Option "Icon of Sin", "dcy_ios", "YesNoIOS"
+	StaticText ""
+	Option "Revert to Vanilla", "dcy_monsters", "AestheticYN"
+	Option "All enemies' spawn type", "dcy_vanillaspawns", "EnemySpawnYN"
+	StaticText ""
+	Option "Former Human Names", "dcy_humanname", "YesNo"
+	Option "Scientific Names for Demons", "dcy_scientificname", "Scienceyn"
+	StaticText ""
+	Option "Boss Piano Notification", "dcy_audiblebossnotif", "BossPiano"
+	StaticText ""
+	Slider "Effect Distance", "cl_effectdistance", 0, 25535, 1
+	Option "Effect Choker", "sv_effectchoker", "YesNo"
+	StaticText ""
+	Option "Show Temperature and Level", "cl_dcy_hud_temperatureandlevel", "EnableDisable2"
+	Option "Progression Level on HUD", "cl_dcy_hud_level", "EnableDisable2"
+	StaticText ""
+	Option "Let there be bloodshed", "dcy_gibbing", "EnableDisable2"
+	Slider "Gib Fading Time", "dcy_gibtime", 20, 2000, 1
+}

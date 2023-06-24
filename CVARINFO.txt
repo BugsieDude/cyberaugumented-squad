@@ -1,0 +1,53 @@
+server bool cyberaugumented_noenemyannouncements = false;
+server int dcy_announcetype = 0;
+
+nosave server bool sv_dcy_progressivespawns = true;
+server float sv_dcy_progression = 1.500;
+
+server bool dcy_soulcount = true;
+server bool dcy_rescount = true;
+
+server bool sv_effectchoker = false;
+user int cl_effectdistance = 1000;
+
+user bool cl_dcy_hud_level = true;
+user bool cl_dcy_hud_temperatureandlevel = true;
+
+server bool dcy_audiblebossnotif = true;
+
+nosave server bool dcy_ios = true;
+nosave server bool dcy_wolfensteinspawns = true;
+nosave server bool dcy_keenspawns = true;
+nosave server bool dcy_vanillaspawns = false;
+
+server bool dcy_humanname = true;
+server int dcy_scientificname = 0;
+
+server bool dcy_gibbing = true;
+server int dcy_gibtime = 2000;
+
+server bool dcy_smoothmovement = true;
+
+//Replacements
+nosave server bool dcy_monsters = true;
+nosave server bool dcy_props = true;
+
+nosave server int dcy_zombieman = 1;
+nosave server int dcy_shotgunner = 1;
+nosave server int dcy_chaingunner = 1;
+nosave server int dcy_imp = 1;
+nosave server int dcy_soul = 1;
+nosave server int dcy_pinky = 1;
+nosave server int dcy_spectre = 1;
+nosave server int dcy_caco = 1;
+nosave server int dcy_pain = 1;
+nosave server int dcy_revenant = 1;
+nosave server int dcy_fatso = 1;
+nosave server int dcy_arachno = 1;
+nosave server int dcy_knight = 1;
+nosave server int dcy_baron = 1;
+nosave server int dcy_vile = 1;
+nosave server int dcy_cyber = 1;
+nosave server int dcy_mastermind = 1;
+nosave server int dcy_nazi = 1;
+nosave server int dcy_ios2 = 1;

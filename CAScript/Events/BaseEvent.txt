@@ -1,0 +1,180 @@
+CLASS CyberaugumentedMonsterEventHandler : EventHandler
+{
+  ui int inputtic;
+  float temp1;
+  int plvl;
+  bool restartmus;
+  
+  //Cutscene Stuff
+  bool cutscene;
+  
+  static double lerp (double a, double b, double t) {
+	return a + ((b - a) * t);
+  }
+  
+  static Vector3 lerp3 (Vector3 a, Vector3 b, double t) {
+	return a + ((b - a) * t);
+  }
+  
+  override void NetworkProcess(ConsoleEvent e)
+  {
+	let g = DCY_Variables.Get();
+	
+	if(e.name == "dcy_checkprogress")
+	{
+		let g = DCY_Variables.Get();
+		if (g) Console.Printf("Current level: %d", g.dcyLevel);
+	}
+	if(e.name == "dcy_increaselevel")
+	{
+		let g = DCY_Variables.Get();
+		g.dcyLevel++;
+	}
+	if(e.name == "dcy_decreaselevel")
+	{
+		let g = DCY_Variables.Get();
+		g.dcyLevel--;
+	}
+  }
+  
+  override void WorldThingSpawned(WorldEvent e)
+  {
+	let x = DCY_Variables.Get();
+	
+	//Effect Choker
+    if(sv_effectchoker && e.thing && e.thing is "DCY_Effect")
+        e.thing.Destroy();
+	
+	//Lost Souls
+	bool counts = (e.thing && e.thing.bCountKill);
+	
+	if(dcy_soulcount && counts && e.thing is "DCY_SkullParent")
+	{
+		e.thing.bCountKill = false;
+		Level.total_monsters--;
+	}
+  }
+  
+  override void WorldThingRevived(WorldEvent e)
+  {
+	if(dcy_rescount && e.thing && e.thing.bCountKill)
+	{
+		e.thing.bCountKill = false;
+		Level.total_monsters--;
+	}
+  }
+
+  override void WorldLoaded(WorldEvent e)
+  {
+	let x = DCY_Variables.Get();
+	
+	if (x)
+	{
+		x.alternateturretsound = randompick(0, 1); //very simple
+		x.monsterpack = true;
+	}
+
+	temp1 = 15;
+	IntoneSpawner();
+  }
+  
+  override void WorldUnloaded(WorldEvent e)
+  {
+	cutscene = false;
+	let d = DCY_Variables.Get();
+	
+	if (d) d.dcyLevel++;
+  }
+  
+  void DTemperature(sound soundx, string colorx, string messagex)
+  {
+	if (soundx)
+		S_StartSound(soundx, 10, CHANF_NOPAUSE);
+	
+	console.printf("\c".."["..colorx.."]"..messagex.."\c-");
+  }
+  
+  override void WorldTick()
+  {
+	TempCheck();
+	BossTrack();
+	
+	let d = DCY_Variables.Get();
+	plvl = d.dcylevel;
+  }
+  
+  void TempCheck()
+  {
+	let d = DCY_Variables.Get();
+	let temp = d.temperature;
+	
+	temp1 += temp;
+  }
+  
+  vector3 GetSectorVec3(sector mySector)
+  {
+	Vector3 mins = (double.max, double.max, double.max);
+	Vector3 maxs = -mins;
+
+	for (int i = 0; i < mySector.lines.Size(); i++)
+	{
+	  Line l = mySector.lines[i];
+	  mins.x = min(mins.x, l.v1.p.x, l.v2.p.x);
+	  maxs.x = max(maxs.x, l.v1.p.x, l.v2.p.x);
+	  
+	  mins.y = min(mins.y, l.v1.p.y, l.v2.p.y);
+	  maxs.y = max(maxs.y, l.v1.p.y, l.v2.p.y);
+
+	  double floor1 = mySector.floorPlane.ZAtPoint(l.v1.p);
+	  double floor2 = mySector.floorPlane.ZAtPoint(l.v2.p);
+	  mins.z = min(mins.z, floor1, floor2);
+
+	  double ceiling1 = mySector.ceilingPlane.ZAtPoint(l.v1.p);
+	  double ceiling2 = mySector.ceilingPlane.ZAtPoint(l.v2.p);
+	  maxs.z = max(maxs.z, ceiling1, ceiling2);
+	}
+	
+	return (maxs - mins);
+  }
+}
+
+extend class CyberaugumentedMonsterEventHandler
+{
+	bool tboss, tsuperboss;
+	int bc, sbc, tb, tsb, t, t2;
+	
+	override void PlayerEntered(PlayerEvent e)
+	{
+		tboss = false;
+		t = 0;
+	}
+	
+	void BossTrack()
+	{
+		let d = DCY_Variables.Get();
+		
+		if (t >= 15)
+		{
+			bc = d.minibossbeaten;
+			tb = d.minibosscount;
+			sbc = d.superbossbeaten;
+			tsb = d.superbosscount;
+			
+			if (bc < 2) return;
+			if (!tb && !tboss) return;
+			if (dcy_audiblebossnotif)
+			{
+				if (bc >= tb && !tboss)
+				{
+					t2++;
+					if (t2 > 100)
+					{
+						S_StartSound("dcy/nobossarea", 60, CHANF_UI, 1, 0);
+						tboss = true;
+					}
+				}
+			}
+		}
+		else t++;
+	}
+}
