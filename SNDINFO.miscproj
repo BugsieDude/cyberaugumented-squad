@@ -1,0 +1,64 @@
+ROTHPOLO "Sounds/Projectiles/dcy_demonic_shotgun.ogg"
+AM2DASH "Sounds/DCY SFX/dcy_enemy_rush.ogg"
+
+PHASDASH "Sounds/DCY SFX/dcy_deathdealer_dash.ogg"
+OTHRDASH "Sounds/DCY SFX/dcy_upheavalbringer_dodge.ogg"
+
+TZBLSTOF "Sounds/DCY SFX/dcy_tzero_blastoff.ogg" //T-ZerO (An Amiga SHMUP)
+
+MREIDISR "Sounds/DCY Monsters/Xusqoox/dcy_xusqoox_distort.ogg"
+MREIDIS2 "Sounds/DCY Monsters/Xusqoox/dcy_xusqoox_distort2.ogg"
+MREIDIS3 "Sounds/DCY Monsters/Xusqoox/dcy_xusqoox_distort3.ogg"
+
+FlashingExplosion "Sounds/Projectiles/dcy_flashexplosion.ogg"
+
+$random Earthpound { BRUSPND1 BRUSPND2 BRUSPND3 BRUSPND4 BRUSPND5 }
+BRUSPND1 "Sounds/DCY SFX/dcy_generic_groundpound1.ogg"
+BRUSPND2 "Sounds/DCY SFX/dcy_generic_groundpound2.ogg"
+BRUSPND3 "Sounds/DCY SFX/dcy_generic_groundpound3.ogg"
+BRUSPND4 "Sounds/DCY SFX/dcy_generic_groundpound4.ogg"
+BRUSPND5 "Sounds/DCY SFX/dcy_generic_groundpound5.ogg"
+
+PENTASUM "Sounds/DCY SFX/dcy_summoning_pentagram.ogg"
+BIGSTEPP "Sounds/DCY SFX/dcy_modified_gundam_step.ogg"
+
+Lightning/Strike "Sounds/Projectiles/dcy_biglightning_far.ogg"
+Lightning/StrikeClose "Sounds/Projectiles/dcy_biglightning.ogg"
+
+UCKABEWM "Sounds/DCY SFX/dcy_android_explosion.ogg"
+ENIGEXPL "Sounds/DCY SFX/dcy_metamor_explosion.ogg"
+
+MREIDASH "Sounds/DCY Monsters/Arachnoaversion/dcy_arachnoaversion_dash.ogg"
+
+Enemy/Teleport3 "Sounds/DCY SFX/Teleports/dcy_vague_teleport.ogg"
+Enemy/Teleport5 "Sounds/DCY SFX/Teleports/dcy_enigma_teleport.ogg"
+Enemy/Teleport7A "Sounds/DCY SFX/Teleports/dcy_mw_telein.ogg"
+Enemy/Teleport7B "Sounds/DCY SFX/Teleports/dcy_mw_teleout.ogg"
+GALCTELE "Sounds/DCY SFX/Teleports/dcy_galactic.ogg"
+
+RTROBOM1 "Sounds/DCY SFX/dcy_retroboom.wav"
+RTROBOM2 "Sounds/DCY SFX/dcy_retroboom2.wav"
+
+ShieldBroke1 "Sounds/DCY SFX/dcy_generic_shieldbreak1.ogg"
+ShieldBroke2 "Sounds/DCY SFX/dcy_generic_shieldbreak2.ogg"
+ShieldBroke3 "Sounds/DCY SFX/dcy_generic_shieldbreak3.ogg"
+ShieldBroke4 "Sounds/DCY SFX/dcy_generic_shieldbreak4.ogg"
+
+$random dcyvomitblood { dcyvomitblood1 dcyvomitblood2 dcyvomitblood3 }
+dcyvomitblood1 "Sounds/DCY SFX/dcy_blood_vomit1.ogg"
+dcyvomitblood2 "Sounds/DCY SFX/dcy_blood_vomit2.ogg"
+dcyvomitblood3 "Sounds/DCY SFX/dcy_blood_vomit3.ogg"
+
+ExplosiveDash "Sounds/Projectiles/dcy_hexodenican_dash.ogg"
+
+LightningPhase/Teleport "Sounds/DCY SFX/dcy_lightningphase_teleport.ogg"
+
+PlasmicLaser/Charge "Sounds/Projectiles/dcy_lasercharge.ogg"
+LaserSegment1 "Sounds/Projectiles/dcy_lasersegment1.ogg"
+LaserSegment2 "Sounds/Projectiles/dcy_lasersegment2.ogg"
+
+ROBOHURT "Sounds/DCY SFX/dcy_orbitalgrunt.ogg"
+
+$random dcy/ordeal { ordeal1 ordeal2 }
+ordeal1 "Sounds/DCY SFX/dcy_ordeal1.ogg"
+ordeal2 "Sounds/DCY SFX/dcy_ordeal2.ogg"

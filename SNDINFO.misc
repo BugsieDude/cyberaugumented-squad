@@ -1,0 +1,79 @@
+misc/startupdone "Sounds/Game/dcy_welcome.ogg"
+misc/kaboom "Sounds/DCY SFX/dcy_disintegrate.ogg"
+CYBECREP "Sounds/Game/dcy_creepy.ogg"
+WHATDONE "Sounds/Announcements/Minibosses/dcy_whathaveyoudone.ogg"
+PIANPIAN "Sounds/Game/dcy_piano.ogg"
+
+$random dcyeye/ambient { CYBECREP CYBECREP dcyeye/ambient1 dcyeye/ambient2 dcyeye/ambient3 dcyeye/ambient4 dcyeye/ambient5 dcyeye/ambient6 }
+dcyeye/ambient1 "Sounds/DCY SFX/dcy_archvile_whisper1.ogg"
+dcyeye/ambient2 "Sounds/DCY SFX/dcy_archvile_whisper2.ogg"
+dcyeye/ambient3 "Sounds/DCY SFX/dcy_archvile_whisper3.ogg"
+dcyeye/ambient4 "Sounds/DCY SFX/dcy_archvile_whisper4.ogg"
+dcyeye/ambient5 "Sounds/DCY SFX/dcy_archvile_whisper5.ogg"
+dcyeye/ambient6 "Sounds/DCY SFX/dcy_archvile_whisper6.ogg"
+
+//Announcements
+Warp/Choir "Sounds/DCY SFX/dcy_warp1.ogg"
+Warp/Spacial "Sounds/DCY SFX/dcy_warp2.ogg"
+dcy/flashback "Sounds/Announcements/dcy_flashback.ogg"
+dcy/deadlydejavu "Sounds/Announcements/dcy_flashback_chillax.ogg"
+dcy/decimalerror "Sounds/Announcements/dcy_havoc_map.ogg"
+$random dcy/midi { dcy/wu dcy/mid }
+dcy/mid "Sounds/Announcements/dcy_midi.ogg"
+dcy/wu "Sounds/Announcements/dcy_wakeup.ogg"
+dcy/peace "Sounds/Announcements/dcy_peace.ogg"
+
+//yay you did something
+$random dcy/nobossarea { dcy/nobossarea1 dcy/nobossarea2 }
+dcy/nobossarea1 "Sounds/Announcements/dcy_allbossesdefeated.ogg"
+dcy/nobossarea2 "Sounds/Announcements/dcy_allbossesdefeated2.ogg"
+
+//Enemy Announcements
+CMYSTERY "Sounds/Announcements/Minibosses/dcy_it_is_a_mystery.ogg"
+DANGERT "Sounds/Announcements/Minibosses/dcy_calignosity.ogg"
+DANGERU "Sounds/Announcements/Minibosses/dcy_alien_soldier.ogg"
+DANGERN "Sounds/Announcements/Minibosses/dcy_chorico.ogg"
+DANGERMW "Sounds/Announcements/Minibosses/dcy_multidimensional_caster.ogg"
+SDANGER0 "Sounds/Announcements/Minibosses/dcy_xusqoox.ogg"
+SECOIN "Sounds/Announcements/Minibosses/dcy_kamui.ogg"
+ORBWARN0 "Sounds/Announcements/Minibosses/dcy_visitant.ogg"
+0RCHWARN "Sounds/Announcements/Minibosses/dcy_arche.ogg"
+$random Z0MBWARX { Z0MBWARN Z0MBWAR1 Z0MBWAR2 }
+Z0MBWARN "Sounds/Announcements/Minibosses/dcy_unknown1.ogg"
+Z0MBWAR1 "Sounds/Announcements/Minibosses/dcy_unknown2.ogg"
+Z0MBWAR2 "Sounds/Announcements/Minibosses/dcy_unknown3.ogg"
+DOP3WARN "Sounds/Announcements/Minibosses/dcy_doppelganger.ogg"
+WARNINGM "Sounds/Announcements/Minibosses/dcy_maelstrom.ogg"
+THEFRAID "Sounds/Announcements/Minibosses/dcy_youll_never_know.ogg"
+THEWARN "Sounds/Announcements/Minibosses/dcy_reverend_mother.ogg"
+ABYSSALFEAR "Sounds/Announcements/Minibosses/dcy_abyss.ogg"
+UROZONHASRISEN "Sounds/Announcements/Minibosses/dcy_urozon.ogg"
+EXOIMPCHOIR "Sounds/Announcements/Minibosses/dcy_exoimp.ogg"
+
+DCY/TeleportationIn "Sounds/DCY SFX/Teleports/dcy_teleportation_in.ogg"
+DCY/Teleportation "Sounds/DCY SFX/Teleports/dcy_teleportation.ogg"
+$alias misc/teleport DCY/Teleportation
+dcycyber/teleport "Sounds/DCY SFX/Teleports/dcy_teleport_cyber.ogg"
+dcybosstier/teleport "Sounds/DCY SFX/Teleports/dcy_teleport_miniboss.ogg"
+dcybosstier/teleportend "Sounds/DCY SFX/Teleports/dcy_teleport_miniboss_end.ogg"
+
+//Terrain
+world/lavasizzle "Sounds/Terrain/dcy_lava_sizzle_1.ogg"
+world/lavsiz2 "Sounds/Terrain/dcy_lava_sizzle_2.ogg"
+world/lavasizzlesmall "Sounds/Terrain/dcy_lava_sizzle_small.ogg"
+
+$limit world/lavasizzle 4
+$limit world/lavsiz2 4
+$limit world/lavasizzlesmall 4
+
+DCYTorch "Sounds/Enviroment/dcy_torch_fire.ogg"
+DCYBurningBarrel "Sounds/Enviroment/dcy_burning_barrel.ogg"
+$limit DCYTorch 0
+$limit DCYBurningBarrel 0
+
+DCYExplodingBarrel "Sounds/Replacements/dcy_barrel_explode.ogg"
+
+dcy/freeze "Sounds/Replacements/dcy_icedeath.wav"
+dcy/icebreak "Sounds/Replacements/dcy_icedeath_break.wav"
+$alias misc/freeze dcy/freeze
+$alias misc/icebreak dcy/icebreak

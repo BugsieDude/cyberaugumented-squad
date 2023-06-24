@@ -1,0 +1,57 @@
+Class CyberaugumentedMonsterStartupHandler : StaticEventHandler
+{
+	int timer;
+	bool detected;
+	int unreasonable;
+	
+	override void OnRegister()
+	{
+		foreach (classes:AllActorClasses)
+		{
+			if (classes.GetClassName() == "BDoomer" || classes.GetClassName() == "Doomer"
+				|| classes.GetClassName() == "BrutalDoomer" || classes.GetClassName() == "HDoomPlayer"
+				|| classes.GetClassName() == "Moonman")
+				{ detected = true; }
+			
+			if ( detected ) break;
+		}
+		
+		if ( !detected ) return;
+		
+		else
+		{
+			S_ChangeMusic("");
+			Console.Printf("This mod cannot be loaded.");
+			
+			for (int i = 100; i > 90; i--)
+				S_StartSound("CYBECREP", i, CHANF_UI|CHANF_NOPAUSE|CHANF_OVERLAP, 1.0, ATTN_NONE);
+		}
+	}
+	
+	override void WorldTick()
+	{
+		if ( !detected ) return;
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+			if ( playeringame[i] ) players[i].cheats |= CF_TOTALLYFROZEN;
+		
+		for (int i = 1000; i > 0; i--) Console.Printf("\n");
+		if (timer == 1) S_StartSound("dcy/deadlydejavu", CHAN_BODY, CHANF_UI|CHANF_NOPAUSE|CHANF_OVERLAP, 1.0, ATTN_NONE);
+		
+		timer++;
+	}
+	
+	override void NewGame()
+	{
+		if ( !detected ) return;
+	}
+	
+	override void UiTick()
+	{
+		if ( !detected || timer < 2) return;
+		S_ChangeMusic("");
+		
+		for (int i = 0; i < 2; i++)
+			Menu.SetMenu("dcy_something");
+	}
+}

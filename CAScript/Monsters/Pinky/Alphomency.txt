@@ -1,0 +1,252 @@
+Class DCY_Alphomency : DCY_PinkeII
+{
+  Default
+  {
+  Health 145;
+  Speed 13.5;
+  FastSpeed 14.5;
+  SeeSound "EdgyPinky/Sight";
+  ActiveSound "EdgyPinky/Active";
+  PainSound "EdgyPinky/Pain";
+  DeathSound "EdgyPinky/Death";
+  AttackSound "";
+  Tag "Alphomency";
+  BloodColor "Black";
+  -MISSILEMORE
+  Alpha 1.0;
+  Scale 1.065;
+  RenderStyle "Translucent";
+  Obituary "$o got cremated by the Alphomency.";
+  HitObituary "$o got erased by the Alphomency.";
+  DCYMonster.ScientificName "Evacuatur porcus";
+  Translation "4:4=%[0.00,0.00,0.00]:[1.48,0.38,0.38]", "168:191=%[0.00,0.00,0.00]:[0.41,0.43,0.57]", "16:47=%[0.00,0.00,0.00]:[0.41,0.43,0.57]", "160:167=%[0.00,0.00,0.00]:[2.00,0.00,0.00]", "48:79=%[0.00,0.00,0.00]:[0.98,0.35,0.35]", "80:111=[255,255,255]:[0,0,0]", "1:3=%[0.00,0.00,0.00]:[1.01,0.00,0.00]", "5:8=%[0.00,0.00,0.00]:[0.49,0.49,0.49]", "13:15=%[0.00,0.00,0.00]:[0.49,0.49,0.49]", "128:159=%[0.00,0.00,0.00]:[1.01,1.01,1.01]", "208:231=%[0.00,0.00,0.00]:[2.00,0.00,0.00]";
+  DCYMonster.FootStepSound "";
+  DCYMonster.CanIJump false;
+  DCYMonster.CanILeap false;
+  }
+  States
+  {
+  Spawn:
+	UU8_ A 10 DCY_Look();
+	Loop;
+  Look:
+	UU8_ AABB 4 Fast DCY_LookingForPlayer();
+	UU8_ A 0 A_StartSound("Dasher/Walk", CHAN_BODY);
+	UU8_ CCDD 4 Fast DCY_LookingForPlayer();
+	UU8_ A 0 A_StartSound("Dasher/Walk", CHAN_BODY);
+	UU8_ A 0 A_CheckSight("See");
+	Goto Alert;
+  Alert:
+	UU8_ E 10 { A_FaceTarget(); DCY_AlertSound(); }
+	UU8_ F 20 A_FaceTarget();
+	UU8_ E 10 A_FaceTarget();
+	Goto See;
+  See:
+	UU8_ A 0 Fast A_Jump(10, "FadeAway");
+	UU8_ AABB 2 Fast DCY_Chase("Melee", "Missile");
+	UU8_ A 0 A_StartSound("Dasher/Walk", CHAN_BODY);
+	UU8_ CCDD 2 Fast DCY_Chase("Melee", "Missile");
+	UU8_ A 0 A_StartSound("Dasher/Walk", CHAN_BODY);
+	UU8_ A 0 Fast A_Jump(45, "FadeAway");
+	Loop;
+  FadeAway:
+	UU8_ A 0 Fast
+	{
+		bGhost = true;
+		A_StartSound("dune/active", CHAN_BODY);
+	}
+	UU8_ AABBC 2 Fast
+	{
+		DCY_Chase(null, null);
+		A_FadeOut(0.2, 0);
+	}
+	UU8_ C 0 Fast A_HideThing();
+	Goto SeeFaded;
+  SeeFaded:
+	UU8_ A 0 Fast A_Jump(55, "FadeIn");
+	UU8_ AABBCCDD 2 Fast DCY_Chase(null, null);
+	Loop;
+  FadeIn:
+	UU8_ A 0 Fast
+	{
+		bGhost = false;
+		A_Unhidething();
+		A_StartSound("dune/active", CHAN_BODY);
+	}
+	UU8_ AABBC 2 Fast
+	{
+		DCY_Chase(null, null);
+		A_FadeIn(0.2, 0);
+	}
+	Goto See;
+  Missile:
+	UU8_ A 0
+	{
+		If (target && Distance3D(target) < 222)
+		{
+			switch (random(0, 1))
+			{
+				case 0: Return ResolveState("Yeet");
+				case 1: Return ResolveState("Vomit");
+			}
+		}
+		If (target && Distance3D(target) < 400)
+			Return ResolveState("BLAEAEURGH");
+		
+		Return A_Jump(20, "FadeAway");
+	}
+	UU8_ AABBCCDD 2 Fast DCY_Chase("Melee", null);
+	Loop;
+  Yeet:
+	UU8_ EEEEEEEEE 1 A_FaceTarget();
+	UU8_ F 0 A_StartSound("EdgyPinky/Melee", CHAN_VOICE);
+	UU8_ FFFFFFFF 1 A_Recoil(-4);
+	UU8_ G 0 A_CustomMeleeAttack(8 * random(1, 10), "", "");
+	UU8_ G 8;
+	Goto See;
+  Vomit:
+	UU8_ H 0 A_Pain();
+	UU8_ HHHHHHHHHHHHHHHH 1 A_FaceTarget();
+	UU8_ E 5 { A_FaceTarget(1.2, 1.2); A_StartSound("dcyvomitblood", CHAN_BODY); }
+	UU8_ FFFFFFFFFFFFFFFF 2
+	{
+		A_FaceTarget(1.2, 1.2);
+		for (int i = 2; i > 0; i--) A_SpawnProjectile("DCY_Vomit", frandom(10, 30), frandom(-10, 10), frandom(-10, 10), CMF_AIMDIRECTION|CMF_OFFSETPITCH, pitch: -35);
+	}
+	UU8_ E 6;
+	Goto See;
+  BLAEAEURGH:
+	UU8_ EEEF 3 A_FaceTarget();
+	UU8_ F 3
+	{
+		A_StartSound("dcyvomitblood", CHAN_BODY);
+		A_SpawnProjectile("DCY_AlphomencyProjectile", 39, 0, frandom(-1.0, 1.0), CMF_OFFSETPITCH|CMF_TRACKOWNER, frandom(-1.0, 1.0) - 6);
+	}
+	UU8_ GG 3;
+	UU8_ EEEF 3 A_FaceTarget();
+	UU8_ F 3
+	{
+		A_StartSound("dcyvomitblood", CHAN_BODY);
+		A_SpawnProjectile("DCY_AlphomencyProjectile", 39, 0, frandom(-1.0, 1.0), CMF_OFFSETPITCH|CMF_TRACKOWNER, frandom(-1.0, 1.0) - 6);
+	}
+	UU8_ GGG 3;
+	Goto See;
+  Melee:
+	UU8_ E 0 A_StartSound("EdgyPinky/Melee", CHAN_VOICE);
+	UU8_ EF 8 A_FaceTarget();
+	UU8_ G 0 A_CustomMeleeAttack(8 * random(1, 10), "");
+	UU8_ G 8;
+	Goto See;
+  Pain:
+	UU8_ H 4
+	{
+		A_SetTranslucent(1.0);
+		A_UnHideThing();
+		bGhost = false;
+	}
+	UU8_ H 4 A_Pain();
+	Goto See;
+  Death:
+	UU8_ H 4
+	{
+		A_SetTranslucent(1.0);
+		A_UnHideThing();
+		bGhost = false;
+	}
+	UU8_ H 8
+	{
+		A_FaceTarget();
+		let arm = Spawn("DCY_AlphomencyArm", self.pos + (0, 0, 20));
+		if (arm) { arm.Vel3DFromAngle(random(5, 7), self.angle - 90, self.pitch - 50); arm.translation = translation; }
+		A_Scream();
+	}
+	UU8_ I 7 A_NoBlocking();
+	UU8_ JKLM 7;
+	UU8_ N -1;
+	Stop;
+  Raise:
+	UU8_ ML 8;
+	UU8_ KJIH 8;
+	Goto See;
+  }
+}
+
+Class DCY_AlphomencyProjectile : DoomImpBall
+{
+  Default
+  {
+  Damage 8;
+  Translation "0:255=%[0.00,0.00,0.00]:[1.55,0.00,0.00]";
+  Alpha 1.0;
+  RenderStyle "Translucent";
+  +ROLLSPRITE
+  +BLOODLESSIMPACT
+  +NOEXTREMEDEATH
+  Scale 0.5;
+  Gravity 0.25;
+  -NOGRAVITY
+  Speed 22;
+  SeeSound "misc/smallgibbed";
+  DeathSound "misc/smallgibbed";
+  FastSpeed 31.5;
+  }
+  
+  States
+  {
+  Spawn:
+	BAL3 AB 1
+	{
+		vel.x += frandom(-1, 1);
+		vel.y += frandom(-1, 1);
+		vel.z += frandom(-1, 1);
+		A_SpawnItemEx("DCY_BloodParticleX", frandom(-5.0, 5.0), frandom(-15.0, 15.0), frandom(-15.0, 15.0), frandom(-2, 2), frandom(-2, 2), frandom(2, 2), flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION, failchance: 90);
+		for (int i = 3; i > 0; i--)
+		{
+			let bled = Spawn((!random(0, 1)) ? "De_Blood_Splat" : "De_Blood_BigSplat", pos + (frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0)));
+			if (bled)
+			{
+				bled.vel.x *= vel.x / 4;
+				bled.vel.y *= vel.y / 4;
+				bled.vel.z *= vel.z / 4;
+				bled.scale *= 1.3;
+				bled.translation = translation;
+			}
+		}
+		A_SetRoll(Roll+15);
+	}
+	Loop;
+  Death:
+	BAL3 A 1
+	{
+		for (int i = random(5, 10); i > 0; i--)
+		{
+			let bld = Spawn("De_Blood_BigSplat", pos + (frandom(-20, 20), frandom(-20, 20), frandom(-20, 20)));
+			if (bld)
+			{
+				bld.scale *= 1.5;
+				bld.vel.x += frandom(-3, 3);
+				bld.vel.y += frandom(-3, 3);
+				bld.vel.z += frandom(1, 3.5);
+				bld.gravity /= 2;
+				bld.translation = self.translation;
+			}
+		}
+		
+		for (int i = 3; i > 0; i--) A_SpawnItemEx("DCY_BloodMist", flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION, failchance: 90);
+	}
+	Stop;
+  }
+}
+
+Class DCY_AlphomencyArm : DCY_DasherArm
+{
+  States
+  {
+  Spawn:
+	UU8_ O 1 { roll += xroll; }
+	Loop;
+  Death:
+	UU8_ W -1 { vel.x = 0; vel.y = 0; roll = 0; }
+	Stop;
+  }
+}

@@ -1,0 +1,254 @@
+Class DCY_Manes : DCY_Impe
+{
+  Default
+  {
+  SeeSound "Manes/Chatter";
+  ActiveSound "Manes/Chatter";
+  PainSound "Manes/Pain";
+  DeathSound "Manes/Death";
+  Alpha 3.5;
+  Speed 8;
+  Health 400;
+  FloatSpeed 4;
+  FastSpeed 12;
+  Translation "16:239=%[0.00,0.00,0.00]:[0.00,0.65,2.00]";
+  +FLOAT
+  +NOGRAVITY
+  +NOICEDEATH
+  +THRUSPECIES
+  +NOBLOOD
+  +BRIGHT
+  +GHOST
+  Tag "\c[w9]manes\c-";
+  RenderStyle "Add";
+  Obituary "%o succumbed awaiting death.";
+  DCYMonster.ScientificName "NO DATA";
+  DCYMonster.FootStepSound "";
+  }
+  
+  override void Tick()
+  {
+	if (!level.isfrozen() && DCY_EffectDistance(sfxdistance))
+	{
+		if (!(level.time % 2)) A_SpawnParticleEx(0x222222, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_SUBTRACT, SPF_FULLBRIGHT|SPF_RELATIVE, 200, 120, 0, frandom(-20, 20), frandom(-20, 20), 36 + frandom(-20, 20), frandom(-0.5, 0.5), frandom(-0.5, 0.5), frandom(-0.5, 0.5), startalphaf: 0.2, fadestepf: 0.0035, sizestep: 1.525);
+		A_SpawnItemEx("DCY_ManesTrail", xvel: frandom(-1, 1), yvel: frandom(-1, 1), zvel: frandom(-1, 1), flags: SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE);
+		A_SpawnItemEx("DCY_ProjectileBaseTrail", 0.1, flags: SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE|SXF_TRANSFERTRANSLATION);
+		let shadow = spawn("DCY_ManesTrail2", pos);
+		if (shadow)
+		{
+			shadow.vel.x = frandom(-0.5, 0.5);
+			shadow.vel.y = frandom(-0.5, 0.5);
+			shadow.vel.z = frandom(-0.5, 0.5);
+			shadow.scale = scale;
+			shadow.frame = frame;
+			shadow.sprite = GetSpriteIndex("NSH1");
+			shadow.angle = angle;
+		}
+	}
+	
+	Super.Tick();
+  }
+  
+  States
+  {
+  Spawn:
+	NSH1 AAABBBCCCDDD 10 DCY_Look();
+	Loop;
+  Look:
+	NSH1 AAABBBCCCDDD 3
+	{
+		DCY_LookingForPlayer();
+		if (!random(0, 30)) SetStateLabel("Hide");
+	}
+	Loop;
+  Hide:
+	TNT1 A 5
+	{
+		for (int i = random(1, 1000); i > 0; i--)
+			A_Wander();
+			
+		DCY_LookingForPlayer();
+		if (!random(0, 1)) SetStateLabel("Look");
+	}
+	Loop;
+  Alert:
+	"####" "#" 0
+	{
+		bNOCLIP = true;
+		DCY_AlertSound();
+	}
+	Goto See;
+  See:
+	NSH1 AAABBBCCCDDD 3
+	{
+		if (target && distance3D(target) > 2000)
+			SetStateLabel("Teleporting");
+		
+		DCY_Chase();
+	}
+	Loop;
+  Teleporting:
+	TNT1 A 1 A_Stop();
+	TNT1 A 1
+	{
+		for (int i = random(20, 80); i > 0; i--)
+			DCY_Chase(flags: CHF_NOPLAYACTIVE);
+		
+		if (target && distance3D(target) < 200)
+			SetStateLabel("Breath");
+	}
+	Goto Teleporting+1;
+  Missile:
+	NSH1 E 10
+	{
+		A_FaceTarget();
+		Return A_Jump(80, "Stalk", "Barrage");
+	}
+	NSH1 FFF 15
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("DCY_ManesBallBig", 30, 0, frandom(2, -2), CMF_OFFSETPITCH, frandom(-2, 2));
+	}
+	NSH1 E 8 A_Stop();
+	Goto See;
+  Barrage:
+	NSH1 E 10 A_FaceTarget();
+	NSH1 E 1 A_StartSound("Manes/Chatter", CHAN_VOICE);
+	NSH1 FFFFFFFFFFFFFFFFFFFF 2
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("DCY_ManesBall", 30, 0, frandom(-10, 10), CMF_OFFSETPITCH, frandom(-10, 10));
+	}
+	NSH1 E 8 A_Stop();
+	Goto See;
+  Stalk:
+	NSH1 AAABBBCCCDDD 3
+	{
+		A_FaceTarget();
+	
+		A_Recoil(-0.5);
+		
+		if (target && distance3D(target) < 200)
+			SetStateLabel("Breath");
+	}
+	Loop;
+  Melee:
+  Breath:
+	NSH1 E 20 A_FaceTarget();
+	NSH1 E 1 A_StartSound("Manes/Pain", CHAN_VOICE);
+	NSH1 FFFFFFFFFFFFFFFFFFFFFFF 2
+	{
+		A_FaceTarget();
+		A_QuakeEx(1, 1, 1, 30, 0, 600, "", QF_SCALEDOWN|QF_3D, rollintensity: 1, rollwave: 0.1);
+		A_SpawnProjectile("DCY_ManesScream", 30);
+	}
+	NSH1 F 0 A_Stop();
+	Goto See;
+  Pain:
+	NSH1 G 4 A_Stop();
+	NSH1 G 4 A_Pain();
+	Goto See;
+  XDeath:
+  Death.Fire:
+  Death:
+	NSH1 I 6;
+	NSH1 J 6 A_Scream();
+	NSH1 K 6 A_NoBlocking();
+	NSH1 LMNOP 5;
+	Stop;
+  Raise:
+	Stop;
+  }
+}
+
+Class DCY_ManesBall : DCY_MeatballElecball
+{
+  Default
+  {
+  Translation "0:255=%[0.00,0.00,0.00]:[0.50,0.80,1.50]";
+  DamageType "Ghost";
+  SeeSound "";
+  Scale 0.55;
+  }
+  
+  States
+  {
+  Spawn:
+	ZT__ AAAABBBB 1
+	{
+		roll += 3;
+		A_SpawnItemEx("DCY_CWFXTrail", flags: SXF_TRANSFERTRANSLATION|SXF_TRANSFERSCALE|SXF_TRANSFERROLL);
+		vel.x += frandom(-1, 1);
+		vel.y += frandom(-1, 1);
+		vel.z += frandom(-1, 1);
+		A_SpawnParticleEx(0x0f52ba, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, random(20, 45), random(10, 20), 0, velx: frandom(-0.5, 0.5), vely: frandom(-0.5, 0.5), velz: frandom(-0.5, 0.5), fadestepf: 0.035, sizestep: 0.825);
+	}
+	Loop;
+  Death:
+	SUE1 CDEFGHIJKL 3;
+	Stop;
+  }
+}
+
+Class DCY_ManesBallBig : DCY_ManesBall
+{
+  Default
+  {
+  Speed 15;
+  FastSpeed 25;
+  +SEEKERMISSILE
+  Damage 6;
+  Scale 0.575;
+  SeeSound "SkullFireDCY";
+  DeathSound "ArgentBall";
+  }
+  
+  States
+  {
+  Spawn:
+	ZT__ AAAABBBB 1
+	{
+		roll += 3;
+		A_SpawnItemEx("DCY_Arc", flags: SXF_TRANSFERTRANSLATION, failchance: 220);
+		vel.x += frandom(-0.5, 0.5);
+		vel.y += frandom(-0.5, 0.5);
+		vel.z += frandom(-0.5, 0.5);
+		A_Tracer2(2);
+		A_SpawnParticleEx(0x0f52ba, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, random(20, 45), 30, 0, velx: frandom(-0.5, 0.5), vely: frandom(-0.5, 0.5), velz: frandom(-0.5, 0.5), fadestepf: 0.035, sizestep: 0.825);
+	}
+	Loop;
+  Death:
+	SUE1 C 0 A_SpawnItemEx("DCY_Explosion_1_Small", flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION);
+	SUE1 CDEFGHIJKL 3;
+	Stop;
+  }
+}
+
+Class DCY_ManesSpirit : DCY_RZSpirit { Default { Translation "0:255=%[0.00,0.00,0.00]:[0.50,0.50,0.50]"; RenderStyle "Subtract"; Scale 1.0; } }
+
+Class DCY_ManesScream : DCY_ManesBall
+{
+  Default
+  {
+  Alpha 0;
+  Speed 40;
+  Damage 1;
+  +NOBLOCKMAP
+  +BLOODLESSIMPACT
+  Radius 10;
+  Height 20;
+  +RIPPER
+  +NEVERFAST
+  DamageType "Occult";
+  SeeSound "";
+  }
+  
+  int timer;
+  
+  States
+  {
+  Spawn:
+	TNT1 A 5;
+	Stop;
+  }
+}

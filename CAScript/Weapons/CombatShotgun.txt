@@ -1,0 +1,54 @@
+Class DCY_CombatShotgun : DCY_Weapon
+{
+  Default
+  {
+	Tag "UXA Combat Shotgun 2650";
+	Inventory.PickupSound "dcy/shotgunpickup2";
+	Inventory.PickupMessage "You got the Combat Shotgun! Sweet seven bullet packed in a shell shooter!";
+	Weapon.AmmoGive 8;
+	Weapon.AmmoUse 1;
+	Weapon.AmmoType "Shell";
+	Weapon.SlotNumber 3;
+	Weapon.SelectionOrder 1300;
+  }
+  
+  action void A_ShotgunFire()
+  {
+	A_StartSound("DCYShotgun/Fire", CHAN_WEAPON, CHANF_OVERLAP);
+	invoker.DepleteAmmo(invoker.bAltFire, true);
+	A_GunFlash();
+	A_FireBullets(4, 3, 7, 12, "DCY_Effect", FBF_NORANDOM, 8192, "DCY_TracerPlayer", 0);
+  }
+  
+  States
+  {
+  Spawn:
+	SHT_ Z -1;
+	Stop;
+  Select:
+	SHG_ WXY 1 A_WeaponReady(WRF_NOFIRE);
+	Goto Ready;
+  Deselect:
+	SHG_ YXW 1 A_WeaponOffset(0, 32);
+	TNT1 A 0 A_Lower();
+	Wait;
+  Ready:
+	SHG_ A 1 A_WeaponReady();
+	Loop;
+  Fire:
+	SHG_ A 0;
+	SHG_ A 1;
+	SHG_ B 1 Bright A_ShotgunFire();
+	SHG_ CDEF 1 Bright;
+	SHG_ G 0 A_JumpIfNoAmmo("Ready");
+	SHG_ G 1;
+	SHG_ HIJ 2;
+	SHG_ KLMNOPQRS 2;
+	SHG_ TU 2 A_WeaponReady(WRF_NOPRIMARY|WRF_NOSECONDARY|WRF_NOBOB);
+	Goto Ready;
+  Flash:
+	TNT1 A 3 A_Light1();
+	TNT1 A 3 A_Light2();
+	Goto LightDone;
+  }
+}

@@ -1,0 +1,13 @@
+$pitchshift MREIDISR 0
+$pitchshift MREIDIS2 0
+$pitchshift MREIDIS3 0
+$pitchshift FlashingExplosion 0
+
+$pitchshift MajorNzi/Teleport 0
+$pitchshift MajorNzi/Explode 0
+
+$pitchshift OBLTFIRE 0
+$pitchshift OBLTFIR2 0
+$pitchshift OBLTFIR3 0
+
+$pitchshift misc/startupdone 0

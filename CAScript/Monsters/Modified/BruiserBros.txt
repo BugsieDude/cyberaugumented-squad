@@ -1,0 +1,240 @@
+Class DCY_BaronParent : DCYMonster
+{
+  Default
+  {
+  Health 1000;
+  Radius 24;
+  Height 64;
+  Mass 1000;
+  Speed 8;
+  PainChance 50;
+  +BOSSDEATH
+  SeeSound "DCYBruiser/Sight";
+  PainSound "DCYBruiser/pain";
+  DeathSound "DCYBruiser/death";
+  ActiveSound "DCYBruiser/active";
+  Obituary "$OB_BARON";
+  HitObituary "$OB_BARONHIT";
+  Tag "Templar";
+  DamageFactor "Bruiser", 0.000;
+  Species "Barons";
+  DCYMonster.ScientificName "Brutis cruribus";
+  DCYMonster.FootstepSound "dcybaron/walk";
+  }
+  
+  bool down;
+  
+  void A_BruiserJump()
+  {
+	int jumpheight;
+	int recoilrate;
+	
+	if (target)
+	{
+		recoilrate = (target.pos.z < self.pos.z - 10) ? -10 : -(Distance3D(target) / 10);
+		jumpheight = (target.pos.z < self.pos.z - 10) ? 10 : ((target.pos.z - self.pos.z) / 9.5) + 10;
+	}
+	
+  	A_Recoil((recoilrate < -16) ? -16 : recoilrate);
+	A_Hop((jumpheight > 16) ? 16 : jumpheight);
+  }
+  
+  States
+  {
+  Spawn:
+	B1SS A 10 DCY_Look();
+	Loop;
+  Look:
+	B1SS AABBCCDD 4 DCY_LookingForPlayer();
+	"####" "#" 0 A_CheckSight("Look");
+	Goto Alert;
+  Alert:
+	"####" "#" 0
+	{
+		if (random(0, 1) == 1)
+			SetStateLabel("Roar");
+		else
+			DCY_AlertSound();
+	}
+	Goto See;
+  See:
+	B1SS AABBCCDD 4 DCY_Chase();
+	Loop;
+  Roar:
+	B2SS ABC 5 A_FaceTarget();
+	B2SS D 4 DCY_AlertSound();
+	B2SS EDFDEDF 4 A_FaceTarget();
+	Goto See;
+  Melee:
+	B1SS EF 7 A_FaceTarget();
+	B1SS G 7 A_CustomMeleeAttack(5 * random(1, 10), "knight/melee", "");
+	B1SS F 5 A_FaceTarget();
+	Goto See;
+  Missile:
+	B1SS E 0 A_JumpIf(target && distance3D(target) < 256, "GRANDSLAM");
+	B1SS EF 6 A_FaceTarget();
+	B1SS G 6 { A_FaceTarget(); A_SpawnProjectile("DCY_BaronFireball", 32, 0, frandom(-1.5, 1.5)); }
+	B1SS FE 6 A_JumpIf(target && distance3D(target) < 200, "OHNO");
+	Goto See;
+  OHNO:
+	B1SS G 0 A_Jump(192, "See");
+	B1SS GGGGGGGGGG 1 A_Recoil(-3);
+	B1SS F 7 A_FaceTarget();
+	B1SS G 6 { A_Stop(); A_FaceTarget(); A_SpawnProjectile("DCY_BaronFireball", 32, 0, frandom(-1.5, 1.5)); }
+	B1SS F 7 A_FaceTarget();
+	Goto See;
+  GRANDSLAM:
+	B1SS R 6 A_FaceTarget();
+	B1SS QP 6 A_FaceTarget();
+	B0SS P 1 A_BruiserJump();
+	B0SS P 1
+	{
+		if (vel.z == 0 && down)
+			SetStateLabel("SLAM");
+		if (vel.z == 0 && !down)
+			down = true;
+	}
+	Goto GRANDSLAM+4;
+  SLAM:
+	B1SS R 4;
+	B1SS R 30
+	{
+		vel.x = vel.x / 6;
+		vel.y = vel.y / 6;
+		A_PoundEffect();
+		A_StartSound("Earthpound", CHAN_BODY);
+		A_QuakeEx(3, 3, 3, 50, 0, 300, "none", QF_RELATIVE|QF_SCALEDOWN, falloff: 500);
+		A_Explode(50, 150, XF_NOTMISSILE, damagetype: "Bruiser");
+		
+		down = false;
+	}
+	B1SS RQA 5;
+	Goto See;
+  Pain:
+	B1SS H 4;
+	B1SS H 4 A_Pain();
+	Goto See;
+  Death:
+	B0SS H 4;
+	B0SS I 6 A_ScreamAndUnblock();
+	B0SS JK 5;
+	B0SS LMN 4;
+	B0SS O -1 A_BossDeath2;
+	Stop;
+  Raise:
+	B0SS ON 5;
+	B0SS MLKJIH 4;
+	Goto See;
+  }
+}
+
+Class DCY_HeckBaron : DCY_BaronParent { Default { BloodColor "Green"; Translation "48:79=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "0:0=%[0.00,0.00,0.00]:[2.00,2.00,2.00]", "112:127=%[0.00,0.34,0.00]:[0.00,2.00,0.00]", "16:47=%[0.00,0.00,0.00]:[0.72,0.42,0.42]", "13:15=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "168:191=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "248:255=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "208:239=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "128:159=%[0.00,0.00,0.00]:[0.21,0.21,0.21]", "80:111=[255,255,255]:[0,0,0]"; } }
+
+Class DCY_KnightHell : DCY_BaronParent
+{
+  Default
+  {
+  Health 500;
+  -BOSSDEATH;
+  Tag "Gatecrasher";
+  SeeSound "Gatecrasher/Sight";
+  ActiveSound "Gatecrasher/Active";
+  PainSound "Gatecrasher/Pain";
+  DeathSound "Gatecrasher/Death";
+  HitObituary "$OB_KNIGHTHIT";
+  Obituary "$OB_KNIGHT";
+  BloodColor "Green";
+  DamageFactor "Bruiser", 0.000;
+  Species "Hell Knights";
+  DCYMonster.ScientificName "Brutis fractis";
+  DCYMonster.FootstepSound "dcyknight/walk";
+  }
+  States
+  {
+  Spawn:
+	SS0B A 10 DCY_Look();
+	Loop;
+  Look:
+	SS0B AABBCCDD 2 DCY_LookingForPlayer();
+	"####" "#" 0 A_CheckSight("Look");
+	Goto Alert;
+  Alert:
+	"####" "#" 0 DCY_AlertSound();
+	Goto See;
+  See:
+	SS0B AABBCCDD 2
+	{
+		if (target && distance3D(target) < 311)
+			SetStateLabel("NormalChase");
+		If (target && distance3D(target) < 411)
+			SetStateLabel("MediumChase");
+		
+		for (int i = 2; i > 0; i--)
+			DCY_Chase();
+	}
+	Loop;
+  MediumChase:
+	SS0B AAABBBCCCDDD 2 DCY_Chase();
+	Loop;
+  NormalChase:
+	SS0B AABBCCDD 3 DCY_Chase();
+	Loop;
+  Melee:
+	SS0B EF 7 A_FaceTarget();
+	SS0B G 7 A_CustomMeleeAttack(5 * random(1, 10), "knight/melee", "");
+	SS0B F 5;
+	Goto See;
+  Missile:
+	SS0B E 0 A_JumpIf(target && distance3D(target) < 150, "GRANDSLAM");
+	SS0B EF 6 A_FaceTarget();
+	SS0B G 6 { A_FaceTarget(); A_SpawnProjectile("DCY_BaronFireball", 32, 0, frandom(-1.5, 1.5)); }
+	SS0B F 7 A_FaceTarget();
+	Goto See;
+  GRANDSLAM:
+	SS0B R 10 A_FaceTarget();
+	SS0B QP 8 A_FaceTarget();
+	SS0B P 1
+	{
+		A_BruiserJump();
+		A_FaceTarget();
+	}
+	SS0B P 1
+	{
+		if (vel.z == 0 && down)
+			SetStateLabel("SLAM");
+		if (vel.z == 0 && !down)
+			down = true;
+	}
+	Goto GRANDSLAM+4;
+  SLAM:
+	SS0B S 4;
+	SS0B S 30
+	{
+		vel.x = vel.x / 6;
+		vel.y = vel.y / 6;
+		A_PoundEffect();
+		A_StartSound("Earthpound", CHAN_BODY);
+		A_QuakeEx(3, 3, 3, 50, 0, 300, "none", QF_RELATIVE|QF_SCALEDOWN, falloff: 500);
+		A_Explode(35, 100, XF_NOTMISSILE, damagetype: "Bruiser");
+		
+		down = false;
+	}
+	SS0B RQA 5;
+	Goto See;
+  Pain:
+	SS0B H 4;
+	SS0B H 4 A_Pain();
+	Goto See;
+  Death:
+	SS0B H 4;
+	SS0B I 6 A_ScreamAndUnblock();
+	SS0B JK 5;
+	SS0B LMN 4;
+	SS0B O -1;
+	Stop;
+  Raise:
+	SS0B ON 5;
+	SS0B MLKJIH 4;
+	Goto See;
+  }
+}

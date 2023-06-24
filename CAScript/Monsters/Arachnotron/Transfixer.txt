@@ -1,0 +1,293 @@
+Class DCY_TFExplosion : DCY_AndroidExplosion { Default { Translation "0:255=%[0.00,0.00,0.20]:[1.51,0.50,2.00]"; } }
+
+Class DCY_Transfixer : DCY_ArachnoParent
+{
+  Default
+  {
+  Health 1150;
+  BloodColor "Purple";
+  SeeSound "Transfixer/Sight";
+  ActiveSound "Transfixer/Active";
+  PainSound "Transfixer/Pain";
+  DeathSound "Transfixer/Death";
+  Tag "\c[w0]Transfixer\c-";
+  DamageFactor "Transmuter", 0.00;
+  +QUICKTORETALIATE
+  +NOINFIGHTING
+  PainChance 50;
+  Scale 1.2;
+  DCYMonster.ScientificName "Tenebris demergi";
+  }
+  
+  bool forcefield;
+  bool rushing;
+  int fleeing;
+  void A_TransfixerChase(bool stepsound)
+  {
+	if (rushing == true)
+	{
+		for (int i = 2; i > 0; i--)
+		{
+			if (fleeing > 0) A_Chase(null, null);
+			else A_Chase();
+		}
+		
+		if (DCY_EffectDistance(sfxdistance))
+			A_SpawnItemEx("DCY_TransfixerTrail", zofs: 5, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION);
+	}
+	
+	if (stepsound == true)
+		A_StartSound("Aracgunner/Walk", CHAN_BODY);
+	
+	A_Chase();
+  }
+  
+  States
+  {
+  Spawn:
+	PBDO A 10 DCY_Look();
+	Loop;
+  Look:
+    PBDO A 2 A_StartSound("Aracgunner/Walk", CHAN_BODY);
+    PBDO ABBCC 2 DCY_LookingForPlayer();
+    PBDO D 2 A_StartSound("Aracgunner/Walk", CHAN_BODY);
+    PBDO DEEFF 2 DCY_LookingForPlayer();
+    Loop;
+  Alert:
+    "####" "#" 0 DCY_AlertSound();
+  See:
+	PBDO A 30;
+    PBDO A 2 A_TransfixerChase(true);
+    PBDO ABBCC 2 A_TransfixerChase(false);
+    PBDO D 2 A_TransfixerChase(true);
+    PBDO DEEFF 2 A_TransfixerChase(false);
+	PBDO D 0 { rushing = randompick(0, 0, 0, 1); }
+    Goto See+1;
+  Missile:
+	PBDO A 10
+	{
+		A_FaceTarget();
+		bNoPain = false;
+		Return A_Jump(111, "Chainguns", "Plasma");
+	}
+	PBDO G 3 A_FaceTarget();
+	PBDO G 35
+	{
+		A_StartSound("Pistol/LaserCharge", CHAN_WEAPON, attenuation: 0.65);
+		A_FaceTarget();
+		forcefield = randompick(0, 1);
+	}
+	PBDO H 5
+	{
+		A_StartSound((!forcefield) ? "Pistol/LaserChargedShot" : "LPISSHLD", CHAN_WEAPON, attenuation: (!forcefield) ? 0.45 : 0.65);
+
+		if (target)
+		{
+			A_FaceTarget();
+			A_SpawnProjectile((!forcefield) ? "DCY_TransfixerPlasma" : "DCY_TransfixerForcefield", (!forcefield) ? 25 : 35);
+		}
+	}
+	PBDO G 10 A_Jump(90, "Chainguns", "Plasma");
+	Goto See+1;
+  Chainguns:
+	PBDO A 10 A_FaceTarget();
+	PBDO Q 3 A_FaceTarget();
+	PBDO Q 15;
+	PBDO R 3
+	{
+		A_StartSound("PISFIR4", CHAN_WEAPON, attenuation: 0.45);
+		
+		if (target)
+		{
+			A_FaceTarget();
+			
+			for (int i = -13; i < 14; i += 26)
+				A_SpawnProjectile("DCY_VandalLaser", 15, i, frandom(-3.0, 3.0));
+		}
+	}
+	PBDO Q 2 A_MonsterRefire(40, "See");
+	Goto Chainguns+3;
+  Plasma:
+	PBDO A 10 A_FaceTarget();
+	PBDO Q 3 A_FaceTarget();
+	PBDO Q 15;
+	PBDO R 5
+	{
+		A_StartSound("Transfixer/Plasma", CHAN_WEAPON, attenuation: 0.45);
+		
+		if (target)
+		{
+			A_FaceTarget();
+			
+			for (int i = -13; i < 14; i += 26)
+				A_SpawnProjectile("DCY_TransfixerPlasmaball", 15, i, frandom(-6.0, 6.0));
+		}
+	}
+	PBDO Q 4 A_MonsterRefire(40, "See");
+	Goto Plasma+3;
+  Pain:
+	PBDO I 4;
+	PBDO I 4 A_Pain();
+	PBDO I 1 A_Jump(60, "Flee");
+	Goto See+1;
+  Flee:
+	PBDO A 0 { bNoPain = true; bFrightened = true; rushing = true; }
+	PBDO A 0
+	{
+		if (fleeing >= 7)
+		{
+			bFrightened = false;
+			bNoPain = false;
+			rushing = false;
+			SetStateLabel("See");
+			fleeing = 0;
+		}
+		
+		fleeing += 1;
+	}
+    PBDO A 1 A_TransfixerChase(true);
+    PBDO ABBCC 1 A_TransfixerChase(false);
+    PBDO D 1 A_TransfixerChase(true);
+    PBDO DEEFF 1 A_TransfixerChase(false);
+    Goto Flee+1;
+  Death:
+	PBDO I 4;
+	PBDO I 10 A_Scream();
+	PBDO J 6 { DCY_ArachnoExplosion("DCY_TFExplosion"); A_NoBlocking(); }
+	PBDO KLMNO 5;
+	PBDO P -1;
+	Stop;
+  Raise:
+	PBDO ONMLKJIA 5;
+	Goto See;
+  }
+}
+
+Class DCY_TransfixerPlasmaball : DCY_RehauledPlasma
+{
+  Default
+  {
+  DamageFunction (2);
+  +RIPPER;
+  +BLOODLESSIMPACT;
+  +ROLLSPRITE
+  +NEVERFAST
+  Speed 20;
+  Scale 1.0;
+  Translation "0:255=%[0.00,0.00,0.00]:[1.39,0.94,1.93]";
+  SeeSound "Transfixer/Plasma";
+  DeathSound "Painsend/FireExplode";
+  }
+  States
+  {
+  Spawn:
+	SUE2 AB 1
+	{
+		A_SpawnItemEx("DCY_FluorescentOrbTS", frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION|SXF_TRANSFERSCALE, failchance: 100);
+		A_SetRoll(Roll+20, SPF_INTERPOLATE);
+	}
+	Loop;
+  Death:
+	SUE2 F 2
+	{
+		for (int i = 3; i > 0; i--)
+		{
+			A_SpawnItemEx("DCY_PhasicAndroidPuffSpark", 0, 0, 0, frandom(4.0, 14.5), 0, Pitch+frandom(2.0, 8.0)+frandom(3.0, -3.0), frandom(-20.0, 20.0)+180, SXF_NOCHECKPOSITION, 60);
+			A_SpawnItemEx("DCY_PhasicAndroidPuffSpark", 0, 0, 0, frandom(4.0, 14.5), 0, Pitch+frandom(2.0, 8.0)+frandom(3.0, -3.0), frandom(-20.0, 20.0)+180, SXF_NOCHECKPOSITION, 28);
+		}
+	}
+	SUE2 GHIJKLM 2;
+	Stop;
+  }
+}
+
+Class DCY_TransfixerForcefield : DCY_RehauledPlasma
+{
+  Default
+  {
+  DamageFunction (0);
+  +RIPPER
+  +THRUACTORS
+  Speed 1;
+  Scale 1.3;
+  Radius 32;
+  Height 32;
+  SeeSound "LPISSHLD";
+  DeathSound "";
+  DamageType "Transmuter";
+  +WALLSPRITE
+  MissileType "DCY_TransfixerForcefieldTrail";
+  MissileHeight 5;
+  Translation "0:255=%[0.00,0.00,0.00]:[1.35,0.00,2.00]";
+  DCY_FastProjectile.CV true;
+  DCY_FastProjectile.CR true;
+  DCY_FastProjectile.CF true;
+  DCY_FastProjectile.CA true;
+  }
+  
+  int timer;
+  
+  override void Effect()
+  {
+	if (timer <= 20) return;
+	super.Effect();
+  }
+  
+  States
+  {
+  Spawn:
+	PBDO ST 1
+	{
+		if (timer >= 20 && timer < 45)
+		{
+			if (vel.x <= 100)
+			{
+				A_Explode(45, 75);
+				vel += vel.Unit() * 2.5;
+				
+				for (int i = 2; i > 0; i--)
+					A_SpawnParticle(0xe6d4ff, SPF_FULLBRIGHT|SPF_RELATIVE, 20, 8, frandom(0, 360), frandom(-6, 6), frandom(-64, 64), frandom(-30, 30), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), sizestep: -0.85);
+			}
+		}
+		
+		if (timer == 0) A_SpawnItemEx("DCY_TransfixerForcefieldSpawn", flags: SXF_NOCHECKPOSITION|SXF_TRANSFERPITCH);
+		if (timer < 20) A_SpawnItemEx("DCY_TransfixerForcefieldTrail", flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERPITCH);
+		
+		A_FaceMovementDirection();
+		timer += 1;
+		A_Explode(5, 70);
+		
+		for (int i = 2; i > 0; i--)
+			A_SpawnParticle(0xe6d4ff, SPF_FULLBRIGHT|SPF_RELATIVE, 20, 8, frandom(0, 360), frandom(-6, 6), frandom(-64, 64), frandom(-30, 30), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), sizestep: -0.85);
+	}
+	Loop;
+  Death:
+	PBDO S 0 { vel *= 0; }
+	PBDO STSTST 1 A_FadeOut(0.2);
+	Stop;
+  }
+}
+
+Class DCY_TransfixerForcefieldTrail : DCY_HexodenicanTrail2 { Default { +WALLSPRITE Alpha 0.25; Scale 1.3; RenderStyle "Add"; Translation "0:255=%[0.00,0.00,0.00]:[0.28,0.03,0.43]"; } }
+
+Class DCY_TransfixerForcefieldSpawn : DCY_TransfixerForcefieldTrail
+{
+  Default
+  {
+  Alpha 0.5;
+  }
+  
+  States
+  {
+  Spawn:
+	PBDO ST 1
+	{
+		if (Alpha <= 0.00)
+			Destroy();
+		
+		A_FadeOut(0.09);
+		A_SetScale(Scale.X + 0.1);
+	}
+	Loop;
+  }
+}

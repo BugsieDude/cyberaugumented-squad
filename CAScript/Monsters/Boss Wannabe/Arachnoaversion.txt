@@ -1,0 +1,258 @@
+Class DCY_ArachnoaversionJet : DCY_NimbusJetFlareSmall { Default { Translation "0:255=%[0.13,0.00,0.05]:[2.00,0.00,0.05]"; } }
+Class DCY_Explosion_1_Arachnoaversion : DCY_AndroidExplosionBiggie { Default { Translation "0:255=%[0.13,0.00,0.05]:[2.00,0.00,0.05]"; } }
+Class DCY_Arachnoaversion : DCY_ArachnoParent
+{
+  Default
+  {
+  Health 2000;
+  Translation "192:207=%[0.13,0.00,0.05]:[2.00,0.00,0.35]", "240:247=%[0.13,0.00,0.00]:[2.00,0.00,0.00]", "16:79=%[0.00,0.00,0.00]:[0.43,0.43,0.43]", "80:111=[192,192,192]:[0,0,0]", "128:143=[167,167,167]:[0,0,0]", "144:151=[128,128,128]:[0,0,0]", "152:159=%[0.00,0.00,0.00]:[0.71,0.71,0.71]", "13:15=%[0.00,0.00,0.00]:[0.51,0.51,0.51]", "236:239=%[0.00,0.00,0.00]:[0.51,0.51,0.51]", "208:235=%[0.00,0.00,0.00]:[0.70,0.70,0.70]";
+  BloodColor "Red";
+  BloodType "AndroidNeonFluid", "AndroidNeonFluid", "AndroidNeonFluid";
+  Speed 10;
+  FastSpeed 14;
+  +NOGRAVITY
+  +FLOAT
+  +MISSILEEVENMORE
+  +NOTARGET
+  +DONTHARMSPECIES
+  +FIRERESIST
+  +MISSILEMORE
+  +DONTFALL
+  +AVOIDMELEE
+  +BOSS
+  Scale 1.25;
+  DamageFactor 0.65;
+  PainChance 10;
+  SeeSound "ARPHSIT";
+  ActiveSound "";
+  PainSound "ARPHPAI";
+  DeathSound "ARPHDTH";
+  Tag "\c[y0]Arachnoaversion\c-";
+  Obituary "%o is now swiss cheese.";
+  TeleFogSourceType "DCY_BossTeleport";
+  TeleFogDestType "DCY_BossTeleport";
+  DCYMonster.ScientificName "Timor aranearum";
+  +DCYMONSTER.DCYBOSS;
+  DCYMonster.WD 1300;
+  DCYMonster.CanAnnounce true;
+  DCYMonster.AnnounceSound "SECOIN";
+  DCYMonster.AnnounceColor "y0";
+  DCYMonster.AnnounceMessage "FACE YOUR FEARS";
+  }
+  
+  override void Tick()
+  {
+	Super.Tick();
+	
+	If (Health > 0 && !IsFrozen() && DCY_EffectDistance(sfxdistance))
+	{
+		A_SpawnItemEx("DCY_ArachnoaversionJet", frandom(35, 32), frandom(35, 32),35,0,0,frandom(-4,-6),0,128);
+		A_SpawnItemEx("DCY_ArachnoaversionJet", frandom(-35, -32), frandom(-35, -32),35,0,0,frandom(-4,-6),0,128);
+		A_SpawnItemEx("DCY_ArachnoaversionJet", frandom(-35, -32), frandom(35, 32),35,0,0,frandom(-4,-6),0,128);
+		A_SpawnItemEx("DCY_ArachnoaversionJet", frandom(35, 32), frandom(-35, -32),35,0,0,frandom(-4,-6),0,128);
+		
+		if (strafing == true)
+		{
+			ThrustThing(angle * 256 / 360 + 18.7, randompick(-1, 1), 0, 0);
+			
+			if (target && distance3D(target) < 300)
+				A_Recoil(frandompick(0, 0.25));
+			if (target && distance3D(target) < 900)
+				A_Recoil(frandompick(0, -0.25));
+		}
+	}
+  }
+  
+  bool strafing;
+  int spinloop;
+  int missile;
+  int ang;
+  
+  States
+  {
+  Spawn:
+	TBB2 AB 2 A_Look();
+	Loop;
+  See:
+	TBB2 AB 2
+	{
+		DCY_Chase();
+		strafing = false;
+		Return A_Jump(5, "Dodge", "Dash");
+	}
+	Loop;
+  Dash:
+	TBB2 A 0 A_StartSound("MREIDASH");
+	TBB2 AABB 1
+	{
+		for (int i = 4; i > 0; i--)
+			DCY_Chase(null, null);
+		
+		A_SpawnItemEx("DCY_AversionTrail", flags: SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE);
+		
+		Return A_Jump(12, "See");
+	}
+	Goto Dash+1;
+  Dodge:
+	TBB2 AB 2;
+	TBB2 A 2 A_Dodging(23);
+	TBB2 BABABABA 2;
+	TBB2 B 2 A_Stop();
+	Goto See;
+  Missile:
+	TBB2 A 0 A_Jump(128, "GroundSlam", "GatlingGun", "Bombs");
+	Goto Plasma;
+  Plasma:
+	TBB2 ABABAB 2 A_FaceTarget();
+	TBB2 C 10 { strafing = true; A_FaceTarget(); }
+	TBB2 CD 3
+	{
+		for (int i = -12; i < 13; i += 24)
+			A_SpawnProjectile("DCY_AversionPlasma", 22, i, 15 * cos(MsTimeF() * 0.2), CMF_AIMDIRECTION|CMF_OFFSETPITCH, pitch);
+		
+		missile++;
+		A_FaceTarget(12, 12);
+		
+		if (missile > 20) SetStateLabel("Cooldown1");
+	}
+	Goto Plasma+7;
+  Bombs:
+	TBB2 ABABABABAB 2 A_FaceTarget();
+	TBB2 C 10 { ang = randompick(-12, 12); A_FaceTarget(); }
+	TBB2 DDDDDD 10
+	{
+		ang = !ang;
+		A_SpawnProjectile("DCY_AversionBomb", 22, 0, ang + frandom(-10, 10), CMF_OFFSETPITCH, pitch - frandom(1, 12));
+		A_FaceTarget();
+	}
+	Goto See;
+  Cooldown1:
+	TBB2 C 20 { missile = 0; strafing = false; A_FaceTarget(); }
+	Goto See;
+  GatlingGun:
+	TBB2 ABABABABAB 2 A_FaceTarget();
+	TBB2 K 20
+	{
+		A_StartSound("Arachnoaversion/WindUp", CHAN_WEAPON, attenuation: 0.65);
+		strafing = true;
+		A_FaceTarget();
+	}
+	TBB2 KKKKKKKKKK 2
+	{
+		A_FaceTarget();
+		A_StartSound("Arachnoaversion/WindLoop", CHAN_WEAPON, CHANF_LOOPING, attenuation: 0.65);
+	}
+	Goto FireLoop;
+  Fireloop:
+	TBB2 KL 1
+	{
+		for (int i = -20; i < 21; i += 20)
+			A_SpawnProjectile("DCY_ZombieTracer", 15, i, frandom(-3.0, 3.0), CMF_AIMDIRECTION|CMF_OFFSETPITCH, pitch);
+		
+		A_StartSound("Arachnoaversion/GunFire", 10, CHANF_LOOPING, attenuation: 0.35);
+		
+		A_FaceTarget(1.6, 1.6);
+		
+		missile++;
+		if (missile > 100) SetStateLabel("Cooldown");
+	}
+	Loop;
+  Cooldown:
+	TBB2 K 60
+	{
+		missile = 0;
+		strafing = false;
+		A_StartSound("Arachnoaversion/GunCooldown", 10, attenuation: 0.35);
+		A_StartSound("Arachnoaversion/WindDown", CHAN_WEAPON, attenuation: 0.65);
+	}
+	Goto See;
+  GroundSlam:
+	TBB2 K 1 { spinloop = 0; bNOPAIN = true; vel.z += 2.5; vel.x /= 2; vel.y /= 2; A_FaceTarget(); }
+	TBB2 KKKKKKKKKKKKKKKKKKKKK 1 A_FaceTarget();
+	TBB2 K 1 A_ChangeVelocity(0, 0, -20, CVF_REPLACE|CVF_RELATIVE);
+	TBB2 K 1
+	{
+		A_FaceTarget();
+		A_SpawnItemEx("DCY_AversionTrail", zofs: 5, flags: SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE);
+		
+		if (vel.z == 0)
+		{
+			A_QuakeEx(7, 7, 0, 20, 0, 3000, "", QF_SCALEDOWN|QF_3D);
+			SetStateLabel("GroundMissile");
+			A_StartSound("B0SSSMSH", CHAN_BODY, attenuation: 0.2);
+			A_Explode(150, 200, 0, 0);
+			A_RadiusThrust(2500, 620);
+			bNOPAIN = false;
+		}
+	}
+	Goto GroundSlam+21;
+  GroundMissile:
+	TBB2 K 20 A_FaceTarget();
+	TBB2 DL 1
+	{
+		A_SetAngle(Angle+20);
+		A_StartSound("Consul/ChargedFire", CHAN_WEAPON);
+		for (int i = 3; i > 0; i--)
+			A_SpawnProjectile("DCY_AversionPlasma", random(15, 35), frandom(-15, 15), frandom(-0, 360), CMF_OFFSETPITCH, frandom(0.24, -10));
+		
+		if (spinloop > 35)
+			SetStateLabel("See");
+		
+		spinloop++;
+	}
+	Goto GroundMissile+1;
+  Pain:
+	TBB2 A 2 { missile = 0; strafing = false; A_StopSound(10); A_StopSound(CHAN_WEAPON); }
+	TBB2 B 2 A_Pain();
+	Goto See;
+  Death:
+	TBB2 E 1;
+	TBB2 E 10
+	{
+		 A_StopSound(10); A_StopSound(CHAN_WEAPON);
+		strafing = false;
+		A_Scream();
+	}
+	TBB2 F 6;
+	TBB2 G 6
+	{
+		A_StartSound("Archon/Explode", CHAN_BODY);
+		
+		for (int i = 5; i > 0; i--)
+			A_SpawnItemEx("DCY_Explosion_1_Arachnoaversion", frandom(-5.0, 5.0), frandom(-5.0, 5.0), 30 + frandom(-5.0, 5.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), 0, SXF_NOCHECKPOSITION);
+	}
+	TBB2 HIJ 5;
+	TBB2 J 1 A_BossDeath2();
+	Stop;
+  Raise:
+	Stop;
+  }
+}
+
+Class DCY_AversionPlasma : DCY_RehauledPlasma
+{
+  Default
+  {
+  Speed 28;
+  FastSpeed 34;
+  Scale 0.85;
+  Damage 3;
+  Translation "0:255=%[0.13,0.00,0.05]:[2.00,0.00,0.25]";
+  }
+  
+  States
+  {
+  Spawn:
+    THZ4 A 1 Bright
+	{
+		A_SpawnItemEx("DCY_CWFXTrail", flags: SXF_TRANSFERTRANSLATION|SXF_TRANSFERSCALE|SXF_TRANSFERROLL);
+		A_SpawnParticleEx(0x8a0815, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 60, 20, 0, velx: frandom(-0.5, 0.5), vely: frandom(-0.5, 0.5), velz: frandom(-0.5, 0.5), fadestepf: 0.05, sizestep: -0.725);
+	}
+    Loop;
+  Death:
+    THZ4 DEFGHIJKLM 1 Bright;
+    Stop;
+  }
+}
+
+Class DCY_AversionBomb : DCY_LaserBombBase { Default { Translation "0:255=%[0.13,0.00,0.05]:[2.00,0.00,0.25]"; Damage 1; Speed 20; FastSpeed 30; Gravity 0.2; DCY_LaserBombBase.Damage1 60; DCY_LaserBombBase.Damage2 15; } }

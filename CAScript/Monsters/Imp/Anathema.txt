@@ -1,0 +1,200 @@
+Class DCY_Anathema : DCY_Impe
+{
+  Default
+  {
+  Translation "0:255=%[0.00,0.00,0.00]:[0.53,0.29,0.29]", "80:111=[255,255,255]:[0,0,0]", "4:4=[255,255,255]:[255,255,255]", "160:167=%[0.50,0.00,0.00]:[2.00,1.01,0.00]", "208:235=%[0.50,0.00,0.00]:[2.00,1.01,0.00]", "168:191=%[0.00,0.00,0.00]:[2.00,0.00,0.00]";
+  Health 300;
+  Tag "\c[Red]Anathema\c-";
+  SeeSound "sacker/sight";
+  ActiveSound "sacker/active";
+  PainSound "sacker/pain";
+  DeathSound "sacker/death";
+  +MISSILEEVENMORE
+  DamageType "Fire";
+  Obituary "The anathema's cluster ripped %o apart.";
+  DCYMonster.ScientificName "Daemonium ardenti";
+  }
+  
+  States
+  {
+  Spawn:
+	SAIM A 10 DCY_Look();
+	Loop;
+  Look:
+	"####" AAAABBBBCCCCDDDD 2 DCY_LookingForPlayer();
+	"####" "#" 0 A_CheckSight("Look");
+	Goto Alert;
+  Alert:
+	"####" "#" 0 DCY_AlertSound();
+	Goto See;
+  See:
+	SAIM AAAABBBBCCCCDDDD 2
+	{
+		DCY_Chase("Missile", "Missile");
+		Return A_Jump(10, "Dodge");
+	}
+	Loop;
+  Dodge:
+	SAIM A 10
+	{
+		bNoDropOff = true;
+		DCY_Chase("Missile", "Missile", CHF_DONTMOVE);
+		A_Dodging(24);
+		A_Hop(5);
+	}
+	SAIM A 2
+	{
+		A_Stop();
+		bNoDropOff = false;
+	}
+	Goto See;
+  Missile:
+	SAIM A 0 A_Jump(60, "Comet");
+	SAIM A 7 A_FaceTarget();
+	SAIM EEEEEEEEEEEEEEEEEEEEEE 1
+	{
+		A_SpawnParticleEx(0xff8c00, particlefire, STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, random(20, 45), 23, 0, frandom(-2.5, 2.5), 25 + frandom(-2.5, 2.5), frandom(-2.5, 2.5) + 36, velz: 1.5, accelz: 0.1175, fadestepf: 0, sizestep: -1.325);
+		A_FaceTarget();
+	}
+	SAIM F 4 A_FaceTarget();
+	SAIM GGGGG random(3, 12)
+	{
+		A_SpawnProjectile("DCY_AnathemaProjectile", 34, 0, frandom(-2, 2), CMF_OFFSETPITCH, pitch - 8 + frandom(-2, 2));
+		A_FaceTarget();
+	}
+	SAIM F 6 A_FaceTarget();
+	Goto See;
+  Comet:
+	SAIM F 10 A_FaceTarget();
+	SAIM F 7 { A_StartSound(SeeSound, CHAN_VOICE); A_FaceTarget(); }
+	SAIM GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1
+	{
+		A_SpawnParticleEx(0xff8c00, particlefire, STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, random(20, 45), 36, 0, frandom(-2.5, 2.5) + 15, frandom(-2.5, 2.5), frandom(-2.5, 2.5) + 36, velz: 1.5, accelz: 0.1175, fadestepf: 0, sizestep: -1.325);
+		A_SpawnParticleEx(0xffffff, particlefire, STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, random(20, 45), 18, 0, frandom(-2.5, 2.5) + 15, frandom(-2.5, 2.5), frandom(-2.5, 2.5) + 36, velz: 1.5, accelz: 0.1175, fadestepf: 0, sizestep: -1.325);
+		A_FaceTarget();
+	}
+	SAIM F 4 A_FaceTarget();
+	SAIM E 0
+	{
+		A_SpawnProjectile("DCY_AnathemaComet", 34);
+		A_FaceTarget();
+	}
+	SAIM EEAAA 6 A_FaceTarget();
+	Goto See;
+  Pain:
+	SAIM H 4 { bNoDropOff = false; }
+	SAIM H 4 A_Pain();
+	Goto See;
+  Death:
+	SAIM H 4
+	{
+		if (random(0, 1)) SetStateLabel("Death2");
+		A_Flip();
+	}
+	SAIM I 6 A_ScreamAndUnblock();
+	SAIM J 5;
+	SAIM KLM 4;
+	SAIM M -1;
+	Stop;
+  Death2:
+	S2IM A 1;
+	S2IM A 7 A_ScreamAndUnblock();
+	S2IM B 8;
+	S2IM CD 7;
+	S2IM E -1;
+	Stop;
+  Raise:
+	SAIM MLKJIH 5;
+	Goto See;
+  }
+}
+
+Class DCY_AnathemaProjectile : DCY_ImpFireball
+{
+  Default
+  {
+  Damage 4;
+  Speed 20;
+  FastSpeed 30;
+  -NOGRAVITY
+  Scale 1.1;
+  Gravity 0.3;
+  +NOEXTREMEDEATH
+  Translation "0:255=%[0.00,0.00,0.00]:[2.00,1.01,0.00]";
+  SeeSound "Painsend/Fireball";
+  DeathSound "Painsend/FireExplode";
+  }
+  States
+  {
+  Spawn:
+	NBKL AABBCC 1
+	{
+		if (DCY_EffectDistance(sfxdistance)) A_SpawnItemEx("DCY_ImpFlame1", frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), zvel: 1, flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION, failchance: 200);
+		A_SpawnFlames("ab3a0a", 13, 30, 0, true, frandom(-1.5, 1.5), allsmoke: true, thrust: 2);
+	}
+	Loop;
+  }
+}
+
+Class DCY_AnathemaComet : DCY_GeneralComet
+{
+  Default
+  {
+  DamageType "Fire";
+  Speed 15;
+  FastSpeed 25;
+  Translation "0:255=%[0.27,0.00,0.00]:[2.00,1.38,0.76]";
+  +EXTREMEDEATH
+  Scale 0.65;
+  }
+  
+  States
+  {
+  Spawn:
+    CGMT AABBCC 1 Bright
+	{
+		A_SpawnFlames("ffffff", 20, 10, 0, false, thrust: 6);
+		A_SpawnFlames("ab3a0a", 30, 30, 0, false, thrust: 6);
+	}
+    Loop;
+  Death:
+	CGMT D 1 Bright
+	{
+		A_FadeOut(0.15, 0);
+		A_Explode(60, 90, XF_NOTMISSILE, 1);
+		A_SetScale(Scale.X+0.15, Scale.Y+0.15);
+		A_QuakeEx(3, 3, 3, 40, 0, 200, "none", QF_SCALEDOWN, falloff: 400);
+	}
+    CGMT D 1 Bright
+	{
+		A_FadeOut(0.15, 0);
+		A_SetScale(Scale.X+0.15, Scale.Y+0.15);
+		A_SetTranslucent(1.0, 1);
+		A_SpawnItemEx("DCY_Explosion_1_Small", 0, 0, 0, random(-5, 5), random(-5, 5), random(-5, 5), random(0, 360), SXF_NOCHECKPOSITION);
+		A_SpawnItemEx("DCY_Explosion_1_Small", 0, 0, 0, random(-5, 5), random(-5, 5), random(-5, 5), random(0, 360), SXF_NOCHECKPOSITION);
+		A_SpawnItemEx("DCY_Explosion_1_Small", 0, 0, 0, random(-5, 5), random(-5, 5), random(-5, 5), random(0, 360), SXF_NOCHECKPOSITION);
+		
+		Spawn("DCY_NapalmBigFire", pos);
+		
+		for (int i = 5; i > 0; i--)
+		{
+			let ember = Spawn("DCY_NapalmEmber", (pos.x, pos.y, pos.z));
+			
+			if (ember)
+			{
+				ember.vel.x = frandom(-7, 7);
+				ember.vel.y = frandom(-7, 7);
+				ember.vel.z = frandom(1, 10);
+			}
+		}
+	}
+    CGMT EEFF 1 Bright
+	{
+		A_FadeOut(0.15, 0);
+		A_SetScale(Scale.X+0.15, Scale.Y+0.15);
+	}
+	CGMT GGHHII 1 Bright A_SetScale(Scale.X+0.25, Scale.Y+0.25);
+	TNT1 A 25;
+    Stop;
+  }
+}

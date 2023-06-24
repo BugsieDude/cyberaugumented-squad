@@ -1,0 +1,300 @@
+Class DCY_Backpack : Backpack
+{
+  Mixin DCY_Progression;
+  
+  Default
+  {
+  Inventory.PickupSound "dcy/backpack";
+  Inventory.PickupMessage "Time to get those weapons locked up. (Ammo increased.)";
+  Tag "Tactical Range Backpack";
+  }
+  
+  States
+  {
+  Spawn:
+    BCPA ABCDEFG 3;
+    Loop;
+  }
+}
+
+Class DCY_Clip : Clip
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/clip";
+  Inventory.PickupMessage "Picked up a stripper clip.";
+  Tag "Stripper Clip of Bullets";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ A -1;
+	Loop;
+  Pickup:
+	DCA_ A 0
+	{
+		A_TakeInventory("DCY_Clip");
+		A_GiveInventory("Clip");
+	}
+	Stop;
+  }
+}
+
+Class DCY_ClipBox : ClipBox
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/clip";
+  Inventory.PickupMessage "Picked up a crate filled with stripper clips.";
+  Tag "Crate of Bullets";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ B -1;
+	Loop;
+  Pickup:
+	DCA_ B 0
+	{
+		A_TakeInventory("DCY_Clipbox");
+		A_GiveInventory("Clipbox");
+	}
+	Stop;
+  }
+}
+
+Class DCY_Shell : Shell
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/shell";
+  Inventory.PickupMessage "Picked up four stranded shells.";
+  Tag "Stranded Shotgun Shells";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ C -1;
+	Loop;
+  Pickup:
+	DCA_ C 0
+	{
+		A_TakeInventory("DCY_Shell");
+		A_GiveInventory("Shell");
+	}
+	Stop;
+  }
+}
+
+Class DCY_Shellbox : ShellBox
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/shell";
+  Inventory.PickupMessage "Found a box with twenty shells inside.";
+  Tag "Shellbox";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ D -1;
+	Loop;
+  Pickup:
+	DCA_ D 0
+	{
+		A_TakeInventory("DCY_Shellbox");
+		A_GiveInventory("Shellbox");
+	}
+	Stop;
+  }
+}
+
+Class DCY_RocketA : RocketAmmo
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/rocket";
+  Inventory.PickupMessage "Obtained a built, unused rocket.";
+  Tag "Unused Rocket";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ E -1;
+	Loop;
+  Pickup:
+	DCA_ E 0
+	{
+		A_TakeInventory("DCY_RocketA");
+		A_GiveInventory("RocketAmmo");
+	}
+	Stop;
+  }
+}
+
+Class DCY_RocketBox : RocketBox
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/rocket";
+  Inventory.PickupMessage "The lootbox is now yours, now with missiles.";
+  Tag "Missile Box";
+  }
+  
+  States
+  {
+  Spawn:
+	DCA_ F -1;
+	Loop;
+  Pickup:
+	DCA_ F 0
+	{
+		A_TakeInventory("DCY_RocketBox");
+		A_GiveInventory("RocketBox");
+	}
+	Stop;
+  }
+}
+
+Class DCY_Cell : Cell
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/cell";
+  Inventory.PickupMessage "Acquired a energy cell.";
+  Tag "ENVISAGE Energy Cell";
+  }
+  
+  States
+  {
+  Spawn:
+	_DLL HGFABCDEDCBAFGH 9;
+	Loop;
+  Pickup:
+	_DLL A 0
+	{
+		A_TakeInventory("DCY_Cell");
+		A_GiveInventory("Cell");
+	}
+	Stop;
+  }
+}
+
+Class DCY_Cellpack : Cellpack
+{
+  Default
+  {
+  Inventory.PickupSound "dcy/cellpack";
+  Inventory.PickupMessage "This is not a visualizer, but it is a cube powered with lots of energy.";
+  Tag "ENVISAGE Power Cube";
+  }
+  
+  States
+  {
+  Spawn:
+	_DLX ABCDCB 3;
+	Loop;
+  Pickup:
+	_DLX A 0
+	{
+		A_TakeInventory("DCY_Cellpack");
+		A_GiveInventory("Cellpack");
+	}
+	Stop;
+  }
+}
+
+
+Class DCY_Eminence : Ammo
+{
+  Default
+  {
+  Inventory.Amount 8;
+  Inventory.MaxAmount 150;
+  Ammo.BackpackAmount 16;
+  Ammo.BackpackMaxAmount 250;
+  Inventory.PickupMessage "Gathered some Eminence.";
+  Inventory.PickupSound "Eminence/Pickup";
+  Inventory.Icon "_2BMA0";
+  +FLOATBOB;
+  Scale 0.85;
+  Tag "Vigor";
+  }
+  States
+  {
+  Spawn:
+    _2BM ABCDEFGHIJKL 2;
+	Loop;
+  }
+}
+
+Class DCY_EminencePack : DCY_Eminence
+{
+  Default
+  {
+  Inventory.Amount 40;
+  Ammo.BackpackAmount 40;
+  Inventory.PickupSound "ARTPKUP";
+  Inventory.PickupMessage "You feel Incandescence.";
+  Tag "Vigor";
+  Scale 1.0;
+  }
+  
+  States
+  {
+  Spawn:
+    _2DM ABCDEFGHIJKLMNOP 2;
+	Loop;
+  }
+}
+
+
+Class DCY_CinerealPrestige : Ammo
+{
+  Default
+  {
+  Inventory.Amount 10;
+  Inventory.MaxAmount 250;
+  Ammo.BackpackAmount 15;
+  Ammo.BackpackMaxAmount 400;
+  Inventory.PickupMessage "The Cinereal Prestige is in your hands.";
+  Inventory.PickupSound "CinerealPrestige/Pickup";
+  Tag "Cinereal Prestige";
+  }
+  States
+  {
+  Spawn:
+    ZCLP A -1;
+    Stop;
+  }
+}
+
+Class DCY_UltramodernEnergy : Ammo
+{
+  Default
+  {
+  Inventory.PickupMessage "Got a vessel of Ultramodern energy.";
+  Inventory.PickupSound "SmallItem/Pickup";
+  Inventory.Icon "C2LLB0";
+  Inventory.Amount 15;
+  Inventory.MaxAmount 500;
+  Ammo.BackpackAmount 30;
+  Ammo.BackpackMaxAmount 500;
+  Tag "Exuberance-XVII Ultramodern Energy";
+  }
+  States
+  { 
+  Spawn:
+	C2LL A 0 NoDelay { if (random(0, 1) == 0) SetStateLabel("Spawn2"); }
+    C2LL ABCDEFGHIJKL 3;
+    Goto Spawn+1;
+  Spawn2:
+	C2LL LKJIHGFEDCBA 3;
+	Loop;
+  }
+}

@@ -1,0 +1,59 @@
+Version "4.10.0"
+
+//Menu
+#include "CAScript/Menus/Tooltips.txt"
+
+//Misc.
+#include "CAScript/Mathematics.txt"
+#include "CAScript/AABB.txt"
+#include "CAScript/Mindful.txt"
+#include "CAScript/Varietastic.txt"
+#include "CAScript/Others/Misc.txt"
+#include "CAScript/Others/TeleportFX.txt"
+#include "CAScript/Splashes.txt"
+#include "CAScript/RailLazers.txt"
+#include "CAScript/ModifiedProjectiles.txt"
+#include "CAScript/NormalTracers.txt"
+#include "CAScript/BEWMBEWMBEWMBEWMBEWM.txt"
+#include "CAScript/MiscEffects.txt"
+#include "CAScript/BigLazor.txt"
+
+//Events
+#include "CAScript/Events/BaseEvent.txt"
+#include "CAScript/Events/Anti.txt"
+#include "CAScript/Events/Replacers.txt"
+#include "CAScript/Events/Spawning.txt"
+
+//Effects
+#include "CAScript/Others/OtherTrails.txt"
+#include "CAScript/JetFlares.txt"
+#include "CAScript/BloodTypes.txt"
+#include "CAScript/Gibs.txt"
+
+//Monsters
+#include "CAScript/Monsters/EnemyBases.txt"
+#include "CAScript/EnemySFX.txt"
+#include "CAScript/Monsters/MonsterList.txt"
+
+//Props
+#include "CAScript/Props/Lights.txt"
+#include "CAScript/Props/Eye.txt"
+#include "CAScript/Props/Gore.txt"
+
+//Spawners
+#include "CAScript/Spawners/Monsters/Zombies.txt"
+#include "CAScript/Spawners/Monsters/Shotgunners.txt"
+#include "CAScript/Spawners/Monsters/Chaingunners.txt"
+#include "CAScript/Spawners/Monsters/Imps.txt"
+#include "CAScript/Spawners/Monsters/Pinkies.txt"
+#include "CAScript/Spawners/Monsters/LostSouls.txt"
+#include "CAScript/Spawners/Monsters/Cacodemons.txt"
+#include "CAScript/Spawners/Monsters/PainElementals.txt"
+#include "CAScript/Spawners/Monsters/Arachnotrons.txt"
+#include "CAScript/Spawners/Monsters/HellKnights.txt"
+#include "CAScript/Spawners/Monsters/BaronsOfHell.txt"
+#include "CAScript/Spawners/Monsters/Revenants.txt"
+#include "CAScript/Spawners/Monsters/Mancubi.txt"
+#include "CAScript/Spawners/Monsters/Archviles.txt"
+#include "CAScript/Spawners/Monsters/Cyberdemonz.txt"
+#include "CAScript/Spawners/Monsters/TheGiantEnemySpider.txt"

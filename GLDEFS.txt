@@ -1,0 +1,159 @@
+//GLDEFS
+Glow
+{
+	Texture "BFALL1", 000000, 0
+	Texture "BFALL2", 000000, 0
+	Texture "BFALL3", 000000, 0
+	Texture "BFALL4", 000000, 0
+	Texture "WFALL1", 000000, 0
+	Texture "WFALL2", 000000, 0
+	Texture "WFALL3", 000000, 0
+	Texture "WFALL4", 000000, 0
+	Texture "FWATER1", 000000, 0
+	Texture "FWATER2", 000000, 0
+	Texture "FWATER3", 000000, 0
+	Texture "FWATER4", 000000, 0
+	Texture "NUKAGE1", 048000, 255
+	Texture "NUKAGE2", 048000, 255
+	Texture "NUKAGE3", 048000, 255
+	Texture "NUKAGE4", 048000, 255
+	Texture "BLOOD1", 000000, 0
+	Texture "BLOOD2", 000000, 0
+	Texture "BLOOD3", 000000, 0
+	Texture "FIRELAV2", 000000, 0
+	Texture "SLIME01", 000000, 0
+	Texture "SLIME02", 000000, 0
+	Texture "SLIME03", 000000, 0
+	Texture "SLIME04", 000000, 0
+	Texture "SLIME05", 000000, 0
+	Texture "SLIME06", 000000, 0
+	Texture "SLIME07", 000000, 0
+	Texture "SLIME08", 000000, 0
+	Texture "SFALL1", 048000, 255
+	Texture "SFALL2", 048000, 255
+	Texture "SFALL3", 048000, 255
+	Texture "SFALL4", 048000, 255
+	Texture "LAVA1", 995000, 255
+	Texture "LAVA2", 995000, 255
+	Texture "LAVA3", 995000, 255
+	Texture "LAVA4", 995000, 255
+	
+	Texture "DC_NKG", 048000, 255
+	Texture "DC_SFLL1", 048000, 255
+	Texture "DC_LAV", 995000, 255
+	Texture "DC_LFLL1", 995000, 255
+}
+
+FlickerLight DCY_EmptyVileLight
+{
+  Color 1.0 1.0 1.0
+  Size 130
+  SecondarySize 135
+  Chance 0.5
+}
+
+Object DCY_EmptyVile
+{
+  frame TNT1A { Light DCY_EmptyVileLight }
+}
+
+FlickerLight DCY_EmptyItself
+{
+  Color 0.75 0.75 0.75
+  Size 150
+  SecondarySize 155
+  Subtractive 1
+  Chance 0.7
+}
+
+Object DCY_Emptiness
+{
+  frame AASX {Light DCY_EmptyItself}
+  frame ASX2 {Light DCY_EmptyItself}
+  frame ASX4 {Light DCY_EmptyItself}
+}
+
+PulseLight DCY_EmptyProjectile1
+{
+  Color 0.75 0.75 0.75
+  Size 50
+  SecondarySize 40
+  Interval 0.85
+}
+
+Object DCY_EmptyLaser
+{
+  Frame TNT1A0 { Light DCY_EmptyProjectile1 }
+}
+
+PulseLight DCY_EmptyPillarLight1
+{
+  Color 0.9 0.9 0.9
+  Size 50
+  SecondarySize 100
+  Interval 0.85
+}
+
+PulseLight DCY_EmptyPillarLight2
+{
+  Color 0.5 0.5 0.5
+  Size 50
+  SecondarySize 100
+  Subtractive 1
+  Interval 0.85
+}
+
+PulseLight DCY_EmptyPillarLight3
+{
+  Color 0.25 0.25 0.25
+  Size 50
+  SecondarySize 100
+  Subtractive 1
+  Interval 0.85
+}
+
+PulseLight DCY_EmptyPillarLight4
+{
+  Color 0.05 0.05 0.05
+  Size 50
+  SecondarySize 100
+  Subtractive 1
+  Interval 0.85
+}
+
+Object DCY_EmptyPillar
+{
+  Frame ETV3A {Light DCY_EmptyPillarLight4}
+  Frame ETV3B {Light DCY_EmptyPillarLight4}
+  Frame ETV3C {Light DCY_EmptyPillarLight3}
+  Frame ETV3D {Light DCY_EmptyPillarLight3}
+  Frame ETV3E {Light DCY_EmptyPillarLight2}
+  Frame ETV3F {Light DCY_EmptyPillarLight2}
+  Frame ETV3G {Light DCY_EmptyPillarLight2}
+  Frame ETV3H {Light DCY_EmptyPillarLight2}
+  Frame ETV3I {Light DCY_EmptyPillarLight2}
+  Frame ETV3J {Light DCY_EmptyPillarLight2}
+  Frame ETV3K {Light DCY_EmptyPillarLight2}
+  Frame ETV3L {Light DCY_EmptyPillarLight1}
+}
+
+PulseLight DCY_EmptyVesselLight
+{
+  Color 0.75 0.75 0.75
+  Size 80
+  SecondarySize 90
+  Interval 0.75
+}
+
+Object DCY_EmptyVessel
+{
+  Frame ETV5 {Light DCY_EmptyVesselLight}
+}
+
+FlickerLight DCY_MultidimensionalLight
+{
+  Color 0.00 0.055 0.45
+  Size 140
+  SecondarySize 155
+  Chance 0.75
+}
