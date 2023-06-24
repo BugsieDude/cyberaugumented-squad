@@ -1,9 +1,0 @@
-Class DCY_Besmirch : DCY_Befouler
-{
-  Default
-  {
-  Health 800;
-  Tag "\c[l0]Besmirch\c-";
-  DCYMonster.ScientificName "Subridens oculus";
-  }
-}

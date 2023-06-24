@@ -1,2 +1,0 @@
-excludemap TEST
-excludeactor DCY_Intone

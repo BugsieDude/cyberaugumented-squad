@@ -1,9 +1,0 @@
-decal Scorch
-{
-	pic PLASMA2
-	shade "00 00 00"
-	x-scale 1
-	y-scale 1
-	randomflipx
-	randomflipy
-}

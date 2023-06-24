@@ -1,6 +1,0 @@
-Class DCY_Asura : DCYMonster
-{
-  Default
-  {
-	Health 1000;
-	Tag "ASURA";
