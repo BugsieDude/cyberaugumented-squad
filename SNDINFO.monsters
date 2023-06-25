@@ -440,11 +440,30 @@ Ionizer/Crippled "Sounds/DCY SFX/dcy_ioncripple.ogg"
 DEM2SIT "Sounds/DCY Monsters/Bloodshed/dcy_bloodshed_sight.ogg"
 DEM2PAI "Sounds/DCY Monsters/Bloodshed/dcy_bloodshed_pain.ogg"
 
-SuperShadow/Sight "Sounds/DCY Monsters/Umbrage/dcy_umbrage_sight.lmp"
-SuperShadow/Active "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle.lmp"
-SuperShadow/Pain "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain.lmp"
-SuperShadow/Attack "Sounds/DCY Monsters/Umbrage/dcy_umbrage_swing.lmp"
-SuperShadow/Death "Sounds/DCY Monsters/Umbrage/dcy_umbrage_death.lmp"
+$random SuperShadow/Sight { SuperShadow/Sight1 SuperShadow/Sight2 }
+SuperShadow/Sight1 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_sight1.ogg"
+SuperShadow/Sight2 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_sight2.ogg"
+$random SuperShadow/Active { SuperShadow/Active1 SuperShadow/Active2 SuperShadow/Active3  SuperShadow/Active4  SuperShadow/Active5  SuperShadow/Active6 SuperShadow/Active7 SuperShadow/Active8 }
+SuperShadow/Active1 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle1.ogg"
+SuperShadow/Active2 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle2.ogg"
+SuperShadow/Active3 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle3.ogg"
+SuperShadow/Active4 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle4.ogg"
+SuperShadow/Active5 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle5.ogg"
+SuperShadow/Active6 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle6.ogg"
+SuperShadow/Active7 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle7.ogg"
+SuperShadow/Active8 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_idle8.ogg"
+$random SuperShadow/Pain { SuperShadow/Pain1 SuperShadow/Pain2 SuperShadow/Pain3 SuperShadow/Pain4 SuperShadow/Pain5 SuperShadow/Pain6 }
+SuperShadow/Pain1 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain1.ogg"
+SuperShadow/Pain2 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain2.ogg"
+SuperShadow/Pain3 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain3.ogg"
+SuperShadow/Pain4 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain4.ogg"
+SuperShadow/Pain5 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain5.ogg"
+SuperShadow/Pain6 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_pain6.ogg"
+$random SuperShadow/Attack { SuperShadow/Attack1 SuperShadow/Attack2 SuperShadow/Attack3 }
+SuperShadow/Attack1 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_swing1.ogg"
+SuperShadow/Attack2 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_swing2.ogg"
+SuperShadow/Attack3 "Sounds/DCY Monsters/Umbrage/dcy_umbrage_swing3.ogg"
+SuperShadow/Death "Sounds/DCY Monsters/Umbrage/dcy_umbrage_fade.ogg"
 
 Trepidation/Sight "Sounds/DCY Monsters/Trepidation/dcy_trepidation_sight.ogg"
 $limit Trepidation/Active 1
@@ -468,11 +487,6 @@ RBRACT4 "Sounds/DCY Monsters/Xhouginad/dcy_xhoughinad_idle4.ogg"
 $random DarkDroid/Death { RBRDTH1 RBRDTH2 }
 RBRDTH1 "Sounds/DCY Monsters/Xhouginad/dcy_xhoughinad_dissipate1.ogg"
 RBRDTH2 "Sounds/DCY Monsters/Xhouginad/dcy_xhoughinad_dissipate2.ogg"
-
-VPartisan/Sight "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_drone.ogg"
-VPartisan/Active "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_hum.ogg"
-VPartisan/Pain "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_pain.ogg"
-VPartisan/Death "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_death.ogg"
 
 $random Exarch/Sight { EXARSIT1 EXARSIT2 }
 EXARSIT1 "Sounds/DCY Monsters/Abyssal Exarch/dcy_exarch_sight1.ogg"

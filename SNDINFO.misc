@@ -66,11 +66,6 @@ $limit world/lavasizzle 4
 $limit world/lavsiz2 4
 $limit world/lavasizzlesmall 4
 
-DCYTorch "Sounds/Enviroment/dcy_torch_fire.ogg"
-DCYBurningBarrel "Sounds/Enviroment/dcy_burning_barrel.ogg"
-$limit DCYTorch 0
-$limit DCYBurningBarrel 0
-
 DCYExplodingBarrel "Sounds/Replacements/dcy_barrel_explode.ogg"
 
 dcy/freeze "Sounds/Replacements/dcy_icedeath.wav"

@@ -420,8 +420,6 @@ R3EXPL2 R3EXPL2
 //R-Type Dree
 R3LASR3 "Sounds/DCY Monsters/Terminalist/dcy_terminalist_beam.ogg"
 R3MINIEX "Sounds/DCY Monsters/Terminalist/dcy_terminalist_impact.ogg"
-R3WAVCHR "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_wave_charge.ogg"
-R3WAVE "Sounds/DCY Monsters/Verdict Partisan/dcy_partisan_wave.ogg"
 
 //Space Manbow
 SMEXPL2 "Sounds/DCY Monsters/Vague/dcy_vague_explode.ogg"
