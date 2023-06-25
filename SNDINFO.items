@@ -1,5 +1,3 @@
-misc/p_pkup "Sounds/Inventory/dcy_vanilla_powerup.ogg"
-
 SmallItem/Pickup "Sounds/Inventory/Ammo/dcy_ultramodern.ogg"
 
 DCYRUNEPKUP "Sounds/Inventory/dcy_rune.ogg"

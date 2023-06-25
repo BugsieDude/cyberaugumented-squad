@@ -1123,8 +1123,6 @@ psxelemental/active "Sounds/DCY Monsters/Rahovart/dcy_rahovart_idle.ogg"
 psxelemental/pain "Sounds/DCY Monsters/Rahovart/dcy_rahovart_pain.ogg"
 psxelemental/death "Sounds/DCY Monsters/Rahovart/dcy_rahovart_death.ogg"
 
-skull/death "Sounds/Replacements/DSLSOD.ogg"
-
 $random Gatecrasher/Sight { gcs1 gcs2 gcs3 gcs4 gcs5 gcs6 }
 gcs1 "Sounds/DCY Monsters/Gatecrasher/dcy_hk_sight1.ogg"
 gcs2 "Sounds/DCY Monsters/Gatecrasher/dcy_hk_sight2.ogg"
