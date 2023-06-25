@@ -50,11 +50,11 @@ extend class CyberaugumentedMonsterEventHandler
 			case 'ArchvileFire' : e.Replacement = 'DCY_ArchvileBlaze'; break;
 			
 			//Monster gore
-			case 'DeadZombieman' : e.Replacement = 'DCY_Deadass1'; break;
-			case 'DeadShotgunGuy' : e.Replacement = 'DCY_Deadass2'; break;
-			case 'DeadDoomImp' : e.Replacement = 'DCY_Deadass3'; break;
-			case 'DeadDemon' : e.Replacement = 'DCY_Deadass4'; break;
-			case 'DeadCacodemon' : e.Replacement = 'DCY_Deadass5'; break;
+			case 'DeadZombieman' : e.Replacement = 'DCY_Monster_Deadass1'; break;
+			case 'DeadShotgunGuy' : e.Replacement = 'DCY_Monster_Deadass2'; break;
+			case 'DeadDoomImp' : e.Replacement = 'DCY_Monster_Deadass3'; break;
+			case 'DeadDemon' : e.Replacement = 'DCY_Monster_Deadass4'; break;
+			case 'DeadCacodemon' : e.Replacement = 'DCY_Monster_Deadass5'; break;
 		}
 	}
 	

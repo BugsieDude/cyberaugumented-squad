@@ -8,7 +8,7 @@ server bool dcy_soulcount = true;
 server bool dcy_rescount = true;
 
 server bool sv_effectchoker = false;
-user int cl_effectdistance = 1000;
+server int cl_effectdistance = 1000;
 
 user bool cl_dcy_hud_level = true;
 user bool cl_dcy_hud_temperatureandlevel = true;
@@ -30,8 +30,6 @@ server bool dcy_smoothmovement = true;
 
 //Replacements
 nosave server bool dcy_monsters = true;
-nosave server bool dcy_props = true;
-
 nosave server int dcy_zombieman = 1;
 nosave server int dcy_shotgunner = 1;
 nosave server int dcy_chaingunner = 1;

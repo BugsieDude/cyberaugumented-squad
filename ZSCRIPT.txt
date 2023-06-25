@@ -36,8 +36,6 @@ Version "4.10.0"
 #include "CAScript/Monsters/MonsterList.txt"
 
 //Props
-#include "CAScript/Props/Lights.txt"
-#include "CAScript/Props/Eye.txt"
 #include "CAScript/Props/Gore.txt"
 
 //Spawners

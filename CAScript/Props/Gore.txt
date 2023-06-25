@@ -1,4 +1,4 @@
-Mixin Class DCY_MarineColors
+Mixin Class DCY_Monster_MarineColors
 {
   static const string MarineColor[] =
   {
@@ -25,7 +25,7 @@ Mixin Class DCY_MarineColors
   }
 }
 
-Class DCY_Meat3 : Meat3
+Class DCY_Monster_Meat3 : Meat3
 {
   override void PostBeginPlay()
   {
@@ -47,9 +47,9 @@ Class DCY_Meat3 : Meat3
   }
 }
 
-Class DCY_Impaled : LiveStick
+Class DCY_Monster_Impaled : LiveStick
 {
-  Mixin DCY_MarineColors;
+  Mixin DCY_Monster_MarineColors;
   bool animate;
   
   override void PostBeginPlay()
@@ -80,9 +80,9 @@ Class DCY_Impaled : LiveStick
   }
 }
 
-Class DCY_Impaled2 : DeadStick
+Class DCY_Monster_Impaled2 : DeadStick
 { 
-  Mixin DCY_MarineColors;
+  Mixin DCY_Monster_MarineColors;
   override void PostBeginPlay()
   {
 	switch (random(0, 5))
@@ -108,9 +108,9 @@ Class DCY_Impaled2 : DeadStick
   }
 }
 
-Class DCY_Deadass : DeadMarine
+Class DCY_Monster_Deadass : DeadMarine
 { 
-  Mixin DCY_MarineColors;
+  Mixin DCY_Monster_MarineColors;
   
   override void PostBeginPlay()
   {
@@ -133,7 +133,7 @@ Class DCY_Deadass : DeadMarine
   }
 }
 
-Class DCY_Deadass1 : DeadZombieman
+Class DCY_Monster_Deadass1 : DeadZombieman
 { 
   override void PostBeginPlay()
   {
@@ -158,7 +158,7 @@ Class DCY_Deadass1 : DeadZombieman
   }
 }
 
-Class DCY_Deadass2 : DeadShotgunGuy
+Class DCY_Monster_Deadass2 : DeadShotgunGuy
 { 
   override void PostBeginPlay()
   {
@@ -183,7 +183,7 @@ Class DCY_Deadass2 : DeadShotgunGuy
   }
 }
 
-Class DCY_Deadass3 : DeadDoomImp
+Class DCY_Monster_Deadass3 : DeadDoomImp
 { 
   override void PostBeginPlay()
   {
@@ -209,7 +209,7 @@ Class DCY_Deadass3 : DeadDoomImp
   }
 }
 
-Class DCY_Deadass4 : DeadDemon
+Class DCY_Monster_Deadass4 : DeadDemon
 { 
   override void PostBeginPlay()
   {
@@ -228,7 +228,7 @@ Class DCY_Deadass4 : DeadDemon
   }
 }
 
-Class DCY_Deadass5 : DeadCacodemon
+Class DCY_Monster_Deadass5 : DeadCacodemon
 { 
   override void PostBeginPlay()
   {

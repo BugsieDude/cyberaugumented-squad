@@ -267,79 +267,6 @@ Class DCY_BulletPuffGlow : DCY_Effect
   }
 }
 
-Class DCY_CrucibleChainsawPuff : DCY_ChainsawPuff
-{
-  Default
-  {
-  Translation "0:255=%[0.00,0.00,0.00]:[2.00,1.01,1.01]";
-  +NOTIMEFREEZE;
-  }
-  States
-  {
-  Spawn:
-	TNT1 A 1 NoDelay
-	{
-		A_StartSound("Chainsaw/Hit", CHAN_BODY);
-		A_SpawnItemEx("DCY_CruciblePuff", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION);
-		for (int i = 5; i > 0; i--)
-		{
-			A_SpawnItemEx("DCY_CrucibleBulletPuffSpark", 0, 0, 0, frandom(4.0, 14.5), 0, Pitch+frandom(2.0, 10.0)+frandom(1.0, -2.0), frandom(-60.0, 60.0), SXF_NOCHECKPOSITION, 28);
-			A_SpawnItemEx("DCY_CrucibleBulletPuffSpark", 0, 0, 0, frandom(4.0, 14.5), 0, Pitch+frandom(2.0, 10.0)+frandom(1.0, -2.0), frandom(-60.0, 60.0), SXF_NOCHECKPOSITION, 60);
-			A_SpawnItemEx("DCY_BulletPuffSpark", 0, 0, 0, frandom(4.0, 14.5), 0, Pitch+frandom(2.0, 8.0)+frandom(3.0, -3.0), frandom(-20.0, 20.0)+180, SXF_NOCHECKPOSITION, 45);
-		}
-	}
-	Stop;
-  }
-}
-
-Class DCY_CruciblePuff : DCY_BulletPuffSpark
-{
-  Default
-  {
-  Scale 0.2666;
-  Translation "0:255=%[0.00,0.00,0.00]:[2.00,0.47,0.47]";
-  +ROLLSPRITE;
-  }
-  States
-  {
-  Spawn:
-	KAB3 A 0 NoDelay A_SetRoll(frandom(0, 360));
-	KAB3 AEHKQTW 1;
-	Stop;
-  }
-}
-  
-Class DCY_CrucibleBulletPuffSpark : DCY_BulletPuffSpark
-{
-  Default
-  {
-  Scale 0.35;
-  +NOTIMEFREEZE;
-  +BOUNCEONWALLS;
-  +BOUNCEONCEILINGS;
-  +BOUNCEONFLOORS;
-  +CANBOUNCEWATER;
-  -NOBLOCKMAP;
-  BounceType "Hexen";
-  BounceFactor 1.0;
-  }
-  States
-  {
-  Spawn:
-	NULL A 4;
-	NULL A 1
-	{
-		If(Scale.X <= 0)
-			Destroy();
-		
-		A_ScaleVelocity(1);
-		A_SetScale(Scale.X-0.025);
-		A_FadeOut(0.00025, 0);
-	}
-	Goto Spawn+1;
-  }
-}
-
 Class DCY_AndroidPuffSpark : DCY_BulletPuffSpark
 {
   Default
@@ -963,7 +890,7 @@ Class DCY_SiriusArc : DCY_Arc
 }
 
 //BARREL
-Class DCY_ABarrelofExplosives : ExplosiveBarrel
+Class DCY_Monster_ABarrelofExplosives : ExplosiveBarrel
 {
   Mixin DCY_Effects;
   
