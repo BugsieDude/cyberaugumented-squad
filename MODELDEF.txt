@@ -1,4 +1,4 @@
-Model DCY_TracerPlayer
+Model DCY_TracerBase
 {
   Path "CAModels"
   SKIN 0 "tracer1.png"

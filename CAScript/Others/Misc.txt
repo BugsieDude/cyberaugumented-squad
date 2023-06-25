@@ -59,52 +59,6 @@ Class DCY_Effect : Actor
   States { Spawn: TNT1 A 0; Stop; }
 }
 
-Class DCY_Pellucid : DoomImp
-{
-  Default
-  {
-  Health 0x7FFFFFFF;
-  Mass 0x7FFFFFFFF;
-  +NOTIMEFREEZE;
-  +DONTTHRUST;
-  +NOBLOOD;
-  +FLOORHUGGER;
-  Gravity 9999.9999;
-  DamageFactor 1.0;
-  BounceFactor 0.0;
-  Scale 1.25;
-  Radius 30;
-  Height 65;
-  Tag "\c[Gray]- \c[Sapphire]Pellucid\c[Gray] - (\c[DarkGray]Damage Tester\c[Gray])\c-";
-  SeeSound "";
-  PainSound "";
-  DeathSound "";
-  HowlSound "";
-  BounceSound "";
-  WallBounceSound "";
-  ActiveSound "";
-  +BRIGHT;
-  +NOTARGET;
-  }
-  States
-  {
-  Spawn:
-  See:
-  Idle:
-	DUMY AAAA 4;
-	DUMY BBCD 4 A_SpawnItemEx("DCY_ProjectileBaseTrail", 0, 0, 4, 0, 0, 0, 0, SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE);
-	DUMY DDDD 4;
-	DUMY CCBA 4 A_SpawnItemEx("DCY_ProjectileBaseTrail", 0, 0, 4, 0, 0, 0, 0, SXF_NOCHECKPOSITION|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERSCALE);
-	Loop;
-  Pain:
-	"####" "#" 4;
-	Goto Idle;
-  Death:
-	DUMY AAAAA 4 A_FadeOut(0.2, 0);
-	Stop;
-  }
-}
-
 Class DCY_Smonk : DCY_Effect
 {
   Default

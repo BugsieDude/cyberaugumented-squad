@@ -1,4 +1,4 @@
-Class DCY_TracerPlayer : DCY_FastProjectile
+Class DCY_TracerBase : DCY_FastProjectile
 {
   sound whiz;
   property WhizSound : whiz;
@@ -19,9 +19,9 @@ Class DCY_TracerPlayer : DCY_FastProjectile
   -DONTSPLASH;
   +MISSILE;
   +BRIGHT;
-  DCY_TracerPlayer.WhizSound "Rec";
-  DCY_TracerPlayer.IsExplosive false;
-  DCY_TracerPlayer.SparkFX "DCY_BulletPuffSpark";
+  DCY_TracerBase.WhizSound "Rec";
+  DCY_TracerBase.IsExplosive false;
+  DCY_TracerBase.SparkFX "DCY_BulletPuffSpark";
   DamageFunction 0;
   Radius 2;
   Height 2;
@@ -101,20 +101,20 @@ Class DCY_TracerPlayer : DCY_FastProjectile
   }
 }
 
-Class DCY_PistolTracer : DCY_TracerPlayer { Default { DamageFunction (random(1, 5) * 3); } }
-Class DCY_RifleTracer : DCY_TracerPlayer { Default { DamageFunction (random(2, 8) * 3); } }
-Class DCY_SSGTracer : DCY_TracerPlayer { Default { DamageFunction (7 * random[FireSG2](1, 3)); } }
-Class DCY_DeathbringerTracer : DCY_TracerPlayer { Default { DamageFunction (random(1, 10) * 5); } }
-Class DCY_DeagleTracer : DCY_TracerPlayer { Default { DamageFunction (random(1, 5) * 10); } }
+Class DCY_PistolTracer : DCY_TracerBase { Default { DamageFunction (random(1, 5) * 3); } }
+Class DCY_RifleTracer : DCY_TracerBase { Default { DamageFunction (random(2, 8) * 3); } }
+Class DCY_SSGTracer : DCY_TracerBase { Default { DamageFunction (7 * random[FireSG2](1, 3)); } }
+Class DCY_DeathbringerTracer : DCY_TracerBase { Default { DamageFunction (random(1, 10) * 5); } }
+Class DCY_DeagleTracer : DCY_TracerBase { Default { DamageFunction (random(1, 5) * 10); } }
 
-Class DCY_ExplosiveTracer : DCY_TracerPlayer { Default { DCY_TracerPlayer.IsExplosive true; } }
-Class DCY_ExplosivePistolTracer : DCY_PistolTracer { Default { DCY_TracerPlayer.IsExplosive true; } }
-Class DCY_ExplosiveRifleTracer : DCY_RifleTracer { Default { DCY_TracerPlayer.IsExplosive true; } }
-Class DCY_ExplosiveSSGTracer : DCY_SSGTracer { Default { DCY_TracerPlayer.IsExplosive true; } }
-Class DCY_ExplosiveDeathbringerTracer : DCY_DeathbringerTracer { Default { DCY_TracerPlayer.IsExplosive true; } }
-Class DCY_ExplosiveDeagleTracer : DCY_DeagleTracer { Default { DCY_TracerPlayer.IsExplosive true; } }
+Class DCY_ExplosiveTracer : DCY_TracerBase { Default { DCY_TracerBase.IsExplosive true; } }
+Class DCY_ExplosivePistolTracer : DCY_PistolTracer { Default { DCY_TracerBase.IsExplosive true; } }
+Class DCY_ExplosiveRifleTracer : DCY_RifleTracer { Default { DCY_TracerBase.IsExplosive true; } }
+Class DCY_ExplosiveSSGTracer : DCY_SSGTracer { Default { DCY_TracerBase.IsExplosive true; } }
+Class DCY_ExplosiveDeathbringerTracer : DCY_DeathbringerTracer { Default { DCY_TracerBase.IsExplosive true; } }
+Class DCY_ExplosiveDeagleTracer : DCY_DeagleTracer { Default { DCY_TracerBase.IsExplosive true; } }
 
-Class DCY_EnemyTracer : DCY_TracerPlayer
+Class DCY_EnemyTracer : DCY_TracerBase
 {
   Default
   {
@@ -164,7 +164,7 @@ Class DCY_BlueZombieTracer : DCY_ZombieTracer
 {
   Default
   {
-	DCY_TracerPlayer.SparkFX "DCY_BlueBulletPuffSpark";
+	DCY_TracerBase.SparkFX "DCY_BlueBulletPuffSpark";
 	DamageType "Electric";
   }
   
@@ -204,7 +204,7 @@ Class DCY_MechaZombiePlasma : DCY_EnemyTracer
   +NOEXTREMEDEATH;
   SeeSound "DSPLASM4";
   DeathSound "";
-  DCY_TracerPlayer.SparkFX "DCY_AndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_AndroidPuffSpark";
   }
   States
   {
@@ -234,7 +234,7 @@ Class DCY_JadeLaser : DCY_MechaZombiePlasma
   +BLOODLESSIMPACT;
   +DONTSPLASH;
   +RIPPER;
-  DCY_TracerPlayer.SparkFX "DCY_GreenPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_GreenPuffSpark";
   }
   States
   {
@@ -295,7 +295,7 @@ Class DCY_AbyssalAndroidPlasma : DCY_MechaZombiePlasma
   {
   SeeSound "Android/Laser";
   Damage 3;
-  DCY_TracerPlayer.SparkFX "DCY_RedAndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_RedAndroidPuffSpark";
   }
   
   States
@@ -320,7 +320,7 @@ Class DCY_PhasicRazerLaser : DCY_MechaZombiePlasma
   -RANDOMIZE;
   SeeSound "";
   MissileType "";
-  DCY_TracerPlayer.SparkFX "DCY_PhasicAndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_PhasicAndroidPuffSpark";
   }
   States
   {
@@ -457,7 +457,7 @@ Class DCY_UmbraLaser : DCY_JadeLaserEnemy
   +BLOODLESSIMPACT
   Translation "0:255=%[0.00,0.00,0.00]:[1.34,0.67,2.00]";
   Speed 70.5;
-  DCY_TracerPlayer.SparkFX "DCY_PhasicAndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_PhasicAndroidPuffSpark";
   }
   States
   {
@@ -484,7 +484,7 @@ Class DCY_ArbiterTracer : DCY_ZombieTracer
   DamageFunction (5);
   DamageType "Regulus";
   Scale .1125;
-  DCY_TracerPlayer.SparkFX "DCY_BlueBulletPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_BlueBulletPuffSpark";
   }
   States
   {
@@ -504,7 +504,7 @@ Class DCY_ArbiterTracer : DCY_ZombieTracer
 
 Class DCY_TripartiteTracer : DCY_ArbiterTracer
 {
-  Default { DCY_TracerPlayer.SparkFX "DCY_BulletPuffSpark"; }
+  Default { DCY_TracerBase.SparkFX "DCY_BulletPuffSpark"; }
   States
   {
   Spawn:
@@ -533,7 +533,7 @@ Class DCY_ChrysalisLaser : DCY_ZombieTracer
   SeeSound "Chrysalis/Laser";
   DeathSound "Chrysalis/LaserXplode";
   Scale 1.5;
-  DCY_TracerPlayer.SparkFX "DCY_AndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_AndroidPuffSpark";
   }
   States
   {
@@ -557,7 +557,7 @@ Class DCY_VandalLaser : DCY_ZombieTracer
   Scale .15;
   SeeSound "Vandal/Laser";
   DeathSound "";
-  DCY_TracerPlayer.SparkFX "DCY_PhasicAndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_PhasicAndroidPuffSpark";
   }
   States
   {
@@ -584,7 +584,7 @@ Class DCY_EspionPlasma : DCY_MechaZombiePlasma
   DeathSound "B3LLFIRE";
   Translation "0:255=%[0.00,0.00,0.00]:[0.76,1.10,1.82]";
   +PIERCEARMOR
-  DCY_TracerPlayer.SparkFX "DCY_AExplosionSpark";
+  DCY_TracerBase.SparkFX "DCY_AExplosionSpark";
   }
   States
   {
@@ -619,7 +619,7 @@ Class DCY_EspionEmissionTracer : DCY_MechaZombiePlasma
   +NEVERFAST
   +RANDOMIZE
   Scale .3275;
-  DCY_TracerPlayer.SparkFX "DCY_RedAndroidPuffSpark";
+  DCY_TracerBase.SparkFX "DCY_RedAndroidPuffSpark";
   }
   
   States
