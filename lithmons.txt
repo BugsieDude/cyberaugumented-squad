@@ -168,4 +168,7 @@
    scr: 28000 exp: 560    type: mastermind    filter: "DCY_Discerner";
    scr: 28000 exp: 560    type: mastermind    filter: "DCY_ContraptionOfHell";
    scr: 0 exp: 0    type: mastermind    filter: "DCY_ContraptionUpperBody";
+   
+   scr: 0 exp: 0    type: demon    filter: "DCY_Intone";
+   scr: 0 exp: 0    type: demon    filter: "DCY_BionicShield";
 }
