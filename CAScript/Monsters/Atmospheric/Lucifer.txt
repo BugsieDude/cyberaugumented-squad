@@ -1,0 +1,8 @@
+Class DCY_Lucifer : DCYMonster
+{
+  Default
+  {
+	Health 3000;
+	Tag "LUCIFER";
+  }
+}

@@ -148,14 +148,14 @@ Class DCY_Hexodenican : DCY_VileParent
 		A_FaceTarget(5, 5);
 		if (DCY_EffectDistance(sfxdistance))
 			for (int i = -30; i < 31; i += 60)
-				A_SpawnItemEx("DCY_LightningPhaseElec", -10, i, 90, frandom(-1, 1), frandom(-1, 1), frandom(-1, 1), flags: SXF_NOCHECKPOSITION);
+				A_SpawnItemEx("DCY_HexoSmallElec", -10, i, 90, frandom(-1, 1), frandom(-1, 1), frandom(-1, 1), flags: SXF_NOCHECKPOSITION);
 	}
 	H3X_ IJ 3 A_FaceTarget();
 	H3X_ K 15
 	{
 		A_FaceTarget(5, 5);
 		A_StartSound("LIGTFIR1", CHAN_WEAPON);
-		A_SpawnProjectile("DCY_LightningPhaseDischarge", 32, 0, 0, CMF_AIMDIRECTION, pitch);
+		A_SpawnProjectile("DCY_HexodenicanDischarge", 32, 0, 0, CMF_AIMDIRECTION, pitch);
 	}
 	H3X_ KA 10 A_FaceTarget();
 	Goto See;
@@ -318,5 +318,22 @@ Class DCY_HexBolt : DCY_LightningVulgarShot
 		}
 	}
 	Loop;
+  }
+}
+
+Class DCY_HexoSmallElec : DCY_LightningPhaseElec
+{
+  Default
+  {
+  Translation "0:255=%[0.00,0.00,0.00]:[0.45,2.00,0.45]";
+  Alpha 1.0;
+  }
+}
+
+Class DCY_HexodenicanDischarge : DCY_LightningPhaseDischarge
+{
+  Default
+  {
+  Translation "0:255=%[0.00,0.00,0.00]:[0.45,2.00,0.45]";
   }
 }

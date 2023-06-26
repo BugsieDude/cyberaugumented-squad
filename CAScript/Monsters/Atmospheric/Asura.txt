@@ -4,3 +4,6 @@ Class DCY_Asura : DCYMonster
   {
 	Health 1000;
 	Tag "ASURA";
+	Obituary "%o has faced the world's depravity.";
+  }
+}
