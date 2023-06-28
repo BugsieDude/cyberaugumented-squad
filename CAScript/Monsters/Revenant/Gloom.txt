@@ -142,7 +142,7 @@ Class DCY_GRocket : DCY_HomingMissile
   States
   {
   Spawn:
-	TMIS A 1
+	TE_X A 1
 	{
 		if (getAge() < 15) A_ScaleVelocity(1.1);
 		
