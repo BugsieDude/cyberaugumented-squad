@@ -17,11 +17,19 @@ extend class CyberaugumentedMonsterEventHandler
 			if (secsize < 450) continue;
 			
 			//spawn the initial droid
-			if (!random(0, 740))
+			if (!random(0, 720))
 			{
 				console.printf("sector %d size %d",curSec.sectornum,secSize);
 				actor intone = actor.spawn("DCY_Intone", c);
 				if (!intone) continue;
+			}
+			
+			//spawn the orb
+			if (!random(0, 750))
+			{
+				console.printf("\cgsector %d size %d",curSec.sectornum,secSize);
+				actor orb = actor.spawn("DCY_Asura", c);
+				if (!orb) continue;
 			}
 		}
 	}

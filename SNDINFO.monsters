@@ -3246,8 +3246,14 @@ preventive/sight12 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight12.ogg"
 preventive/sight13 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight13.ogg"
 preventive/sight14 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight14.ogg"
 
-Intone/Hum "Sounds/DCY Monsters/Intone/dcy_intone_hum.ogg"
+Intone/Hum "Sounds/DCY Monsters/Intone/dcy_intone_hum.ogg" //Infrasound
 Intone/Explode "Sounds/DCY Monsters/Intone/dcy_intone_explode.ogg"
+
+$random Asura/Hum { Asura/Hum1 Asura/Hum2 Asura/Hum3 Asura/Hum4 }
+Asura/Hum1 "Sounds/DCY Monsters/Asura/dcy_asura_hum1.ogg"
+Asura/Hum2 "Sounds/DCY Monsters/Asura/dcy_asura_hum2.ogg"
+Asura/Hum3 "Sounds/DCY Monsters/Asura/dcy_asura_hum3.ogg"
+Asura/Hum4 "Sounds/DCY Monsters/Asura/dcy_asura_hum4.ogg"
 
 $random DCYMatriarch/Sight { DCYMatriarch/Sight1 DCYMatriarch/Sight2 DCYMatriarch/Sight3 }
 DCYMatriarch/Sight1 "Sounds/DCY Monsters/Matriarch/dcy_matriarch_sight1.ogg"
