@@ -6,15 +6,15 @@ extend class CyberaugumentedMonsterEventHandler
 		
 		for (int i = 0; i < level.Sectors.Size(); i++) {
 			Sector curSec = level.Sectors[i];
-
-			vector3 c = (curSec.centerspot.x, curSec.centerspot.y, curSec.floorplane.ZAtPoint(curSec.centerspot));
-			if (!level.IsPointInLevel(c))	continue;
-			if (curSec.floorplane.ZAtPoint(curSec.centerspot) == curSec.ceilingplane.ZAtPoint(curSec.centerspot)) continue;
 			
 			vector3 s = GetSectorVec3(curSec); 
 			double secSize = (s.x + s.y) / 2;
 			
-			if (secsize < 450) continue;
+			vector3 c = (curSec.centerspot.x + (frandom(-s.x, s.x) / 2), curSec.centerspot.y + (frandom(-s.y, s.y) / 2), curSec.floorplane.ZAtPoint(curSec.centerspot) + (frandom(0, s.z) / 2));
+			if (!level.IsPointInLevel(c))	continue;
+			if (curSec.floorplane.ZAtPoint(curSec.centerspot) == curSec.ceilingplane.ZAtPoint(curSec.centerspot)) continue;
+			
+			if (secsize < 250) continue;
 			
 			//spawn the initial droid
 			if (!random(0, 720))

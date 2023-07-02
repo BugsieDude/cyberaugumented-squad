@@ -2,7 +2,7 @@ Class DCY_Intone : DCY_SkullParent
 {
   Default
   {
-  Health 1000;
+  Health 300;
   Tag "\c[u2]Intone\c-";
   +ROLLSPRITE
   +ROLLCENTER
@@ -11,6 +11,7 @@ Class DCY_Intone : DCY_SkullParent
   +PAINLESS
   +NOPAIN
   +SLIDESONWALLS
+  +LOOKALLAROUND
   +FLOAT
   Mass 170;
   Speed 5;
@@ -73,13 +74,72 @@ Class DCY_Intone : DCY_SkullParent
 	}
   }
   
+  void A_IntoneDecide()
+  {
+	if (hasbuffed) return;
+	if (!target && !CheckSight(target) && distance3D(target) > 300) return;
+	if (!(level.time % random(2, 20))) return;
+	
+	BlockThingsIterator t = BlockThingsIterator.Create(self, 600);
+	actor m;
+	
+	while(t.Next())
+	{
+		m = t.Thing;
+		if (!m || !m.bISMONSTER || !CheckSight(m) || Distance3D(m) > 600 || m.bBOSS) return;
+		if (m.Health > 0 && m != self && m != target && m.species != "Ambient") { SetStateLabel("Buffing"); hasbuffed = true; }
+		else continue;
+	}
+  }
+  
+  bool hasbuffed;
+  double looping;
+  
   States
   {
   Spawn:
 	1NT1 # 1 DCY_Look();
 	Loop;
   Look:
-	1NT1 # 1 A_IntoneHover();
+	1NT1 # 1
+	{
+		A_IntoneHover();
+		A_IntoneDecide();
+	}
+	Loop;
+  Buffing:
+	1NT1 # 1
+	{
+		A_IntoneHover();
+		
+		looping++;
+		
+		if (looping > 90)
+		{
+			A_SpawnParticleEx(0x610000, TexMan.CheckForTexture("graphics/particles/dcysquare.png"), STYLE_ADD, SPF_FULLBRIGHT, 180, random(3, 6), frandom(0, 360), frandom(-10.0, 10.0), frandom(-10.0, 10.0), frandom(-10, 10) + 25, frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.1, 0.1), frandom(-0.1, 0.1), frandom(-0.1, 0.1), startalphaf: 0.9, fadestepf: 0, sizestep: -0.045);
+			A_SpawnParticleEx(0x610000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 80, 0, frandom(20, -20), frandom(-20, 20), frandom(-20, 20) + 25, frandom(-0.01, 0.01), frandom(-0.01, 0.01), frandom(0.01, -0.01), frandom(-1.01, 1.01), frandom(-1.01, 1.01), frandom(-1.01, 1.01), startalphaf: 0.5, fadestepf: 0.0375, sizestep: 3.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
+		}
+		
+		switch(looping)
+		{
+			case 90:
+				A_StartSound("Intone/BuffReady", 100, attenuation: 0.75);
+				break;
+			case 180:
+				
+				for (int i = 0; i < 360; i += random(5, 10))
+				{
+					A_SpawnParticleEx(0xaa0000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 80, i, frandom(20, -20), frandom(-20, 20), frandom(-20, 20) + 25, frandom(-0.01, 0.01) + 15, frandom(-0.01, 0.01), frandom(0.01, -0.01), 0.15, 0.15, 0.15, startalphaf: 0.9, fadestepf: 0.01, sizestep: 5.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
+					A_SpawnParticleEx(0xaa0000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 80, i, frandom(20, -20), frandom(-20, 20), frandom(-20, 20) + 25, frandom(-0.01, 0.01) + 27.5, frandom(-0.01, 0.01), frandom(0.01, -0.01), 0.15, 0.15, 0.15, startalphaf: 0.9, fadestepf: 0.05, sizestep: 5.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
+				}
+				
+				A_RadiusGive("DCY_IntoneBuffGiver", 600, RGF_MONSTERS|RGF_CUBE|RGF_NOSIGHT);
+				A_QuakeEx(4, 4, 4, 20, 0, 3000, "", QF_SCALEDOWN|QF_3D, rollintensity: 1, rollWave: 1);
+				A_StartSound("Intone/BuffRelease", 100, attenuation: 0.75);
+				SetStateLabel("Look");
+				break;
+		}
+	}
 	Loop;
   Death:
 	1NT1 # 10
@@ -96,6 +156,17 @@ Class DCY_Intone : DCY_SkullParent
 	{
 		if (vel.z == 0)
 		{
+			BlockThingsIterator t = BlockThingsIterator.Create(self, 600);
+			actor m;
+			
+			while(t.Next())
+			{
+				m = t.Thing;
+				if (!m || !m.bISMONSTER || Distance3D(m) > 4000 || m.bBOSS) continue;
+				if (m.Health > 0 && m != self) { m.TakeInventory("DCY_IntoneBuff", 1); }
+				else continue;
+			}
+	
 			for (int i = random(8, 14); i > 0; i--)
 				A_SpawnProjectile("DCY_IntoneDischarge", frandom(-30, 30), frandom(-30, 30), frandom(0, 360), CMF_AIMDIRECTION|CMF_OFFSETPITCH, frandom(0, -40));
 			A_SpawnItemEx("DCY_WretchedExplosion", flags: SXF_NOCHECKPOSITION);
@@ -166,5 +237,87 @@ Class DCY_IntoneRing : Actor
   Spawn:
 	BAL1 A -1;
 	Stop;
+  }
+}
+
+Class DCY_IntoneBuffGiver : Inventory
+{
+  Default
+  {
+	+INVENTORY.ALWAYSPICKUP;
+	+INVENTORY.AUTOACTIVATE;
+  }
+  
+  override bool Use(bool pickup)
+  {
+	if (!owner) return false;
+	if (owner.bISMONSTER && !owner.bBOSS && owner.health > 0 && !(owner is "DCY_Intone") && !(owner is "DCY_Asura"))
+		owner.GiveInventory("DCY_IntoneBuff", 1);
+	return true;
+  }
+}
+
+Class DCY_IntoneBuff : Powerup
+{
+  Default
+  {
+	+INVENTORY.ALWAYSPICKUP;
+	+INVENTORY.AUTOACTIVATE;
+	Powerup.Duration 0x7FFFFFFD;
+  }
+  
+  bool has1, has2;
+  
+  override void PostBeginPlay()
+  {
+	if (owner && owner.health > 0)
+	{
+		owner.A_AttachLight("Buffer", DynamicLight.DummyLight, "500000", owner.radius + 10, owner.radius + 20, DynamicLight.LF_ATTENUATE);
+		
+		for (int i = 0; i < 360; i += random(10, 50)) owner.A_SpawnParticleEx(0xaa0000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 30, 0, frandom(owner.radius, -owner.radius), frandom(-owner.radius, owner.radius), frandom(0, owner.height), frandom(-0.01, 0.01) + 5, frandom(-0.01, 0.01), frandom(0.01, -0.01), frandom(-0.25, 0.25), frandom(-0.25, 0.25), frandom(-0.25, 0.25), startalphaf: 0.85, fadestepf: 0.0375, sizestep: 3.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
+	}
+  }
+  
+  override void DoEffect()
+  {
+	super.DoEffect();
+	
+	if (owner && owner.health > 0 && !level.isFrozen())
+	{
+		if ((level.time % random(1, 5)) == 0)
+			owner.A_SpawnParticleEx(0xaa0000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 60, 0, frandom(owner.radius, -owner.radius), frandom(-owner.radius, owner.radius), frandom(0, owner.height), frandom(-0.01, 0.01), frandom(-0.01, 0.01), frandom(0.01, -0.01), frandom(-0.25, 0.25), frandom(-0.25, 0.25), frandom(-0.25, 0.25), startalphaf: 0.85, fadestepf: 0.0375, sizestep: 3.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
+		
+		owner.A_SetTics(int(owner.tics / 1.25));
+		if (owner.bNOINFIGHTING) has1 = true;
+		if (!has1) owner.bNOINFIGHTING = true;
+		if (owner.bNOTARGET) has2 = true;
+		if (!has2) owner.bNOTARGET = true;
+	}
+  }
+  
+  override void DetachFromOwner()
+  {
+	if (owner && owner.health > 0)
+	{
+		owner.A_StopSounds(0, 0);
+		owner.A_RemoveLight("Buffer");
+		
+		if (!has1) owner.bNOINFIGHTING = false;
+		if (!has2) owner.bNOTARGET = false;
+	}
+  }
+  
+  override void OwnerDied()
+  {
+	if (owner)
+	{
+		owner.A_StopSounds(0, 0);
+		owner.A_RemoveLight("Buffer");
+		
+		if (!has1) owner.bNOINFIGHTING = false;
+		if (!has2) owner.bNOTARGET = false;
+		
+		Destroy();
+	}
   }
 }

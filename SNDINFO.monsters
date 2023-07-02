@@ -3248,6 +3248,8 @@ preventive/sight14 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight14.ogg"
 
 Intone/Hum "Sounds/DCY Monsters/Intone/dcy_intone_hum.ogg" //Infrasound
 Intone/Explode "Sounds/DCY Monsters/Intone/dcy_intone_explode.ogg"
+Intone/BuffReady "Sounds/DCY Monsters/Intone/dcy_intone_buffready.ogg"
+Intone/BuffRelease "Sounds/DCY Monsters/Intone/dcy_intone_buffrelease.ogg"
 
 $random Asura/Hum { Asura/Hum1 Asura/Hum2 Asura/Hum3 Asura/Hum4 }
 Asura/Hum1 "Sounds/DCY Monsters/Asura/dcy_asura_hum1.ogg"
