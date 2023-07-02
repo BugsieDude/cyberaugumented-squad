@@ -4,24 +4,10 @@ CYBECREP "Sounds/Game/dcy_creepy.ogg"
 WHATDONE "Sounds/Announcements/Minibosses/dcy_whathaveyoudone.ogg"
 PIANPIAN "Sounds/Game/dcy_piano.ogg"
 
-$random dcyeye/ambient { CYBECREP CYBECREP dcyeye/ambient1 dcyeye/ambient2 dcyeye/ambient3 dcyeye/ambient4 dcyeye/ambient5 dcyeye/ambient6 }
-dcyeye/ambient1 "Sounds/DCY SFX/dcy_archvile_whisper1.ogg"
-dcyeye/ambient2 "Sounds/DCY SFX/dcy_archvile_whisper2.ogg"
-dcyeye/ambient3 "Sounds/DCY SFX/dcy_archvile_whisper3.ogg"
-dcyeye/ambient4 "Sounds/DCY SFX/dcy_archvile_whisper4.ogg"
-dcyeye/ambient5 "Sounds/DCY SFX/dcy_archvile_whisper5.ogg"
-dcyeye/ambient6 "Sounds/DCY SFX/dcy_archvile_whisper6.ogg"
-
 //Announcements
 Warp/Choir "Sounds/DCY SFX/dcy_warp1.ogg"
 Warp/Spacial "Sounds/DCY SFX/dcy_warp2.ogg"
-dcy/flashback "Sounds/Announcements/dcy_flashback.ogg"
 dcy/deadlydejavu "Sounds/Announcements/dcy_flashback_chillax.ogg"
-dcy/decimalerror "Sounds/Announcements/dcy_havoc_map.ogg"
-$random dcy/midi { dcy/wu dcy/mid }
-dcy/mid "Sounds/Announcements/dcy_midi.ogg"
-dcy/wu "Sounds/Announcements/dcy_wakeup.ogg"
-dcy/peace "Sounds/Announcements/dcy_peace.ogg"
 
 //yay you did something
 $random dcy/nobossarea { dcy/nobossarea1 dcy/nobossarea2 }
@@ -65,8 +51,6 @@ world/lavasizzlesmall "Sounds/Terrain/dcy_lava_sizzle_small.ogg"
 $limit world/lavasizzle 4
 $limit world/lavsiz2 4
 $limit world/lavasizzlesmall 4
-
-DCYExplodingBarrel "Sounds/Replacements/dcy_barrel_explode.ogg"
 
 dcy/freeze "Sounds/Replacements/dcy_icedeath.wav"
 dcy/icebreak "Sounds/Replacements/dcy_icedeath_break.wav"

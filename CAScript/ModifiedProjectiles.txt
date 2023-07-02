@@ -508,7 +508,7 @@ Class DCY_OverhauledRocket : DCY_Projectile
   Damage 20;
   +RANDOMIZE
   +DEHEXPLOSION
-  SeeSound "RocketLauncher/Kaboom";
+  SeeSound "DCYRocket";
   DeathSound "Explod";
   Obituary "$OB_MPROCKET";
   RenderStyle "Normal";
@@ -540,6 +540,10 @@ Class DCY_OverhauledRocket : DCY_Projectile
 	{
 		A_SetTranslucent(1.0);
 		A_Explode();
+		
+		A_StartSound("ExplodVeryFar", 30);
+		A_StartSound("ExplodFar", 20);
+		
 		A_SpawnItemEx("DCY_Explosion_1", frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(0.00, 360.0), SXF_NOCHECKPOSITION);
 		A_SpawnItemEx("DCY_Explosion_1", frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(0.00, 360.0), SXF_NOCHECKPOSITION);
 		A_SpawnItemEx("DCY_Explosion_1", frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(-0.85, 0.85), frandom(0.00, 360.0), SXF_NOCHECKPOSITION);

@@ -141,31 +141,6 @@ Class DCY_CometChunk : DCY_GoreBase
   }
 }
 
-Class DCY_GunmetalInfiltratorBallTrail : DCY_Effect
-{
-  Default
-  {
-  Speed 0;
-  Damage 0;
-  Speed 0;
-  Radius 1;
-  Height 1;
-  RenderStyle "Add";
-  Projectile;
-  +NOINTERACTION
-  +CLIENTSIDEONLY
-  -SOLID
-  +BRIGHT
-  }
-  
-  States
-  {
-  Spawn:
-    GBL8 AAAAABBBBB 1 Bright A_FadeOut();
-	Stop;
-  }
-}
-
 Class DCY_FatThrower : DCY_Projectile
 {
   Default

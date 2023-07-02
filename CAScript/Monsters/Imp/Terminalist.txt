@@ -195,7 +195,7 @@ Class DCY_TLaser : DCY_FastProjectile
   }
 }
 
-Class DCY_TLTrail : DCY_GunmetalInfiltratorBallTrail
+Class DCY_TLTrail : DCY_ProjectileBaseTrail
 {
   Default
   {

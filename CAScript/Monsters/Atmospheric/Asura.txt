@@ -41,6 +41,10 @@ Class DCY_Asura : DCY_CacoParent
   override void Tick()
   {
 	super.Tick();
+	
+	if (level.isFrozen()) return;
+	if (!DCY_EffectSight()) return;
+	
 	A_SpawnParticleEx(0x751b1b, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, random(90, 95), random(120, 280), frandom(0, 360), zoff: 30, velx: frandom(1, 5), vely: frandom(-0.5, 0.5), velz: frandom(-2.5, 2.5), accelz: 0.05, startalphaf: 0.35, fadestepf: 0.01, sizestep: 2, startroll: frandom(0, 360));
 	A_SpawnParticleEx(0x873535, TexMan.CheckForTexture("graphics/Particles/dcyglowp.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 50, random(70, 100), angle, zoff: 30, startalphaf: 1, fadestepf: 0.1, sizestep: random(-1, -2), startroll: frandom(0, 360));
 	A_AttachLight("AsuraLight", DynamicLight.PulseLight, "873535", 300, 350, DynamicLight.LF_DONTLIGHTSELF, ofs: (0, 0, 30));
@@ -66,7 +70,18 @@ Class DCY_Asura : DCY_CacoParent
   
   void A_AsuraDecide()
   {
-	if (!random(0, 300)) { spaz = random(1, 6); SetStateLabel("Spaz"); }
+	if (!random(0, 400)) { spaz = random(1, 6); SetStateLabel("Spaz"); }
+  }
+  
+  void CheckStare()
+  {
+	if (!target) return;
+	if (!self.CheckSight(target)) return;
+	FLineTraceData l;
+	target.LineTrace(target.angle, 9999, target.pitch, 0, (target.height) / 2, 0, 0, l);
+	
+	if (l.HitType == TRACE_HitActor)
+		if (l.HitActor && l.HitActor is "DCY_Asura") SetStateLabel("Wake");
   }
   
   override void PostBeginPlay()
@@ -92,6 +107,8 @@ Class DCY_Asura : DCY_CacoParent
 			A_FaceTarget();
 			SetStateLabel("Wake");
 		}
+		
+		CheckStare();
 	}
 	Loop;
   Spaz:

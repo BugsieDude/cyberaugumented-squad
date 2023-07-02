@@ -95,28 +95,7 @@ Class DCY_Teleorb2 : DCY_TeleOrb
 }
 
 Class DCY_EnemyTeleport : DCY_Teleportation { Default { Translation "0:255=%[0.00,0.00,0.00]:[1.69,0.43,0.00]"; DCY_Teleportation.TColor "8a2615"; } }
-Class DCY_PlayerTeleport : DCY_Teleportation { Default { Translation "0:255=%[0.00,0.00,0.00]:[0.00,0.76,2.00]";  DCY_Teleportation.TColor "162c75"; } }
 Class DCY_EnemySourceTeleport : DCY_SourceTeleport { Default { Translation "0:255=%[0.00,0.00,0.00]:[1.69,0.43,0.00]"; DCY_Teleportation.TColor "8a2615"; } }
-Class DCY_PlayerSourceTeleport : DCY_SourceTeleport { Default { Translation "0:255=%[0.00,0.00,0.00]:[0.00,0.76,2.00]";  DCY_Teleportation.TColor "162c75"; } }
-
-Class DCY_ItemFog : ItemFog Replaces ItemFog
-{
-  Mixin DCY_Effects;
-  
-  Default { Translation "0:255=%[0.00,0.00,0.00]:[0.57,0.87,1.89]"; Scale 0.575; Alpha 0; }
-  
-  override void PostBeginPlay ()
-  {
-	Actor.PostBeginPlay();
-	
-	//Main Effects
-	A_SpawnParticleEx(0x6ea8ff, TexMan.CheckForTexture("graphics/Particles/dcyglowp.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 50, 60, angle, zoff: 10, fadestepf: 0, sizestep: random(-20, -30));
-	A_SpawnParticleEx(0x0f1761, TexMan.CheckForTexture("graphics/Particles/dcyglowp.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 50, 100, angle, zoff: 10, fadestepf: 0, sizestep: random(-20, -40));
-	A_SpawnItemEx("DCY_TeleOrb2", zofs: 10, flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION|SXF_TRANSFERSCALE);
-	for (int i = random(6, 10); i > 0; i--) A_SpawnParticleEx(0x0f1761, TexMan.CheckForTexture("graphics/particles/dcysquare.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 100, random(1, 2), 0, frandom(-20, 20), frandom(-20, 20), frandom(-20, 20), frandom(-3, 3), frandom(-3, 3), frandom(-3, 3), frandom(-0.4, 0.4), frandom(-0.4, 0.4), frandom(-0.4, 0.4), fadestepf: 0, sizestep: -0.015);	
-	Destroy();
-  }
-}
 
 Class DCY_CyberTeleport : DCY_EnemyTeleport
 {

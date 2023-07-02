@@ -1,9 +1,7 @@
 CLASS CyberaugumentedMonsterEventHandler : EventHandler
 {
-  ui int inputtic;
   float temp1;
   int plvl;
-  bool restartmus;
   
   //Cutscene Stuff
   bool cutscene;
@@ -80,9 +78,7 @@ CLASS CyberaugumentedMonsterEventHandler : EventHandler
   
   override void WorldUnloaded(WorldEvent e)
   {
-	cutscene = false;
 	let d = DCY_Variables.Get();
-	
 	if (d) d.dcyLevel++;
   }
   

@@ -47,7 +47,7 @@ Class DCY_HexodenicanTrail2 : DCY_HexodenicanTrail
   }
 }
 
-Class DCY_ProjectileBaseTrail : DCY_HexodenicanTrail { Default { RenderStyle "Add"; Scale 0.8; StencilColor "White"; } }
+Class DCY_ProjectileBaseTrail : DCY_HexodenicanTrail { Default { RenderStyle "Add"; Scale 1; StencilColor "White"; } }
 
 Class DCY_ShadowTrailBase : DCY_ProjectileBaseTrail
 {

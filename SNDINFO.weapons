@@ -156,6 +156,12 @@ SHOTFIR4 "Sounds/Weapons/Slot 3/Combat SG/dcy_combatsg_shotgun4.ogg"
 RocketLauncher/Kaboom "Sounds/Weapons/Slot 5/Legionnaire/dcy_legionnaire_rocket_fire.ogg"
 Grenade/Launch "Sounds/Weapons/Slot 5/Intervention/dcy_intervention_grenade_fire.ogg"
 
+$random DCYRocket { DCYRocket1 DCYRocket2 DCYRocket3 DCYRocket4 }
+DCYRocket1 "Sounds/Projectiles/dcy_missile1.ogg"
+DCYRocket2 "Sounds/Projectiles/dcy_missile2.ogg"
+DCYRocket3 "Sounds/Projectiles/dcy_missile3.ogg"
+DCYRocket4 "Sounds/Projectiles/dcy_missile4.ogg"
+
 $random DCYSuperShotgun/Fire { SSGFIRE1 SSGFIRE2 SSGFIRE3 SSGFIRE4 }
 SSGFIRE1 "Sounds/Weapons/Slot 3/Double Barrel/dcy_ssg_fire1.ogg"
 SSGFIRE2 "Sounds/Weapons/Slot 3/Double Barrel/dcy_ssg_fire2.ogg"
@@ -165,19 +171,29 @@ $random DCYSuperShotgun/Reload { SSGRELD1 SSGRELD2 }
 SSGRELD1 "Sounds/Weapons/Slot 3/Double Barrel/dcy_ssg_reload1.ogg"
 SSGRELD2 "Sounds/Weapons/Slot 3/Double Barrel/dcy_ssg_reload2.ogg"
 
-$random Explod { EXPLODE1 EXPLODE2 EXPLODE3 EXPLODE4 EXPLODE5 EXPLODE6 EXPLODE7 }
-EXPLODE1 "Sounds/DCY SFX/dcy_explosion1.ogg"
-EXPLODE2 "Sounds/DCY SFX/dcy_explosion2.ogg"
-EXPLODE3 "Sounds/DCY SFX/dcy_explosion3.ogg"
-EXPLODE4 "Sounds/DCY SFX/dcy_explosion4.ogg"
-EXPLODE5 "Sounds/DCY SFX/dcy_explosion5.ogg"
-EXPLODE6 "Sounds/DCY SFX/dcy_explosion6.ogg"
-EXPLODE7 "Sounds/DCY SFX/dcy_explosion7.ogg"
+$random Explod { EXPLODE1 EXPLODE2 EXPLODE3 EXPLODE4 }
+EXPLODE1 "Sounds/DCY FX/dcy_explosion1.ogg"
+EXPLODE2 "Sounds/DCY FX/dcy_explosion2.ogg"
+EXPLODE3 "Sounds/DCY FX/dcy_explosion3.ogg"
+EXPLODE4 "Sounds/DCY FX/dcy_explosion4.ogg"
+
+$random ExplodFar { FEXPLODE1 FEXPLODE2 FEXPLODE3 FEXPLODE4 FEXPLODE5 }
+FEXPLODE1 "Sounds/DCY FX/dcy_explosion_far1.ogg"
+FEXPLODE2 "Sounds/DCY FX/dcy_explosion_far2.ogg"
+FEXPLODE3 "Sounds/DCY FX/dcy_explosion_far3.ogg"
+FEXPLODE4 "Sounds/DCY FX/dcy_explosion_far4.ogg"
+FEXPLODE5 "Sounds/DCY FX/dcy_explosion_far5.ogg"
+
+$rolloff ExplodFar 2000 3000
+
+ExplodVeryFar "Sounds/DCY FX/dcy_explosion_veryfar.ogg"
+
+$rolloff ExplodVeryFar 4000 7000
 
 $random BigExplod { BIGBOOM1 BIGBOOM2 BIGBOOM3 }
-BIGBOOM1 "Sounds/DCY SFX/dcy_large_explosion1.ogg"
-BIGBOOM2 "Sounds/DCY SFX/dcy_large_explosion2.ogg"
-BIGBOOM3 "Sounds/DCY SFX/dcy_large_explosion3.ogg"
+BIGBOOM1 "Sounds/DCY FX/dcy_large_explosion1.ogg"
+BIGBOOM2 "Sounds/DCY FX/dcy_large_explosion2.ogg"
+BIGBOOM3 "Sounds/DCY FX/dcy_large_explosion3.ogg"
 
 misc/ring_pkup "Sounds/Inventory/dcy_palisade.ogg"
 HOLYSTF1 "Sounds/Weapons/Slot 8/dcy_choir.wav"

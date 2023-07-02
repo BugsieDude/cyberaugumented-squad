@@ -1,4 +1,4 @@
-Class DCY_MastermindJetFlare : DCY_GunmetalInfiltratorBallTrail
+Class DCY_MastermindJetFlare : DCY_ProjectileBaseTrail
 {
   Default
   {
