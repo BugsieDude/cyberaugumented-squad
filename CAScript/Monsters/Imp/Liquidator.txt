@@ -2,7 +2,7 @@ Class DCY_LiquidatorTypeImp : DCY_Impe
 {
   Default
   {
-  Health 120;
+  Health 100;
   Speed 10;
   FastSpeed 13;
   Tag "\c[Orange]Liquidator\c- ''Type - Imp''";

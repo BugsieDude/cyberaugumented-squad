@@ -129,8 +129,11 @@ Class DCY_AnathemaProjectile : DCY_ImpFireball
   Spawn:
 	NBKL AABBCC 1
 	{
-		if (DCY_EffectDistance(sfxdistance)) A_SpawnItemEx("DCY_ImpFlame1", frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(-5.0, 5.0), zvel: 1, flags: SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION, failchance: 200);
-		A_SpawnFlames("ab3a0a", 13, 30, 0, true, frandom(-1.5, 1.5), allsmoke: true, thrust: 2);
+		if (DCY_EffectDistance(sfxdistance))
+		{
+			A_SpawnFlames("c24d0e", 25, 32, 0, allsmoke: true);
+			if ((level.time % random(1, 9)) == 0) A_SpawnParticleEx(0xc24d0e, TexMan.CheckForTexture("graphics/particles/dcysquarep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE, 80, random(3, 9), 0, frandom(-1, 1), frandom(-1, 1), frandom(-1, 1), frandom(-0.1, 0.1), frandom(-0.1, 0.1), frandom(-0.1, 0.1), frandom(-0.2, 0.2), frandom(-0.2, 0.2), frandom(-0.2, 0.2), fadestepf: 0, sizestep: -0.125);			
+		}
 	}
 	Loop;
   }

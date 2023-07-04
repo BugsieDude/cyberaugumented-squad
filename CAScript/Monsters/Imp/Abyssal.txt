@@ -8,7 +8,7 @@ Class DCY_AbyssalSycophant : DCY_Impe
   Scale 1.0;
   Alpha 1.0;
   Tag "\c[Red]Abyssal Sycophant\c-";
-  Health 180;
+  Health 150;
   Obituary "%o got obliterated by a Abyssal Sycophant. It's malfunctioned by a demon...";
   SeeSound "Congress/Sight";
   ActiveSound "Congress/Active";

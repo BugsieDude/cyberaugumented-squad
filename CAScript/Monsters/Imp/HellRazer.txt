@@ -34,7 +34,7 @@ Class DCY_HellRazer : DCY_Impe
 	static const string messages[] =
 	{
 		"%o got razed.",
-		"One day, a little robot did not eat all of his food, so der Machtzerstorer came to %h and obliterated %p's testicles. %g now has no testicles. \n%o:",
+		"One day, a little guy did not eat all of his food, so der Machtzerstorer came to %h and obliterated %p's testicles. %g now has no testicles. \n%o:",
 		"%o couldn't stand it any longer."
 	};
 

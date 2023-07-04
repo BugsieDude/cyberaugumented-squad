@@ -14,7 +14,7 @@ extend class CyberaugumentedMonsterEventHandler
 			if (!level.IsPointInLevel(c))	continue;
 			if (curSec.floorplane.ZAtPoint(curSec.centerspot) == curSec.ceilingplane.ZAtPoint(curSec.centerspot)) continue;
 			
-			if (secsize < 250) continue;
+			if (secsize < 150) continue;
 			
 			//spawn the initial droid
 			if (!random(0, 720))

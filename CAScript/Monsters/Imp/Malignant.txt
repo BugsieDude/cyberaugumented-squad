@@ -2,7 +2,7 @@ Class DCY_Malignant : DCY_Impe
 {
   Default
   {
-  Health 200;
+  Health 150;
   DamageType "Poison";
   Obituary "$o felt the poison of a Malignant.";
   HitObituary "%o mutated under the eyes of the Malignant.";

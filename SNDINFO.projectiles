@@ -19,7 +19,7 @@ impx4 "Sounds/Projectiles/dcy_dastard_fire_impact4.ogg"
 $random dcycaco/attack { cacof1 cacof2 }
 cacof1 "Sounds/DCY SFX/dcy_cacofire1.ogg"
 cacof2 "Sounds/DCY SFX/dcy_cacofire2.ogg"
-$alias dcycaco/shotx imp/shotx
+$alias dcycaco/shotx dcyimp/shotx
 
 $random dcybaron/attack { baronf1 baronf2 baronf3 baronf4 }
 baronf1 "Sounds/Projectiles/dcy_baron_ball1.ogg"
@@ -37,7 +37,17 @@ $random dcyfatso/attack { fatm1 fatm2 fatm3 }
 fatm1 "Sounds/DCY SFX/dcy_fatso_fire1.ogg"
 fatm2 "Sounds/DCY SFX/dcy_fatso_fire2.ogg"
 fatm3 "Sounds/DCY SFX/dcy_fatso_fire3.ogg"
-$alias dcyfatso/shotx dcyimp/shotx
+$random dcyfatso/shotx { fatx1 fatx2 fatx3 fatx4 fatx5 fatx6 fatx7 fatx8 fatx9 fatx10 }
+fatx1 "Sounds/Projectiles/dcy_fatshot_explode1.ogg"
+fatx2 "Sounds/Projectiles/dcy_fatshot_explode2.ogg"
+fatx3 "Sounds/Projectiles/dcy_fatshot_explode3.ogg"
+fatx4 "Sounds/Projectiles/dcy_fatshot_explode4.ogg"
+fatx5 "Sounds/Projectiles/dcy_fatshot_explode5.ogg"
+fatx6 "Sounds/Projectiles/dcy_fatshot_explode6.ogg"
+fatx7 "Sounds/Projectiles/dcy_fatshot_explode7.ogg"
+fatx8 "Sounds/Projectiles/dcy_fatshot_explode8.ogg"
+fatx9 "Sounds/Projectiles/dcy_fatshot_explode9.ogg"
+fatx10 "Sounds/Projectiles/dcy_fatshot_explode10.ogg"
 
 $random dcyskeleton/attack { revm1 revm2 revm3 revm4 }
 revm1 "Sounds/DCY SFX/dcy_rev_rocket1.ogg"
@@ -140,6 +150,14 @@ metwalk3 "Sounds/Footsteps/dcy_metal_step3.ogg"
 metwalk4 "Sounds/Footsteps/dcy_metal_step4.ogg"
 metwalk5 "Sounds/Footsteps/dcy_metal_step5.ogg"
 metwalk6 "Sounds/Footsteps/dcy_metal_step6.ogg"
+$random dcyarch/walk { arcwalk1 arcwalk2 arcwalk3 arcwalk4 arcwalk5 arcwalk6 arcwalk7 }
+arcwalk1 "Sounds/Footsteps/dcy_arch_walk1.ogg"
+arcwalk2 "Sounds/Footsteps/dcy_arch_walk2.ogg"
+arcwalk3 "Sounds/Footsteps/dcy_arch_walk3.ogg"
+arcwalk4 "Sounds/Footsteps/dcy_arch_walk4.ogg"
+arcwalk5 "Sounds/Footsteps/dcy_arch_walk5.ogg"
+arcwalk6 "Sounds/Footsteps/dcy_arch_walk6.ogg"
+arcwalk7 "Sounds/Footsteps/dcy_arch_walk7.ogg"
 
 $random WastelandInfiltrator/Step { CYHOOF1 CYHOOF2 CYHOOF3 CYHOOF4 CYHOOF5 CYHOOF6 }
 CYHOOF1 "Sounds/DCY SFX/dcy_cyhoof1.ogg"

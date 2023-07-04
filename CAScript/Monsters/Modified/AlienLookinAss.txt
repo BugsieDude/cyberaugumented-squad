@@ -26,7 +26,7 @@ Class DCY_VileParent : DCYMonster
 	DCYMonster.GibType "DCY_ShorterGiblets";
 	DCYMonster.ScientificName "Alienata";
 	DCYMonster.FootstepFrames 0, 3, 6;
-	DCYMonster.FootstepSound "dcyimp/walk";
+	DCYMonster.FootstepSound "dcyarch/walk";
   }
   
   override string GetObituary (Actor victim, Actor inflictor, Name mod, bool playerattack)

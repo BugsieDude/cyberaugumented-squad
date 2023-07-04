@@ -156,14 +156,14 @@ Class DCY_Intone : DCY_SkullParent
 	{
 		if (vel.z == 0)
 		{
-			BlockThingsIterator t = BlockThingsIterator.Create(self, 600);
-			actor m;
+			BlockThingsIterator ti = BlockThingsIterator.Create(self, 600);
+			actor mo;
 			
-			while(t.Next())
+			while(ti.Next())
 			{
-				m = t.Thing;
-				if (!m || !m.bISMONSTER || Distance3D(m) > 4000 || m.bBOSS) continue;
-				if (m.Health > 0 && m != self) { m.TakeInventory("DCY_IntoneBuff", 1); }
+				mo = ti.Thing;
+				if (!mo || !mo.bISMONSTER || mo.bBOSS) continue;
+				if (mo.Health > 0 && mo != self) { mo.TakeInventory("DCY_IntoneBuff", 1); }
 				else continue;
 			}
 	
@@ -272,8 +272,7 @@ Class DCY_IntoneBuff : Powerup
   {
 	if (owner && owner.health > 0)
 	{
-		owner.A_AttachLight("Buffer", DynamicLight.DummyLight, "500000", owner.radius + 10, owner.radius + 20, DynamicLight.LF_ATTENUATE);
-		
+		owner.A_AttachLight("Buffer", DynamicLight.PulseLight, "500000", owner.radius * 1.5, owner.radius * 2.5, DynamicLight.LF_ATTENUATE);
 		for (int i = 0; i < 360; i += random(10, 50)) owner.A_SpawnParticleEx(0xaa0000, TexMan.CheckForTexture("graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 180, 30, 0, frandom(owner.radius, -owner.radius), frandom(-owner.radius, owner.radius), frandom(0, owner.height), frandom(-0.01, 0.01) + 5, frandom(-0.01, 0.01), frandom(0.01, -0.01), frandom(-0.25, 0.25), frandom(-0.25, 0.25), frandom(-0.25, 0.25), startalphaf: 0.85, fadestepf: 0.0375, sizestep: 3.5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 0.5 : -0.5);
 	}
   }
