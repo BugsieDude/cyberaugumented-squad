@@ -3190,9 +3190,10 @@ DCYBane/Sight4 "Sounds/DCY Monsters/Bane/dcy_bane_sight4.ogg"
 $random DCYBane/Idle { DCYBane/Idle1 DCYBane/Idle2 }
 DCYBane/Idle1 "Sounds/DCY Monsters/Bane/dcy_bane_idle1.ogg"
 DCYBane/Idle2 "Sounds/DCY Monsters/Bane/dcy_bane_idle2.ogg"
-$random DCYBane/Bite { DCYBane/Grunt1 DCYBane/Grunt2 }
+$random DCYBane/Bite { DCYBane/Grunt1 DCYBane/Grunt2 DCYBane/Grunt3 }
 DCYBane/Grunt1 "Sounds/DCY Monsters/Bane/dcy_bane_grunt1.ogg"
 DCYBane/Grunt2 "Sounds/DCY Monsters/Bane/dcy_bane_grunt2.ogg"
+DCYBane/Grunt3 "Sounds/DCY Monsters/Bane/dcy_bane_grunt3.ogg"
 $random DCYBane/Pain { DCYBane/pain1 DCYBane/pain2 DCYBane/pain3 DCYBane/pain4 }
 DCYBane/pain1 "Sounds/DCY Monsters/Bane/dcy_bane_pain1.ogg"
 DCYBane/pain2 "Sounds/DCY Monsters/Bane/dcy_bane_pain2.ogg"
