@@ -422,6 +422,19 @@ Tsar/Sight "Sounds/DCY Monsters/Calamity Tzar/dcy_psx_knight_sight.ogg"
 Tsar/Active "Sounds/DCY Monsters/Calamity Tzar/dcy_psx_knight_idle.ogg"
 Tsar/Pain "Sounds/DCY Monsters/Calamity Tzar/dcy_psx_knight_pain.ogg"
 Tsar/Death "Sounds/DCY Monsters/Calamity Tzar/dcy_psx_knight_death.ogg"
+Tsar/Dash "Sounds/DCY SFX/dcy_tsar_dash.ogg"
+$random Tsar/Fire { Tsar/Fire1 Tsar/Fire2 }
+Tsar/Fire1 "Sounds/Projectiles/dcy_tsar_fire.ogg"
+Tsar/Fire2 "Sounds/Projectiles/dcy_tsar_fire2.ogg"
+$limit Tsar/Fire 0
+$random Tsar/Impact { Tsar/Impact1 Tsar/Impact2 }
+Tsar/Impact1 "Sounds/Projectiles/dcy_tsar_impact1.ogg"
+Tsar/Impact2 "Sounds/Projectiles/dcy_tsar_impact2.ogg"
+$random Tsar/Ground { Tsar/Ground1 Tsar/Ground2 Tsar/Ground3 Tsar/Ground4 }
+Tsar/Ground1 "Sounds/Projectiles/dcy_tsar_ground1.ogg"
+Tsar/Ground2 "Sounds/Projectiles/dcy_tsar_ground2.ogg"
+Tsar/Ground3 "Sounds/Projectiles/dcy_tsar_ground3.ogg"
+Tsar/Ground4 "Sounds/Projectiles/dcy_tsar_ground4.ogg"
 
 $random Misc/DemonicGibberish { DSMADNES DSMADNE2 DSMADNE3 DSMADNE4 DSMADNE5 }
 DSMADNES "Sounds/DCY SFX/dcy_madness1.ogg"
@@ -2959,13 +2972,18 @@ $random DCYRuffian/pain { dcyruffian/pain1 dcyruffian/pain2 dcyruffian/pain3 }
 dcyruffian/pain1 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_pain1.ogg"
 dcyruffian/pain2 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_pain2.ogg"
 dcyruffian/pain3 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_pain3.ogg"
-$random DCYRuffian/death { dcyruffian/death1 dcyruffian/death2 }
+$random DCYRuffian/death { dcyruffian/death1 dcyruffian/death2 dcyruffian/death3 dcyruffian/death4 dcyruffian/death5 }
 dcyruffian/death1 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_death1.ogg"
 dcyruffian/death2 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_death2.ogg"
-$random DCYRuffian/idle { dcyruffian/idle1 dcyruffian/idle2 dcyruffian/idle3 }
+dcyruffian/death3 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_death3.ogg"
+dcyruffian/death4 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_death4.ogg"
+dcyruffian/death5 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_death5.ogg"
+$random DCYRuffian/idle { dcyruffian/idle1 dcyruffian/idle2 dcyruffian/idle3 dcyruffian/idle4 dcyruffian/idle5 }
 dcyruffian/idle1 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_growl1.ogg"
 dcyruffian/idle2 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_growl2.ogg"
 dcyruffian/idle3 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_growl3.ogg"
+dcyruffian/idle4 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_growl4.ogg"
+dcyruffian/idle5 "Sounds/DCY Monsters/Ruffian/dcy_ruffian_growl5.ogg"
 
 $random DCYVersatility/Sight { DCYVersatility/Sight1 DCYVersatility/Sight2 DCYVersatility/Sight3 DCYVersatility/Sight4 }
 DCYVersatility/Sight1 "Sounds/DCY Monsters/Versatility/dcy_versatility_sight1.ogg"

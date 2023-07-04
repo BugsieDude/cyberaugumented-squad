@@ -230,8 +230,6 @@ Class DCY_GEmber : DCY_NapalmEmber
   Gravity 0.8;
   }
   
-  static const string ParticleColors[] = { "87efff", "54c3ff", "005eff" };
-  
   States
   {
   Spawn:
@@ -240,7 +238,7 @@ Class DCY_GEmber : DCY_NapalmEmber
 		if (waterlevel > 0)
 			Destroy();
 		
-		A_SpawnParticleEx(ParticleColors[random(0, ParticleColors.Size() - 1)], Texman.CheckForTexture("Graphics/Particles/dcyflamep.png"), STYLE_ADD, SPF_FULLBRIGHT, 35, random(9, 13), frandom(0, 360), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), sizestep: -0.325);
+		A_SpawnParticleEx(0x3374ff, Texman.CheckForTexture("Graphics/Particles/dcyflamep.png"), STYLE_ADD, SPF_FULLBRIGHT, 35, random(9, 13), frandom(0, 360), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), sizestep: -0.325);
 	}
 	Loop;
   Death:
@@ -278,17 +276,18 @@ Class DCY_GFire : DCY_NapalmFire
 		if ((level.time % 3) == 0)
 		{
 			fireloop++;
-			A_Explode(3, 25);
+			A_Explode(5, 25);
 		}
 		
-		if ((level.time % random(2, 5)) == 0)
-			A_SpawnParticleEx(ParticleColors[random(0, ParticleColors.Size() - 1)], TexMan.CheckForTexture("graphics/particles/dcysquare.png"), STYLE_ADD, SPF_FULLBRIGHT, 35, random(9, 12), frandom(0, 360), frandom(-10.0, 10.0), frandom(-10.0, 10.0), frandom(4.0, 13.0), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), accelz: 0.2, fadestepf: 0, sizestep: -0.45);
+		if (DCY_EffectDistance(900))
+			if ((level.time % random(2, 5)) == 0)
+				A_SpawnParticleEx(ParticleColors[random(0, ParticleColors.Size() - 1)], TexMan.CheckForTexture("graphics/particles/dcysquare.png"), STYLE_ADD, SPF_FULLBRIGHT, 35, random(2, 6), frandom(0, 360), frandom(-10.0, 10.0), frandom(-10.0, 10.0), frandom(4.0, 13.0), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), accelz: 0.2, fadestepf: 0, sizestep: -0.45);
 	}
 	Goto Spawn+11;
   }
 }
 
-Class DCY_GComet : DCY_Projectile
+Class DCY_GComet : DCY_GeneralComet
 {
   Default
   {

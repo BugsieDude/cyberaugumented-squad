@@ -4,6 +4,7 @@ Class DCY_MastermindJetFlare : DCY_ProjectileBaseTrail
   {
   +BRIGHT;
   +ROLLSPRITE;
+  +FORCEXYBILLBOARD;
   Translation "0:255=%[0.00,0.00,0.00]:[1.35,0.54,0.19]";
   }
   States

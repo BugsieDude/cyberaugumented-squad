@@ -312,11 +312,10 @@ Class DCY_ApollyonTracer : DCY_Projectile
   Radius 5;
   Height 5;
   Speed 25;
-  ReactionTime 175;
   Damage 10;
   DamageType "Fire";
   RenderStyle "Add";
-  Alpha 0.5;
+  Alpha 1;
   Projectile;
   +SEEKERMISSILE
   +FLOORHUGGER
@@ -342,12 +341,14 @@ Class DCY_ApollyonTracer : DCY_Projectile
 		if (looping < 60) A_Tracer2(1);
 		looping++;
 		
-		let fire = Spawn("DCY_ApollyonFireTrail", pos);
-		fire.scale = scale;
-		fire.translation = translation;
-		fire.frame = frame;
-		
-		for (int i = random(2, 4); i > 0; i--) A_SpawnParticleEx(0xff5219, TexMan.CheckForTexture("graphics/Particles/dcyflamep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 20, random(50, 80), angle, frandom(-10, 10), frandom(-10, 10), frandom(2, 25), velz: frandom(0, 2.5), startalphaf: 1.0, fadestepf: 0.1, sizestep: -5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 2 : -2);
+		if (DCY_EffectDistance(sfxdistance))
+		{
+			let fire = Spawn("DCY_ApollyonFireTrail", pos);
+			fire.scale = scale;
+			fire.translation = translation;
+			fire.frame = frame;
+			for (int i = random(2, 4); i > 0; i--) A_SpawnParticleEx(0xff5219, TexMan.CheckForTexture("graphics/Particles/dcyflamep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_RELATIVE|SPF_ROLL, 20, random(50, 80), angle, frandom(-10, 10), frandom(-10, 10), frandom(2, 25), velz: frandom(0, 2.5), startalphaf: 1.0, fadestepf: 0.1, sizestep: -5, startroll: frandom(0, 360), rollvel: random(0, 1) ? 2 : -2);
+		}
 	}
     Loop;
   Death:
@@ -364,32 +365,5 @@ Class DCY_ApollyonTracer : DCY_Projectile
     FTRA L 2 A_Explode(20, 64);
     FTRA MNO 2;
     Stop;
-  }
-}
-
-Class DCY_ApollyonFireTrail : DCY_Effect
-{
-  Default
-  {
-	RenderStyle "Add";
-	Alpha 2;
-	Scale 1;
-	+NOINTERACTION
-	-SOLID
-	+NOBLOCKMAP
-	Radius 0;
-	Height 0;
-  }
-  
-  States
-  {
-  Spawn:
-	123E A 0;
-	123E # 1
-	{
-		A_FadeOut(0.15);
-		scale *= 0.9;
-	}
-	Wait;
   }
 }
