@@ -62,7 +62,7 @@ Class DCY_Manes : DCY_Impe
 	{
 		DCY_LookingForPlayer();
 		if (!random(0, 30) && !saw) SetStateLabel("Hide");
-		if (target && !random(0, 10) && !CheckSight(target)) SetStateLabel("NormalStand");
+		if (target && !random(0, 40) && !CheckSight(target)) SetStateLabel("NormalStand");
 	}
 	Loop;
   Hide:
