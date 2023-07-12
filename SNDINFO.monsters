@@ -2622,37 +2622,19 @@ Upheaval/OrbitalBoom "Sounds/DCY Monsters/Upheavalbringer/dcy_upheavalbringer_ra
 Upheaval/OrbitalLaser "Sounds/DCY Monsters/Upheavalbringer/dcy_upheavalbringer_upheaval_laser.ogg"
 Upheaval/DeathBoom "Sounds/DCY Monsters/Upheavalbringer/dcy_upheavalbringer_explode.ogg"
 
-MW/Sight "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_TREMBLE.ogg" //He will have a new voice instead of some metallix dude. idk how to voice act
-MW/Active1 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_talk1.ogg" 
-MW/Active2 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_talk2.ogg" 
-$random MW/Active {MW/Active1 MW/Active2}
-MW/Pain1 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_pain1.ogg" 
-MW/Pain2 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_pain2.ogg" 
-$random MW/Pain {MW/Pain1 MW/Pain2}
-MW/Death "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_impossible.ogg" 
-MW/Explode "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_explode.ogg" 
-MW/Spell1 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move1.ogg" 
-MW/Spell2 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move2.ogg" 
-MW/Spell3 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move3.ogg" 
-MW/Spell4 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move4.ogg" 
-MW/Spell5 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move5.ogg" 
-MW/Spell6 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move6.ogg" 
-MW/Spell7 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_move7.ogg" 
-MW/SplitInHalf "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_split_in_half.ogg" 
-
-MW/CrisisStart "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_crisis.ogg"
-MW/Crisis "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_crisis1.ogg"
-MW/Crisis2 "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_crisis_explode.ogg"
+MW/CrisisStart "Sounds/DCY SFX/dcy_mw_crisis.ogg"
+MW/Crisis "Sounds/DCY SFX/dcy_mw_crisis1.ogg"
+MW/Crisis2 "Sounds/DCY SFX/dcy_mw_crisis_explode.ogg"
 MW/Summon "Sounds/DCY SFX/dcy_celestial_summon.ogg"
 MW/Charge MWCHARGE"Sounds/DCY SFX/dcy_multidimensional_charge.ogg"
 MW/Skill "Sounds/DCY SFX/dcy_multidimensional_skill.ogg"
-MW/CloneItself "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_clone.ogg"
+MW/CloneItself "Sounds/DCY SFX/dcy_mw_clone.ogg"
 MW/Shockwave "Sounds/DCY SFX/dcy_multidimensional_shockwave.ogg"
-MW/Noise "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_retro_noise.ogg"
+MW/Noise "Sounds/DCY SFX/dcy_mw_retro_noise.ogg"
 MW/LaserBeam "Sounds/DCY SFX/dcy_multidimensional_beam_start.ogg"
 MW/LaserBeamStop "Sounds/DCY SFX/dcy_multidimensional_beam_end.ogg"
-MW/OrbitalBeamAppear "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_orbital_beam_charge.ogg"
-MW/OrbitalBeam "Sounds/DCY Monsters/Multidimensional Fuckface/dcy_mw_orbital_beam_explode.ogg"
+MW/OrbitalBeamAppear "Sounds/DCY SFX/dcy_mw_orbital_beam_charge.ogg"
+MW/OrbitalBeam "Sounds/DCY SFX/dcy_mw_orbital_beam_explode.ogg"
 $limit MW/OrbitalBeamAppear 0
 $limit MW/OrbitalBeam 0
 
@@ -3266,10 +3248,13 @@ preventive/sight12 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight12.ogg"
 preventive/sight13 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight13.ogg"
 preventive/sight14 "Sounds/DCY Monsters/Preventive/dcy_preventive_sight14.ogg"
 
+Electrostatic "Sounds/DCY SFX/dcy_electrostatic_bomb.ogg"
+
 Intone/Hum "Sounds/DCY Monsters/Intone/dcy_intone_hum.ogg" //Infrasound
 Intone/Explode "Sounds/DCY Monsters/Intone/dcy_intone_explode.ogg"
 Intone/BuffReady "Sounds/DCY Monsters/Intone/dcy_intone_buffready.ogg"
 Intone/BuffRelease "Sounds/DCY Monsters/Intone/dcy_intone_buffrelease.ogg"
+$volume Intone/BuffReady 0.45
 
 $random Asura/Hum { Asura/Hum1 Asura/Hum2 Asura/Hum3 Asura/Hum4 }
 Asura/Hum1 "Sounds/DCY Monsters/Asura/dcy_asura_hum1.ogg"

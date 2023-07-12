@@ -1,0 +1,36 @@
+Class DCY_Equilibrium : Inventory
+{
+  Default
+  {
+	Scale 1.1;
+	Inventory.PickupSound "Equilibrium/Pickup";
+	Inventory.Icon "AZ_AZ0";
+	Tag "Equilibrium";
+	Inventory.PickupMessage "This little thing can regulate your body temperature.";
+	+INVENTORY.INVBAR
+	+FLOORCLIP
+	Inventory.MaxAmount 1;
+	Inventory.InterHubAmount 1;
+  }
+  
+  Mixin DCY_Effects;
+  
+  override void Tick()
+  {
+	if (level.isFrozen()) return;
+	super.Tick();
+	
+	if (DCY_EffectDistance(900) && sprite == GetSpriteIndex("AZ_AA0"))
+	{
+		if ((level.time % random(2, 9)) == 0)
+			A_SpawnParticleEx(0x00ff8c, TexMan.CheckForTexture("graphics/particles/dcysquare.png"), STYLE_ADD, SPF_FULLBRIGHT, 60, random(3, 6), frandom(0, 360), frandom(-5.0, 5.0), frandom(-5.0, 5.0), frandom(5, 15), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.35, 0.35), frandom(-0.1, 0.1), frandom(-0.1, 0.1), frandom(0.05, 0.2), startalphaf: 0.4, fadestepf: 0, sizestep: -0.15);
+	}
+  }
+  
+  States
+  {
+  Spawn:
+	AZ_A A -1;
+	Stop;
+  }
+}

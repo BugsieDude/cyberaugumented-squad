@@ -12,6 +12,8 @@ Class DCY_Intone : DCY_SkullParent
   +NOPAIN
   +SLIDESONWALLS
   +LOOKALLAROUND
+  +NOINFIGHTING
+  +NOTARGET
   +FLOAT
   Mass 170;
   Speed 5;

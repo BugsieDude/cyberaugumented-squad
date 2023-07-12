@@ -11,6 +11,7 @@ Class DCY_Manes : DCY_Impe
   Health 400;
   FloatSpeed 4;
   FastSpeed 12;
+  PainChance 125;
   Translation "16:239=%[0.00,0.00,0.00]:[0.00,0.65,2.00]";
   +FLOAT
   +NOGRAVITY
@@ -25,6 +26,8 @@ Class DCY_Manes : DCY_Impe
   DCYMonster.ScientificName "NO DATA";
   DCYMonster.FootStepSound "";
   }
+  
+  bool saw;
   
   override void Tick()
   {
@@ -58,14 +61,15 @@ Class DCY_Manes : DCY_Impe
 	NSH1 AAABBBCCCDDD 3
 	{
 		DCY_LookingForPlayer();
-		if (!random(0, 30)) SetStateLabel("Hide");
+		if (!random(0, 30) && !saw) SetStateLabel("Hide");
+		if (target && !random(0, 10) && !CheckSight(target)) SetStateLabel("NormalStand");
 	}
 	Loop;
   Hide:
 	TNT1 A 5
 	{
 		for (int i = random(1, 1000); i > 0; i--)
-			A_Wander();
+			{ A_Wander(); A_Stop(); }
 			
 		DCY_LookingForPlayer();
 		if (!random(0, 1)) SetStateLabel("Look");
@@ -75,15 +79,18 @@ Class DCY_Manes : DCY_Impe
 	"####" "#" 0
 	{
 		bNOCLIP = true;
+		saw = true;
 		DCY_AlertSound();
 	}
 	Goto See;
   See:
 	NSH1 AAABBBCCCDDD 3
 	{
+		A_Stop();
 		if (target && distance3D(target) > 2000)
 			SetStateLabel("Teleporting");
-		
+		if (target && !random(0, 100)) SetStateLabel("NormalStandCheck");
+			
 		DCY_Chase();
 	}
 	Loop;
@@ -130,6 +137,35 @@ Class DCY_Manes : DCY_Impe
 		
 		if (target && distance3D(target) < 200)
 			SetStateLabel("Breath");
+	}
+	Loop;
+  NormalStandCheck:
+	NSH1 A 10;
+	NSH1 A 0 { bFRIGHTENED = true; bNOPAIN = true; A_Stop(); } 
+	NSH1 ABCDABCD 1
+	{
+		for (int i = 2; i > 0; i--)
+			A_Chase(null, null, CHF_NOPLAYACTIVE);
+	}
+	NSH1 A 0
+	{
+		A_Chase(null, null, CHF_NOPLAYACTIVE);
+		A_Stop();
+		
+		if (target)
+		{
+			if (!CheckSight(target)) { bNOPAIN = false; bFRIGHTENED = false; SetStateLabel("NormalStand"); }
+			if (CheckSight(target) && distance3D(target) > 1000) { bFRIGHTENED = false; SetStateLabel("See"); }
+			if (distance3D(target) > 4000) { bFRIGHTENED = false; SetStateLabel("Teleporting"); }
+		}
+	}
+	Goto NormalStandCheck+2;
+  NormalStand:
+	NSH1 A 1
+	{
+		A_Stop();
+		A_FaceTarget();
+		if (!CheckSight(target) && distance3D(target) > 1000) SetStateLabel("Look");
 	}
 	Loop;
   Melee:

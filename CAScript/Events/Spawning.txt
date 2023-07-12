@@ -1,6 +1,6 @@
 extend class CyberaugumentedMonsterEventHandler
 {	
-	protected void IntoneSpawner()
+	protected void AmbientEnemySpawner()
 	{
 		if (level.mapname == "TEST" || level.mapname == "TITLEMAP") return;
 		
@@ -11,12 +11,14 @@ extend class CyberaugumentedMonsterEventHandler
 			double secSize = (s.x + s.y) / 2;
 			
 			vector3 c = (curSec.centerspot.x + (frandom(-s.x, s.x) / 2), curSec.centerspot.y + (frandom(-s.y, s.y) / 2), curSec.floorplane.ZAtPoint(curSec.centerspot) + (frandom(0, s.z) / 2));
+			
+			if (curSec.IsSecret()) continue;
 			if (!level.IsPointInLevel(c))	continue;
 			if (curSec.floorplane.ZAtPoint(curSec.centerspot) == curSec.ceilingplane.ZAtPoint(curSec.centerspot)) continue;
 			
 			if (secsize < 150) continue;
 			
-			//spawn the initial droid
+			//spawn the intone
 			if (!random(0, 720))
 			{
 				console.printf("sector %d size %d",curSec.sectornum,secSize);
@@ -24,12 +26,44 @@ extend class CyberaugumentedMonsterEventHandler
 				if (!intone) continue;
 			}
 			
-			//spawn the orb
+			//spawn asura
 			if (!random(0, 750))
 			{
 				console.printf("\cgsector %d size %d",curSec.sectornum,secSize);
 				actor orb = actor.spawn("DCY_Asura", c);
 				if (!orb) continue;
+			}
+		}
+	}
+	
+	protected void SpecialItemSpawner()
+	{
+		bool equalized;
+		if (level.mapname == "TEST" || level.mapname == "TITLEMAP") return;
+		
+		for (int i = 0; i < level.Sectors.Size(); i++) {
+			Sector curSec = level.Sectors[i];
+			
+			vector3 s = GetSectorVec3(curSec); 
+			double secSize = (s.x + s.y) / 2;
+			
+			vector3 c = (curSec.centerspot.x + (frandom(-s.x, s.x) / 3), curSec.centerspot.y + (frandom(-s.y, s.y) / 3), curSec.floorplane.ZAtPoint(curSec.centerspot));
+			if (!level.IsPointInLevel(c)) continue;
+			if (curSec.floorplane.ZAtPoint(curSec.centerspot) == curSec.ceilingplane.ZAtPoint(curSec.centerspot)) continue;
+			if (secsize < 5) continue;
+			
+			//spawn the intone
+			if (!random(0, 400))
+			{
+				//make sure it doesn't spawn after the player has it in their inventory
+				for (int i = 0; i < MAXPLAYERS; i++)
+					if (playeringame[i])
+						if (players[i].mo.CountInv("DCY_Equilibrium", 1)) continue;
+					else continue;
+				if (equalized) continue; //make sure there is only one equalizer
+				console.printf("\c[cyan]sector %d size %d",curSec.sectornum,secSize);
+				actor equalizer = actor.spawn("DCY_Equilibrium", c);
+				equalized = true;
 			}
 		}
 	}

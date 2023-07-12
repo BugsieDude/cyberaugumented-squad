@@ -38,6 +38,9 @@ Version "4.10.0"
 //Props
 #include "CAScript/Props/Gore.txt"
 
+//Temperature System Related
+#include "CAScript/Items/Temperature.txt"
+
 //Spawners
 #include "CAScript/Spawners/Monsters/Zombies.txt"
 #include "CAScript/Spawners/Monsters/Shotgunners.txt"

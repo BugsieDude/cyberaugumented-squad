@@ -73,7 +73,8 @@ CLASS CyberaugumentedMonsterEventHandler : EventHandler
 	}
 
 	temp1 = 15;
-	IntoneSpawner();
+	AmbientEnemySpawner();
+	SpecialItemSpawner();
   }
   
   override void WorldUnloaded(WorldEvent e)
