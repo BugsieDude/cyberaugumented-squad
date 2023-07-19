@@ -2700,6 +2700,28 @@ $random ExoImp/Death { EXOIDTH EXOIDTH2 }
 EXOIDTH "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_death1.ogg"
 EXOIDTH2 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_death2.ogg"
 
+NewExoImp/Sight "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newsight.ogg"
+
+$random NewExoImp/Active { NexoImpActive1 NexoImpActive2 NexoImpActive3 }
+NexoImpActive1 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newactive1.ogg"
+NexoImpActive2 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newactive2.ogg"
+NexoImpActive3 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newactive3.ogg"
+
+$random NewExoImp/Attack { NexoImpAttack1 NexoImpAttack2 }
+NexoImpAttack1 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newattack1.ogg"
+NexoImpAttack2 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newattack2.ogg"
+
+$random NewExoImp/Flinch { NexoImpFlinch1 NexoImpFlinch2 NexoImpFlinch3 }
+NexoImpFlinch1 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newflinch1.ogg"
+NexoImpFlinch2 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newflinch2.ogg"
+NexoImpFlinch3 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newflinch3.ogg"
+
+$random NewExoImp/Pain { NexoImpPain1 NexoImpPain2 }
+NexoImpPain1 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newpain1.ogg"
+NexoImpPain2 "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newpain2.ogg"
+
+NewExoImp/Death "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_newdeath.ogg"
+
 EXOLUNGE "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_lunge.ogg"
 EXOWATK "Sounds/DCY Monsters/Fallen Angel/dcy_fallenangel_fireball.ogg"
 
