@@ -1,11 +1,11 @@
 Class DCY_ExoImp : DCY_Impe
 {
-
   int exopaincount;
+  
   Default
   {
   PainChance 20;
-  Health 1100;
+  Health 650;
   SeeSound "NewExoImp/Sight";
   ActiveSound "NewExoImp/Active";
   PainSound "NewExoImp/Flinch";
@@ -65,18 +65,12 @@ Class DCY_ExoImp : DCY_Impe
 	FAEM AABCCDD 5 A_FaceTarget();
 	FAEM P 10 A_FaceTarget();
 	TNT1 A 0 DCY_AlertSound();
-	FAEM QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 2 
+	FAEM QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 1 
 	{
 	A_FaceTarget();
 	A_SpawnItemEx("DCY_ExoTrail",xofs:-5,zofs:5,zvel:5,flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION);
 	}
 	FAEM PP 5 A_FaceTarget();
-	TNT1 A 0 DCY_AlertSound();
-	FAEM QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 2
-	{
-	A_FaceTarget();
-	A_SpawnItemEx("DCY_ExoTrail",xofs:-5,zofs:5,zvel:5,flags: SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERTRANSLATION);
-	}
 	TNT1 A 0 { bINVULNERABLE = false; }
 	Goto See2;
   See2:

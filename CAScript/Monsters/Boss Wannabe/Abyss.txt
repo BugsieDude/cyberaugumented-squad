@@ -1,0 +1,283 @@
+//Let's diversify them up.
+
+Class DCY_Abyss : DCY_Impe
+{
+  Default
+  {
+  PainChance 20;
+  Health 800;
+  SeeSound "";
+  ActiveSound "";
+  PainSound "";
+  DeathSound "DCYAbyss/Death";
+  BloodType "DCY_SpiritBlood", "DCY_SpiritBlood", "DCY_SpiritBlood";
+  BloodColor "070f29";
+  StencilColor "070f29";
+  MeleeThreshold 150;
+  Translation "80:111=%[0.00,0.00,0.00]:[0.29,0.29,0.29]", "1:3=%[0.00,0.00,0.00]:[0.29,0.29,0.29]", "5:8=%[0.00,0.00,0.00]:[0.29,0.29,0.29]", "112:127=%[0.00,0.00,0.18]:[0.22,0.31,1.39]";
+  Monster;
+  +NOINFIGHTING
+  +NOBLOCKMONST
+  +SLIDESONWALLS
+  +DONTHARMSPECIES
+  +DONTHARMCLASS
+  -SHOOTABLE
+  +BOSS
+  +NEVERFAST
+  +NOPAIN
+  +NODAMAGETHRUST
+  Scale 1.1;
+  Radius 20;
+  Height 56;
+  DamageFactor 0.9;
+  Speed 12;
+  Tag "\c[g2]abyss\c-";
+  Obituary "%o.";
+  HitObituary "%o.";
+  TeleFogSourceType "DCY_Effect";
+  TeleFogDestType "DCY_Effect";
+  DCYMonster.ScientificName "UNKNOWN";
+  +DCYMONSTER.DCYSUPERBOSS;
+  DCYMonster.FootstepSound "";
+  }
+  
+  override string GetObituary (Actor victim, Actor inflictor, Name mod, bool playerattack)
+  {
+	static const string messages[] =
+	{
+		"%o experienced abyss.",
+		"%o.",
+		"%o suffered.",
+		"",
+		"Sorry.",
+		"Are you, like, done yet?"
+	};
+
+	return messages[Random(0, messages.Size() - 1)];
+  }
+  
+  override void Tick()
+  {
+	super.Tick();
+	
+	If (Health > 0 && !level.IsFrozen() && !sv_effectchoker && DCY_EffectDistance(sfxdistance) && alpha > 0.5 && sprite == GetSpriteIndex("FER_") && !dead)
+	{
+		A_SpawnParticleEx(0x0e2f7d, Texman.CheckforTexture("Graphics/Particles/dcysquarep.png"), STYLE_ADD, SPF_FULLBRIGHT, random(20, 60), random(1, 3), frandom(0, 360), frandom(-7.5, 7.5), frandom(-7.5, 7.5), frandom(-3.5, 3.5) + 20, frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(-1.5, -4.4), accelz: -0.35, fadestepf: 0);
+		A_SpawnParticleEx(0x010514, Texman.CheckforTexture("Graphics/Particles/dcyflame.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_ROLL, random(40, 80), random(25, 60), frandom(0, 360), frandom(-7.5, 7.5), frandom(-7.5, 7.5), frandom(-3.5, 3.5) + 40, frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(-0.3, -3.4), accelz: -0.05, sizestep: -1, startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+		A_SpawnParticleEx(0x010514, Texman.CheckforTexture("Graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_ROLL, random(50, 150), random(65, 80), frandom(0, 360), frandom(-7.5, 7.5), frandom(-7.5, 7.5), frandom(-3.5, 3.5) + 40, frandom(-0.5, 0.5), frandom(-0.5, 0.5), frandom(-0.3, -2.4), sizestep: 0.5, startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+	}
+  }
+  
+  bool dead;
+  int d, a;
+  
+  States
+  {
+  Spawn:
+  Idle:
+	TNT1 A random(4, 10)
+	{
+		A_Wander();
+		DCY_Look();
+	}
+	Loop;
+  Look:
+	TNT1 AAAAA random(1, 5) DCY_LookingForPlayer();
+	TNT1 A 1 A_CheckSight("Looking");
+	Goto Alert;
+  Alert:
+	TNT1 A 0 A_Jump(192, "Boo", "RoarSpaz");
+	Goto Boo;
+  RoarSpaz:
+	TNT1 A 0
+	{
+		activesound = "DCYAbyss/Idle";
+		gravity = 0.25;
+		bNOCLIP = true;
+		A_StartSound("DCYAbyss/Alert", CHAN_VOICE, attenuation: 0.1);
+	}
+	Goto Spaz;
+  Boo:
+	FER_ A 6
+	{
+		activesound = "DCYAbyss/Idle";
+		gravity = 0.25;
+		bNOCLIP = true;
+		A_StartSound("DCYAbyss/Alert", CHAN_VOICE, attenuation: 0.1);
+		A_FaceTarget();
+	}
+	FER_ B 6 A_FaceTarget();
+	FER_ B 0 A_SpawnItemEx("DCY_HexodenicanTrail2", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERALPHA|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+	TNT1 A random(30, 70);
+	Goto See;
+  See:
+	TNT1 A random(2, 4)
+	{
+		alpha = 1;
+		A_SetRenderStyle(1, STYLE_NORMAL);
+		bSHOOTABLE = false;
+		bNOGRAVITY = false;
+		for (int i = random(1, 20); i > 0; i--) A_Chase(null, null);
+		
+		if (target && CheckSight(target))
+		{
+			switch (random(0, 30))
+			{
+				case 10:
+					bSHOOTABLE = true;
+					SetStateLabel("Spaz");
+					break;
+				case 15:
+					bSHOOTABLE = true;
+					a = random(20, 80);
+					SetStateLabel("Charge");
+					break;
+				case 20:
+					bSHOOTABLE = true;
+					A_StartSound("DCYAbyss/Breathe", CHAN_VOICE, attenuation: 0.5);
+					SetStateLabel("Chase");
+					break;
+			}
+		}
+	}
+	Loop;
+  Chase:
+	FER_ AB 3
+	{
+		A_SetRenderStyle(1, STYLE_NORMAL);
+		A_Chase("Melee", null);
+		A_Recoil(-0.5);
+		A_FaceTarget(4, 4);
+		if (!random(0, 40)) SetStateLabel("See");
+	}
+	Loop;
+  Charge:
+	FER_ AB 1
+	{
+		a--;
+		bNOGRAVITY = true;
+		A_SetRenderStyle(0.01, STYLE_ADDSTENCIL);
+		
+		for (int i = random(3, 2); i > 0; i--)
+		{
+			if (random(0, 50) < 25) A_Chase(null, null);
+			else A_Wander();
+		}
+		
+		A_SpawnItemEx("DCY_HexodenicanTrail", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+		
+		for (int i = random(3, 2); i > 0; i--)
+		{
+			if (random(0, 50) < 25) A_Chase("Unleash", null);
+			else A_Wander();
+		}
+		
+		A_SpawnItemEx("DCY_HexodenicanTrail", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+		
+		if (a <= 0) SetStateLabel("See");
+	}
+	Loop;
+  Melee:
+  Unleash:
+	FER_ G 0 { A_SetRenderStyle(1, STYLE_NORMAL); bNOGRAVITY = false; A_StartSound("DCYAbyss/Ground", 20, attenuation: 0.65); }
+	FER_ EDCCCCCCC 3 A_FaceTarget();
+	FER_ E 0 A_StartSound("DCYAbyss/GroundFire", 21);
+	FER_ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1
+	{
+		A_Explode(random(3, 4), 160, XF_NOTMISSILE);
+		A_SpawnParticleEx(0x0b0d12, Texman.CheckforTexture("DUSTC0"), STYLE_NORMAL, SPF_ROLL, random(10, 40), random(3, 25), frandom(0, 360), frandom(-120.5, 120.5), frandom(-120.5, 120.5), frandom(-5, 5), frandom(-3.0, 3.0), frandom(-3.0, 3.0), frandom(0.3, 4), accelz: 0.45, startroll: frandom(0, 360), rollvel: frandom(-5, 5));
+		A_SpawnParticleEx(0x082f78, Texman.CheckforTexture("Graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_ROLL, random(50, 150), random(65, 80), frandom(0, 360), frandom(-120.5, 120.5), frandom(-120.5, 120.5), frandom(-5, 5), frandom(-0.5, 0.5), frandom(-0.5, 0.5), frandom(0.5, 0.1), sizestep: frandom(2, 4), startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+	}
+	TNT1 A random(30, 70);
+	Goto See;
+  Spaz:
+	TNT1 AAAAAAAAAA random(0, 3) { alpha = 1; A_Stop(); for (int i = random(1, 10); i > 0; i--) { if (!random(0, 1)) A_Chase(null, null); else A_Wander(); } }
+	TNT1 A 1;
+	FER_ ABABAB random(1, 5) A_FaceTarget();
+	FER_ B 0
+	{
+		A_SpawnItemEx("DCY_HexodenicanTrail", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_TRANSFERALPHA|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+		A_FaceTarget();
+		if (!random(0, 7)) SetStateLabel("See");
+	}
+	Loop;
+  Pain:
+	FER_ F 6 A_SetRenderStyle(1, STYLE_NORMAL); 
+	Goto See;
+  XDeath:
+  Death:
+	FER_ F 0 A_Jump(85, "Piano", "Flee");
+	Goto DustDeath;
+  DustDeath:
+	FER_ F 15
+	{
+		A_SetRenderStyle(1, STYLE_NORMAL);
+		A_NoBlocking();
+		A_StartSound("DCYAbyss/Breathe1", CHAN_VOICE, attenuation: 0.5);
+	}
+	FER_ G 1
+	{
+		if (d > random(80, 100))
+		{
+			dead = true;
+			A_Scream();
+			SetStateLabel("Died");
+		}
+		
+		d++;
+		
+		A_SpawnParticleEx(0x0b0d12, Texman.CheckforTexture("DUSTC0"), STYLE_NORMAL, SPF_ROLL, random(10, 40), random(3, 25), frandom(0, 360), frandom(-12.5, 12.5), frandom(-12.5, 12.5), frandom(-20.5, 5.5) + 60, frandom(-3.0, 3.0), frandom(-3.0, 3.0), frandom(0.3, 4), accelz: 0.45, startroll: frandom(0, 360), rollvel: frandom(-5, 5));
+		A_SpawnParticleEx(0x7a7971, Texman.CheckforTexture("Graphics/Particles/dcysmokep.png"), STYLE_SUBTRACT, SPF_ROLL, random(20, 100), random(35, 90), frandom(0, 360), frandom(-7.5, 7.5), frandom(-7.5, 7.5), frandom(-20.5, 7.5) + 60, frandom(-1.5, 1.5), frandom(-1.5, 1.5), frandom(0.5, 1.5), accelz: 0.1, startalphaf: 0.4, sizestep: 1, startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+		A_SpawnParticleEx(0x010514, Texman.CheckforTexture("Graphics/Particles/dcysmokep.png"), STYLE_ADD, SPF_FULLBRIGHT|SPF_ROLL, random(50, 150), random(65, 80), frandom(0, 360), frandom(-7.5, 7.5), frandom(-7.5, 7.5), frandom(-7.5, 7.5) + 60, frandom(-0.5, 0.5), frandom(-0.5, 0.5), frandom(0.5, 0.1), sizestep: frandom(2, 4), startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+	}
+	Goto DustDeath+1;
+  Died:
+	FER_ GHIJK 6;
+	Stop;
+  Piano:
+	FER_ F 100
+	{
+		A_SetRenderStyle(1, STYLE_NORMAL);
+		A_Scream();
+	}
+	FER_ F 0
+	{
+		dead = true;
+		A_StartSound("DCYAbyss/Piano", 80, attenuation: 0);
+		SetShade("000000");
+		A_SetRenderStyle(1, STYLE_STENCIL);
+	}
+	FER_ ABABAB 4 A_FaceTarget();
+	FER_ GHIJK 14;
+	FER_ KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK 2
+	{
+		A_FadeOut(0.025, 0);
+		A_SpawnParticleEx(0x0b0d12, Texman.CheckforTexture("DUSTC0"), STYLE_NORMAL, SPF_ROLL, random(10, 40), random(3, 25), frandom(0, 360), frandom(-80.5, 80.5), frandom(-80.5, 80.5), frandom(-5, 5), frandom(-3.0, 3.0), frandom(-3.0, 3.0), frandom(0.3, 4), accelz: 0.45, startroll: frandom(0, 360), rollvel: frandom(-5, 5));
+		A_SpawnParticleEx(0x111111, Texman.CheckforTexture("Graphics/Particles/dcysmokep.png"), STYLE_SUBTRACT, SPF_FULLBRIGHT|SPF_ROLL, random(150, 250), random(65, 80), frandom(0, 360), frandom(-80.5, 80.5), frandom(-80.5, 80.5), frandom(-5, 5), frandom(-0.5, 0.5), frandom(-0.5, 0.5), frandom(0.5, 0.1), accelz: 0.01, sizestep: frandom(1, 2), startroll: frandom(0, 360), rollvel: frandom(-10, 10));
+	}
+	Stop;
+  Flee:
+	FER_ F 50
+	{
+		A_SetRenderStyle(1, STYLE_NORMAL);
+		A_Scream();
+	}
+	FER_ ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB 1
+	{
+		bFRIGHTENED = true;
+		bNOGRAVITY = true;
+		A_SetSize(0, 0);
+		bNOINTERACTION = true;
+		bTHRUACTORS = true;
+		A_SetRenderStyle(0.01, STYLE_ADDSTENCIL);
+		
+		for (int i = random(3, 2); i > 0; i--) A_Chase(null, null);
+		A_SpawnItemEx("DCY_HexodenicanTrail", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+		for (int i = random(3, 2); i > 0; i--) A_Chase(null, null);
+		A_SpawnItemEx("DCY_HexodenicanTrail", zofs: 6, flags: SXF_TRANSFERSCALE|SXF_TRANSFERSPRITEFRAME|SXF_NOCHECKPOSITION|SXF_TRANSFERSTENCILCOL);
+	}
+	Stop;
+  Raise:
+	Stop;
+  }
+}

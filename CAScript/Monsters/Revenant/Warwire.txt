@@ -10,7 +10,7 @@ Class DCY_Warwire : DCY_Rev
   PainSound "Warwire/Pain";
   DeathSound "Warwire/Death";
   MeleeSound "hknight/melee";
-  Health 700;
+  Health 500;
   Mass 250;
   MeleeDamage 15;
   MeleeThreshold 200;

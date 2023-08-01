@@ -427,7 +427,11 @@ Class DCY_FallingSpark : DCY_Effect
   Spawn:
 	TNT1 A random(1, 2)
 	{
-		if (f < 0) Destroy();
+		if (f < 0)
+		{
+			Destroy();
+			return;
+		}
 		f--;
 		
 		if (DCY_EffectDistance(900))
@@ -459,7 +463,12 @@ Class DCY_BigSpark : DCY_FallingSpark
   Spawn:
 	TNT1 A 1
 	{
-		if (f < 0) Destroy();
+		if (f < 0)
+		{
+			Destroy();
+			return;
+		}
+		
 		f--;
 		
 		if (DCY_EffectDistance(900))

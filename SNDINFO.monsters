@@ -3471,3 +3471,18 @@ DCYDivestor/pain2 "Sounds/DCY Monsters/Divestor/dcy_divestor_pain2.ogg"
 DCYDivestor/pain3 "Sounds/DCY Monsters/Divestor/dcy_divestor_pain3.ogg"
 DCYDivestor/Death "Sounds/DCY Monsters/Divestor/dcy_divestor_death.ogg"
 DCYDivestor/ScreamExplosion "Sounds/DCY SFX/dcy_nothingbutdeath.ogg"
+
+DCYAbyss/Alert "Sounds/DCY Monsters/Abyss/dcy_abyss_alert.ogg"
+DCYAbyss/Piano "Sounds/DCY Monsters/Abyss/dcy_abyss_piano.ogg"
+$random DCYAbyss/Breathe { DCYAbyss/Breathe1 DCYAbyss/Breathe2 }
+DCYAbyss/Breathe1 "Sounds/DCY Monsters/Abyss/dcy_abyss_breathe1.ogg"
+DCYAbyss/Breathe2 "Sounds/DCY Monsters/Abyss/dcy_abyss_breathe2.ogg"
+$random DCYAbyss/Idle { DCYAbyss/Idle1 DCYAbyss/Idle2 DCYAbyss/Idle3 }
+DCYAbyss/Idle1 "Sounds/DCY Monsters/Abyss/dcy_abyss_idle1.ogg"
+DCYAbyss/Idle2 "Sounds/DCY Monsters/Abyss/dcy_abyss_idle2.ogg"
+DCYAbyss/Idle3 "Sounds/DCY Monsters/Abyss/dcy_abyss_idle3.ogg"
+$random DCYAbyss/Death { DCYAbyss/Death1 DCYAbyss/Death2 }
+DCYAbyss/Death1 "Sounds/DCY Monsters/Abyss/dcy_abyss_death.ogg"
+DCYAbyss/Death2 "Sounds/DCY Monsters/Abyss/dcy_abyss_death2.ogg"
+DCYAbyss/Ground "Sounds/DCY Monsters/Abyss/dcy_abyss_ground.ogg"
+DCYAbyss/GroundFire "Sounds/DCY Monsters/Abyss/dcy_abyss_groundfire.ogg"

@@ -2,7 +2,7 @@ Class DCY_Visitant : DCY_CacoParent
 {
   Default
   {
-  Health 2000;
+  Health 1500;
   Tag "\c[x1]The Visitant\c-";
   Speed 8;
   FastSpeed 12;
