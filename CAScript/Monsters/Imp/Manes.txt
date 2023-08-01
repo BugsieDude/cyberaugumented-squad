@@ -165,7 +165,7 @@ Class DCY_Manes : DCY_Impe
 	{
 		A_Stop();
 		A_FaceTarget();
-		if (!CheckSight(target) && distance3D(target) > 1000) SetStateLabel("Look");
+		if (target && !CheckSight(target) && distance3D(target) > 1000) SetStateLabel("Look");
 	}
 	Loop;
   Melee:

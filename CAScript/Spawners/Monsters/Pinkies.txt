@@ -38,6 +38,7 @@ Class DCY_BossSpectre : DCY_Spawner
   Default
   {
   DropItem "DCY_PinkeII", 0, 255;
-  DropItem "DCY_Urozon", 25, 30;
+  DropItem "DCY_Abyss", 25, 30;
+  DropItem "DCY_Urozon", 25, 1;
   }
 }
